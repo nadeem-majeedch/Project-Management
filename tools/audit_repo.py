@@ -206,14 +206,26 @@ def main() -> int:
         "viewport, lang=en, no heading skips, no alt-less images, no instructor links in nav")
 
     # ------------------------------------------------------------------ E
-    wf_ok = True
-    try:
-        for wf in (ROOT / ".github" / "workflows").glob("*.yml"):
-            yaml.safe_load(wf.read_text(encoding="utf-8"))
-    except Exception as exc:  # noqa: BLE001
-        wf_ok = False
+    wf_ok, wf_problems = True, []
+    for wf in (ROOT / ".github" / "workflows").glob("*.yml"):
+        try:
+            wfd = yaml.safe_load(wf.read_text(encoding="utf-8"))
+        except Exception as exc:  # noqa: BLE001
+            wf_ok = False
+            wf_problems.append(f"{wf.name}: YAML parse error ({exc})")
+            continue
+        for job in wfd.get("jobs", {}).values():
+            for i, step in enumerate(job.get("steps", []), 1):
+                if "with" in step and "uses" not in step:
+                    wf_ok = False
+                    wf_problems.append(
+                        f"{wf.name}: step {i} has 'with' but no 'uses' (invalid workflow file)")
+                if not ("uses" in step or "run" in step):
+                    wf_ok = False
+                    wf_problems.append(f"{wf.name}: step {i} has neither 'uses' nor 'run'")
     add("E", VERIFIED if wf_ok else BLOCKER, "E1",
-        "GitHub workflow YAML parses (pages.yml artifact method, ci.yml gates)")
+        "GitHub workflows parse AND step structure valid (with/uses pairing)"
+        + (f" — problems: {wf_problems}" if wf_problems else ""))
     secret_re = re.compile(r"(api[_-]?key|secret|password|token)\s*[:=]\s*['\"][A-Za-z0-9]{8,}", re.I)
     hits = []
     skip = {".venv", "site", "__pycache__", ".git"}

@@ -30,7 +30,6 @@ jobs:
         run: |
           python tools/check_slides.py
           python tools/build_slides.py
-      - uses: actions/upload-artifact@v4
       - name: Strict site build
         run: python -m mkdocs build --strict --site-dir site
       - name: Link check (built site)
@@ -52,6 +51,7 @@ jobs:
             exit 1
           fi
           echo "OK: no instructor content in site/"
+      - uses: actions/upload-artifact@v4
         with:
           name: site-preview
           path: |
