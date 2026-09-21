@@ -1,0 +1,1362 @@
+# ==============================================================================
+# Band 4 — EXPERT (CS-76..CS-105) · cross-domain integration, ill-posed and
+# strategic; capstone feeders at CS-76, CS-88, CS-105. 8 machine-checkable
+# numeric cases (CS-80, CS-82, CS-84, CS-89, CS-91, CS-95, CS-97, CS-104).
+# ==============================================================================
+
+cases:
+  - id: CS-76
+    title: "First thirty days on a failing program"
+    domain: D1
+    level: L5
+    use: [capstone, portfolio]
+    lecture: null
+    seed: GRIDSENSE
+    difficulty: expert
+    numerical: false
+    tags: [recovery, takeover, assessment, capstone-feeder, leadership]
+    concepts: [recovery assessment, leadership entry]
+    summary: "You inherit the GRIDSENSE streaming program in month 7: sponsor confidence gone, CPI 0.82, three teams demoralized. Produce the first-30-days plan."
+    context: "The previous PM exited after a sponsor confrontation. Facts on arrival: CPI 0.82 and SPI 0.78 over three months, the telemetry vendor on notice (CS-62), the residency rework consuming contingency (CS-73), and a team that has heard 'recovery plan' twice already. The sponsor's first words: 'tell me something I can believe.'"
+    problem: "Produce the first-30-days plan: assessment sequence, quick wins, trust repair, and the re-forecast posture."
+    constraints:
+      - "No re-baseline decision before day 21 — evidence first."
+      - "The plan must name what you will NOT do in 30 days."
+      - "Each week produces one verifiable commitment kept."
+    tasks:
+      - "Assessment plan: what evidence, from whom, in what order (week by week)."
+      - "Two quick wins that demonstrate control without new promises."
+      - "Trust-repair sequence: sponsor, teams, vendor."
+      - "The day-21 re-forecast posture decision framework."
+    deliverables:
+      - "Four-week plan with daily-level detail for week 1."
+      - "Quick-win selection with rationale."
+      - "Day-21 decision framework."
+    discussion:
+      - "Why is the second recovery plan harder to believe than the first?"
+      - "What does 'tell me something I can believe' actually request?"
+    objectives:
+      - "Sequence a recovery assessment under low trust."
+      - "Rebuild credibility through kept micro-commitments."
+    rubric: "Assessment sequence is evidence-first (35%); quick wins are real and small (25%); trust repair is sequenced per audience (25%); not-do list is deliberate (15%)."
+    solution:
+      model: "Evidence-first takeover"
+      reasoning: "Week 1: listen — one-on-ones with every team lead, read the last three monthly reports against raw data, sit in on two standups without speaking. The single deliverable: a written statement of what you know, what you don't, and what you'll know by when. Week 2: verify the EVM data's integrity (CS-51's lesson — committed costs and the verbal change order), walk the critical path with the people who own it, meet the vendor's executive sponsor. Week 3: draft the re-forecast posture with options, not a number. Week 4: present the day-21 framework — commit to EAC₁-based honesty with a scope-preservation option and a descope option, each with evidence requirements. Quick wins: publish the commitment ledger weekly (control made visible); kill the two zombie workstreams everyone privately knows are dead (decisiveness without new promises). What you will NOT do: re-baseline in week 1, promise a date, change the org structure, or relitigate the past PM's decisions publicly. 'Something I can believe' = a forecast with stated error bars and a track record of kept micro-commitments, not optimism."
+      alternatives:
+        - "Re-baseline immediately: wipes the credibility deficit onto the baseline — sometimes right, never in week 1, because the assessment that justifies it does not exist yet."
+      lesson_for_instructor: "Grade the not-do list hardest; incoming leaders are graded on what they resist doing in month one."
+  - id: CS-77
+    title: "Merging two teams without losing either"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 25
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [merger, team-formation, identity, leadership, change]
+    concepts: [team formation, organizational change]
+    summary: "Lead the merger of a model team and a platform team with clashing norms, histories, and one shared manager seat."
+    context: "TelcoCare merges the model team (research norms, flexible hours, notebook culture) with the platform team (ops norms, on-call, IaC discipline). One of the two leads will become the merged team's lead; everyone knows it. Two members have already asked to transfer."
+    problem: "Design the merger: team formation sequence, norms integration, lead selection optics, and retention risks."
+    constraints:
+      - "Merged team starts in three weeks."
+      - "The lead decision is made above you; your job is making it survivable either way."
+      - "Working agreements must be rebuilt, not imposed from either side."
+    tasks:
+      - "Formation sequence: what happens in weeks 1–3."
+      - "Norms integration process with the working agreement (CS-34) rebuilt jointly."
+      - "Lead-transition design: what changes for the non-selected lead."
+      - "Retention risk register with owners."
+    deliverables:
+      - "Three-week formation plan."
+      - "Norms process design."
+      - "Lead-transition plan."
+      - "Retention risk register."
+    discussion:
+      - "Why does 'the best person for the job' framing make the loser's team worse?"
+      - "What does the transfer request tell you before the merger starts?"
+    objectives:
+      - "Manage identity loss during team merger."
+      - "Convert a zero-sum lead decision into a survivable transition."
+    rubric: "Formation sequence is staged and real (35%); norms process is joint (25%); lead transition treats the loser with agency (25%); retention risks owned (15%)."
+    solution:
+      model: "Agency-preserving merger"
+      reasoning: "Weeks: 1 — separate listening sessions, then a joint session that names the differences as data ('research optimizes for exploration, ops for reliability — the merged team needs both and that tension is the job'); 2 — joint working-agreement workshop where both sides' norms compete openly and the team selects; 3 — new ceremony calendar, definition of done, and the first merged sprint planned together. Lead transition: the non-selected lead gets a named, real role — architecture owner or model-reliability owner — with explicit decision rights (CS-66's matrix), announced in the same breath as the selection. Retention risks: the two transfer requesters get one-on-ones this week (their question is 'do I have a future here', answered concretely); the notebook-culture members fear process suffocation — the working agreement's review cadence is the answer. 'Best person' framing fails because it converts a management decision into a verdict on people; the design must give the losing side agency and a real job, not reassurance."
+      alternatives:
+        - "External lead: removes the zero-sum optics, costs context and signals neither team was trusted — defensible if both internal candidates are genuinely unready."
+      lesson_for_instructor: "Ask who decides the working agreement — the manager or the team? The answer determines whether the agreement survives the first conflict."
+  - id: CS-78
+    title: "The delay claim defense"
+    domain: D7
+    level: L4
+    use: [exam]
+    lecture: 18
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [claims, delay-analysis, records, procurement, defense]
+    concepts: [delay claims, contemporaneous records]
+    summary: "Defend against a vendor's delay claim using the project record — and learn what the record failed to capture."
+    context: "The integration vendor files a delay claim: 7 weeks, PKR 1.4M, alleging MedSync-caused data-access delays. Your records show: three access delays (total 3 weeks, documented), one vendor-side schema redesign (undocumented in the schedule), and two disputed weeks where both parties contributed."
+    problem: "Prepare the defense: claim decomposition, evidence map, counter-position, and the records gap."
+    constraints:
+      - "The defense must concede what the record supports — credibility is the asset."
+      - "Counter-claims need the same evidentiary standard as the vendor's claim."
+      - "The records-gap analysis must produce a fix, not a lament."
+    tasks:
+      - "Decompose the 7 weeks by cause with evidence status for each."
+      - "Build the evidence map: document, date, what it proves."
+      - "Draft the counter-position (one page)."
+      - "Specify the records fix for the remaining project."
+    deliverables:
+      - "Claim decomposition table."
+      - "Evidence map."
+      - "Counter-position draft."
+      - "Records fix."
+    discussion:
+      - "Why do contemporaneous records beat reconstructed memory in claims — and what does that demand of weekly reporting?"
+      - "When is conceding three weeks strategically superior to contesting seven?"
+    objectives:
+      - "Decompose and defend delay claims with evidence discipline."
+      - "Convert a claims experience into record-keeping practice."
+    rubric: "Decomposition is cause-accurate (35%); evidence map is real (30%); counter-position concedes properly (25%); records fix durable (10%)."
+    solution:
+      model: "Decompose-concede-counter"
+      reasoning: "Decomposition: 3 weeks client access delays — documented, concede with mitigation credit (vendor could have escalated earlier); 2 weeks shared causation — negotiate split; 2 weeks vendor schema redesign — counter-claim: the redesign was a vendor internal decision, evidenced by the design review minutes the vendor never updated into the schedule; the schedule baseline shows their float absorption, then none. Evidence map: access-request tickets with timestamps, the access grant emails, design-review minutes, the schedule updates (or their absence), the weekly reports where the redesign's impact should have appeared. Counter-position: concede 3, split 2, counter 2 — net exposure ≈ 4 weeks against 7 claimed. The strategic logic of conceding documented delays first: a defense that contests everything reads as evasion and invites the arbitrator to discount the legitimate counter. Records fix: weekly report includes a 'delay events' section with cause attribution agreed at the weekly meeting — attribution recorded contemporaneously is the entire ballgame."
+      alternatives:
+        - "Full contest: the 2 disputed weeks have genuinely mixed causation; contesting them invites deep discovery that will also expose your own records gaps."
+      lesson_for_instructor: "Ask what the vendor's claim would look like if YOUR weekly reports had captured the schema redesign — claims are won by the record you kept, not the lawyer you hire."
+  - id: CS-79
+    title: "Exit clauses for the scoring vendor"
+    domain: D7
+    level: L4
+    use: [homework]
+    lecture: 18
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [exit-clauses, vendor, termination, data-egress, lock-in]
+    concepts: [contract exit design, lock-in]
+    summary: "Design the exit clauses for the scoring-vendor renewal: termination triggers, data egress, transition assistance, and pricing protections."
+    context: "TelcoCare renews the scoring-API contract after the SLA troubles (CS-25, CS-62). Procurement wants the renewal to fix the dependency that made exit unthinkable: three years of scoring history live only in the vendor's cloud, and the model integrates with their proprietary feature store."
+    problem: "Draft the exit clause set: triggers, mechanics, costs, and the anti-lock-in provisions."
+    constraints:
+      - "Termination triggers: for cause (SLA pattern), for convenience (notice period), on change of control."
+      - "Data egress: complete history, defined format, defined timeline, at defined cost."
+      - "Transition assistance must be priced now, not negotiated during a crisis."
+    tasks:
+      - "Trigger table with notice periods and cure windows."
+      - "Data-egress clause: format, completeness standard, timeline, cost cap."
+      - "Transition-assistance clause with day rates agreed now."
+      - "Anti-lock-in provision: what the vendor must maintain for portability."
+    deliverables:
+      - "Exit clause set (four clauses)."
+      - "Negotiation note: what the vendor will resist and the fallback."
+    discussion:
+      - "Why is transition assistance priced at renewal, not at exit?"
+      - "What does the vendor gain from accepting strong exit clauses?"
+    objectives:
+      - "Design exit provisions that make dependency survivable."
+      - "Negotiate portability as a priced deliverable."
+    rubric: "Triggers are contractual and complete (30%); egress clause is specific (35%); transition pricing present (20%); negotiation note realistic (15%)."
+    solution:
+      model: "Exit-by-design clauses"
+      reasoning: "Triggers: for cause — two SLA misses in any rolling three months after cure period (tightened from CS-62's ladder, since the pattern is now documented); for convenience — 90 days' notice with egress fee capped at 6 months' fees; change of control — either party may exit in 60 days (acquisition by a TelcoCare competitor is the real risk). Data egress: full raw + scored history in open format (parquet/CSV with schema contract), 15 business days, cost capped at 400k regardless of volume, completeness verified against row counts TelcoCare holds independently. Transition assistance: named day rates (senior engineer 180k/day) with 20 days guaranteed availability, agreed now — pricing during a crisis is pricing with zero leverage. Anti-lock-in: the vendor maintains a documented API contract and a monthly feature-store export; refusal to maintain portability is itself a for-cause trigger. What the vendor gains: predictability — strong exits priced fairly are cheaper for them than disputed ones, and the commitment often wins the renewal against competitors who promise everything and specify nothing."
+      alternatives:
+        - "Rebuild scoring in-house instead of renewing: the strategic end-state, but the 12–18 month build means the exit clauses are what make the vendor relationship survivable meanwhile."
+      lesson_for_instructor: "Ask who holds the row counts that verify egress completeness — if the answer is the vendor, the clause is decorative."
+  - id: CS-80
+    title: "The program rollup that lied"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 19
+    seed: GRIDSENSE
+    difficulty: expert
+    numerical: true
+    tags: [EVM, program, rollup, CPI, bottom-up-EAC, masking]
+    concepts: [program EVM, bottom-up forecasting]
+    summary: "Compute a three-project program rollup whose CPI looks healthy, then build the bottom-up EAC that reveals the trouble."
+    context: "GRIDSENSE's program office reports program CPI 1.00 — 'on budget'. The three child projects: P1 (BAC 2.0M, EV 1.4M, AC 1.6M), P2 (BAC 3.0M, EV 1.8M, AC 1.7M), P3 (BAC 1.5M, EV 0.9M, AC 0.8M)."
+    problem: "Compute the program indicators and the bottom-up EAC; explain what the rollup hides."
+    constraints:
+      - "Program EV/AC are sums; CPI = EV/AC at program level."
+      - "Bottom-up EAC = Σ (BACᵢ / CPIᵢ) using each project's own CPI."
+      - "The explanation must name the masking mechanism precisely."
+    tasks:
+      - "Compute program BAC, EV, AC, CPI."
+      - "Compute each project's CPI and EAC₁."
+      - "Compute the bottom-up program EAC and VAC."
+      - "Explain the discrepancy between rollup CPI and bottom-up EAC."
+    deliverables:
+      - "Program indicator computation."
+      - "Bottom-up EAC table."
+      - "Masking-mechanism explanation."
+    discussion:
+      - "Why do weighted rollup indices flatter mixed portfolios?"
+      - "Which number would you take to the sponsor — and why does the honest one need three projects' data?"
+    objectives:
+      - "Compute program-level EVM and bottom-up EAC."
+      - "Diagnose aggregation masking in portfolio reporting."
+    rubric: "Program indicators correct (30%); bottom-up EAC correct (40%); masking explanation precise (30%)."
+    solution:
+      model: "Bottom-up correction of weighted rollup"
+      reasoning: "Program: BAC = 6.5M, EV = 4.1M, AC = 4.1M → CPI = 1.000, 'on budget'. Per project: CPI₁ = 0.875 (troubled), CPI₂ = 1.059, CPI₃ = 1.125. Bottom-up EAC = 2,285,714 + 2,833,333 + 1,333,333 = 6,452,381 → program VAC = +47,619. The subtlety: the bottom-up EAC is BETTER than BAC — because P2 and P3's over-performance more than funds P1's overrun — yet the rollup CPI of 1.00 is still misleading: it reads as 'no action needed anywhere', while P1 alone is forecasting a 285,714 overrun that will surface as a funding request at the worst time. Masking mechanism: weighted indices average variances across projects; a program CPI of 1.0 is consistent with any pattern of offsetting project CPIs. Governance fix: program reports show per-project CPI/EAC alongside the rollup — the rollup answers 'are we okay in total', only the decomposition answers 'what needs managing'."
+      alternatives: []
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Ask what decision the CPI 1.00 would have blocked — the P1 funding conversation — and when that conversation gets expensive (month 11)."
+    numeric:
+      type: arith
+      note: "Program rollup vs bottom-up EAC."
+      data:
+        P1: {bac: 2000000, ev: 1400000, ac: 1600000}
+        P2: {bac: 3000000, ev: 1800000, ac: 1700000}
+        P3: {bac: 1500000, ev: 900000, ac: 800000}
+      steps:
+        - {name: program_bac, expr: "P1.bac + P2.bac + P3.bac", expect: 6500000, tol: 1}
+        - {name: program_ev, expr: "P1.ev + P2.ev + P3.ev", expect: 4100000, tol: 1}
+        - {name: program_ac, expr: "P1.ac + P2.ac + P3.ac", expect: 4100000, tol: 1}
+        - {name: program_cpi, expr: "program_ev / program_ac", expect: 1.0, tol: 0.0001}
+        - {name: cpi_p1, expr: "P1.ev / P1.ac", expect: 0.875, tol: 0.0005}
+        - {name: cpi_p2, expr: "P2.ev / P2.ac", expect: 1.0588, tol: 0.0005}
+        - {name: cpi_p3, expr: "P3.ev / P3.ac", expect: 1.125, tol: 0.0005}
+        - {name: eac1_p1, expr: "P1.bac / cpi_p1", expect: 2285714, tol: 2000}
+        - {name: eac1_p2, expr: "P2.bac / cpi_p2", expect: 2833333, tol: 2000}
+        - {name: eac1_p3, expr: "P3.bac / cpi_p3", expect: 1333333, tol: 2000}
+        - {name: bottom_up_eac, expr: "eac1_p1 + eac1_p2 + eac1_p3", expect: 6452381, tol: 5000}
+        - {name: program_vac, expr: "program_bac - bottom_up_eac", expect: 47619, tol: 5000}
+  - id: CS-81
+    title: "The board briefing after the leak"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 26
+    seed: CAMPUSHUB
+    difficulty: expert
+    numerical: false
+    tags: [crisis, board, communication, disclosure, ownership]
+    concepts: [crisis communication, accountability]
+    summary: "Brief the board 48 hours after a student-data exposure: what happened, what is known, what is not, and who owns the fix."
+    context: "A misconfigured storage bucket exposed 40,000 student records for 62 hours. Fixed, logged, external counsel engaged. The board meets in 48 hours; the VC wants 'a clean summary'; counsel wants minimal written record; the CIO wants the technical facts centered."
+    problem: "Design the board briefing: content, sequencing, the unknowns register, and the accountability line."
+    constraints:
+      - "Written material assumes disclosure (it will leak; assume it reads in a headline)."
+      - "Unknowns must be listed as unknowns with dates they resolve."
+      - "The accountability line is stated once, plainly, without diffusion."
+    tasks:
+      - "Briefing structure (six sections maximum)."
+      - "Unknowns register with resolution dates."
+      - "Draft the accountability paragraph."
+      - "Define the follow-up cadence to the board."
+    deliverables:
+      - "Briefing structure."
+      - "Unknowns register."
+      - "Accountability paragraph."
+      - "Follow-up cadence."
+    discussion:
+      - "Why does 'clean summary' from the VC conflict with counsel's minimal-record advice — and which do you serve?"
+      - "What does an unknowns register do that a confident narrative cannot?"
+    objectives:
+      - "Brief governance under crisis with disclosure-grade writing."
+      - "Separate known, unknown, and unresolved — dated."
+    rubric: "Structure serves disclosure-grade scrutiny (35%); unknowns register is dated (25%); accountability paragraph is plain (25%); cadence defined (15%)."
+    solution:
+      model: "Disclosure-grade briefing"
+      reasoning: "Structure: facts and timeline (62 hours, detection-to-fix); affected population and notification status; containment and verification evidence; regulatory and legal posture (counsel's section, minimal prose); unknowns register; accountability and next steps. The unknowns register is the credibility core: 'root cause of the misconfiguration chain — resolves day 5'; 'whether data was accessed, not just exposed — forensic timeline day 12'; 'regulatory notification threshold determination — counsel, day 7'. Written for the headline test: every sentence survives being read alone. Accountability: 'The exposure resulted from a change process that allowed production configuration without peer review; the owner of that control was my organization, and the accountability is mine' — one sentence, no passive constructions, no committee diffusion. VC's 'clean' and counsel's 'minimal' reconcile: clean means complete and plain, not short; counsel's minimalism applies to speculation, not to facts. Follow-up: weekly one-pager against the unknowns register until every line is dated-closed."
+      alternatives: []
+      lesson_for_instructor: "Read the accountability paragraph aloud twice — once fast, once slowly; the second reading is the board's. Language that survives slowness is disclosure-grade."
+  - id: CS-82
+    title: "Recovery by descope: the re-forecast arithmetic"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 20
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: true
+    tags: [recovery, descope, re-baseline, EAC, efficiency, re-forecast]
+    concepts: [recovery planning, re-forecast arithmetic]
+    summary: "Quantify a recovery that descopes 300k of scope and assumes efficiency recovery to 0.95 — then judge whether the assumption is honest."
+    context: "MedSync month 8 of 14: BAC 4.0M, EV 1.8M, AC 2.2M, PV 2.2M. The recovery proposal: descope 300k of budgeted scope (deferred to a later phase), assume remaining-work efficiency improves from 0.818 to 0.95."
+    problem: "Compute the old and new forecasts, and construct the evidence test for the efficiency assumption."
+    constraints:
+      - "Re-based BAC = 4.0M − 0.3M. EAC = AC + (BAC′ − EV)/efficiency."
+      - "The efficiency assumption needs evidence, not hope: specify what evidence would justify 0.95."
+      - "Compare against EAC₁ on the original baseline."
+    tasks:
+      - "Compute CPI, SPI, EAC₁ (original baseline)."
+      - "Compute the re-based forecast."
+      - "Specify the evidence test for the 0.95 assumption."
+      - "State the decision you would take and what would change it."
+    deliverables:
+      - "Forecast computations."
+      - "Evidence test for the efficiency assumption."
+      - "Decision statement."
+    discussion:
+      - "Why is descope-plus-hope the most common recovery fraud teams commit on themselves?"
+      - "What historical efficiency data would make 0.95 credible or incredible?"
+    objectives:
+      - "Compute recovery forecasts under descope."
+      - "Subject efficiency assumptions to evidence tests."
+    rubric: "Computations correct (45%); evidence test is concrete (35%); decision reasoned (20%)."
+    solution:
+      model: "Evidence-tested re-forecast"
+      reasoning: "CPI = SPI = 0.818. EAC₁ (old baseline) = 4,000,000/0.818 ≈ 4,888,889, VAC ≈ −888,889. Re-based: BAC′ = 3.7M; EAC = 2,200,000 + (3,700,000 − 1,800,000)/0.95 = 2,200,000 + 2,000,000 = 4,200,000 → VAC′ = −200,000. The descope buys 300k; the efficiency assumption does the rest of the work — 1,900,000/0.818 would be 2,323,000, so the assumption is worth ~323k of forecast. Evidence test for 0.95: the three most recent completed packages' actual efficiency (if the last three packages ran ≥0.9, the 0.95 has a basis; if they ran 0.8, the assumption is hope dressed as planning); the specific causes of the 0.818 (if pricing errors now fixed, improvement is plausible; if the cause is chronic estimation optimism, it is not); the recovery plan's named mechanism (what changes in month 9 that did not in months 5–8). Decision: accept the re-forecast conditionally — re-baseline at 4.2M with a month-10 checkpoint; if realized efficiency by then is below 0.88, the forecast reverts to EAC₁ logic and the sponsor hears it then, not at month 14."
+      alternatives:
+        - "No descope, accept 4.89M: honest but expensive; defensible if the descoped scope is genuinely optional — the case's scope was 'budgeted', which is not the same as wanted."
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Have students compute the forecast at efficiency 0.818 with the descope — 4.535M — to see the assumption's price tag explicitly."
+    numeric:
+      type: arith
+      note: "Original EAC₁, re-based forecast, efficiency-assumption value."
+      data:
+        bac_pkr: 4000000
+        ev_pkr: 1800000
+        ac_pkr: 2200000
+        pv_pkr: 2200000
+        descope_pkr: 300000
+        assumed_efficiency: 0.95
+      steps:
+        - {name: cpi, expr: "ev_pkr / ac_pkr", expect: 0.8182, tol: 0.001}
+        - {name: spi, expr: "ev_pkr / pv_pkr", expect: 0.8182, tol: 0.001}
+        - {name: eac1_old_pkr, expr: "bac_pkr / cpi", expect: 4888889, tol: 4000}
+        - {name: vac_old_pkr, expr: "bac_pkr - eac1_old_pkr", expect: -888889, tol: 4000}
+        - {name: bac_rebased_pkr, expr: "bac_pkr - descope_pkr", expect: 3700000, tol: 1}
+        - {name: eac_rebased_pkr, expr: "ac_pkr + (bac_rebased_pkr - ev_pkr) / assumed_efficiency", expect: 4200000, tol: 2000}
+        - {name: vac_rebased_pkr, expr: "bac_rebased_pkr - eac_rebased_pkr", expect: -500000, tol: 2000}
+        - {name: eac_descope_no_recovery_pkr, expr: "ac_pkr + (bac_rebased_pkr - ev_pkr) / cpi", expect: 4523171, tol: 5000}
+        - {name: assumption_value_pkr, expr: "eac_descope_no_recovery_pkr - eac_rebased_pkr", expect: 323171, tol: 5000}
+  - id: CS-83
+    title: "Splitting the model team mid-flight"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 25
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [reorganization, knowledge-transfer, bus-factor, mid-flight-change]
+    concepts: [team change, knowledge risk]
+    summary: "Manage the split of a model team into product and research halves in the middle of a quarterly commitment."
+    context: "TelcoCare announces the model team splits after this quarter: two engineers to a new research group, three to the product squad. The quarterly churn-model commitment stands. The two researchers own the feature engineering nobody else understands."
+    problem: "Plan the split: sequencing against the commitment, knowledge transfer, and the commitment re-negotiation."
+    constraints:
+      - "The quarterly commitment is commercial and externally visible."
+      - "The split date is fixed above you."
+      - "Feature engineering knowledge must survive the split — name the mechanism."
+    tasks:
+      - "Sequencing plan: what the split does to the commitment timeline."
+      - "Knowledge-transfer plan with verifiable transfer evidence."
+      - "Commitment re-negotiation script for the sponsor."
+    deliverables:
+      - "Sequencing plan."
+      - "Knowledge-transfer plan."
+      - "Re-negotiation script."
+    discussion:
+      - "Why is 'we'll document it before they leave' the plan that always fails?"
+      - "What does the commercial visibility of the commitment do to your negotiating position?"
+    objectives:
+      - "Sequence organizational change against delivery commitments."
+      - "Make knowledge transfer verifiable, not ceremonial."
+    rubric: "Sequencing protects the commitment honestly (35%); transfer plan is verifiable (40%); re-negotiation script is realistic (25%)."
+    solution:
+      model: "Commitment-protected split"
+      reasoning: "Sequencing: the researchers stay on feature engineering until the quarterly model ships — the split is organizational on day one (new reporting lines) and physical at the commitment boundary; announce it that way to prevent the two-week walking-out-the-door effect. Transfer evidence: each feature pipeline component gets a run-book plus a supervised handover run where the receiving engineer executes a full retrain from scratch — the retrain succeeding is the transfer, not the document. Where knowledge is genuinely two-person deep, the plan names it and adds one sprint of pairing. Re-negotiation script: 'The commitment stands with the current team through ship. After ship, research support for the next cycle changes — here is the capacity impact and the two options (one-cycle slip or scope reduction on exploratory features).' The commercial visibility cuts both ways: it pressures you, and it pressures the sponsor to accept a staged split — use the same fact they bring."
+      alternatives:
+        - "Immediate physical split: cleaner organizationally, and it risks the commitment with a team that just lost its feature knowledge — indefensible given the external visibility."
+      lesson_for_instructor: "Ask what happens if the retrain fails during handover — that failure mode is the reason 'supervised retrain' beats 'signed acknowledgment' as transfer evidence."
+  - id: CS-84
+    title: "Weighted scoring and the tie that mattered"
+    domain: D7
+    level: L4
+    use: [exam]
+    lecture: 18
+    seed: CAMPUSHUB
+    difficulty: expert
+    numerical: true
+    tags: [vendor-evaluation, weighted-scoring, sensitivity, thresholds, procurement]
+    concepts: [weighted scoring, sensitivity analysis]
+    summary: "Score two vendors on a weighted matrix, break the tie with sensitivity analysis, and defend the result against the losing vendor."
+    context: "CAMPUSHUB evaluates two integration vendors. Weights: cost 0.30, technical 0.40, SLA 0.20, transition 0.10. Vendor A: 4, 3, 5, 2. Vendor B: 2, 5, 3, 4. The losing vendor demands to know how a 'tie' was resolved."
+    problem: "Compute the weighted scores, run the sensitivity analysis, and prepare the debrief defense."
+    constraints:
+      - "Weights sum to 1.0; scores on 1–5."
+      - "Sensitivity: re-score with technical 0.45, cost 0.25 (the weight the losing vendor will attack)."
+      - "The defense must state which decision the scoring actually drove."
+    tasks:
+      - "Compute both weighted scores under the base weights."
+      - "Re-score under the sensitivity weights."
+      - "Write the debrief paragraph for the losing vendor."
+      - "State the governance rule that prevents weight-shopping."
+    deliverables:
+      - "Score computations."
+      - "Sensitivity analysis."
+      - "Debrief paragraph."
+      - "Governance rule."
+    discussion:
+      - "Why does a tie under base weights mean the decision is fragile — and what fixes fragility?"
+      - "Who should set the weights, and when — before or after seeing the scores?"
+    objectives:
+      - "Compute and stress-test weighted evaluations."
+      - "Define governance that makes weight manipulation impossible."
+    rubric: "Base scores correct (30%); sensitivity correct (30%); debrief professional and honest (25%); governance rule sound (15%)."
+    solution:
+      model: "Weighted scoring with sensitivity"
+      reasoning: "Base: A = 0.3×4 + 0.4×3 + 0.2×5 + 0.1×2 = 3.60; B = 0.3×2 + 0.4×5 + 0.2×3 + 0.1×4 = 3.60 — a tie. Sensitivity (technical 0.45, cost 0.25): A = 1.00+1.35+1.00+0.20 = 3.55; B = 0.50+2.25+0.60+0.40 = 3.75 → B wins. The tie's meaning: the decision is entirely weight-dependent, which is not a scandal — it is information. The honest debrief: 'Under the published weights you scored identically; under the sensitivity weights technical fit dominates and B leads. Your transition score was the lowest in the field; that is the gap to address.' Governance rule: weights are fixed and signed before proposals open, sensitivity weights fixed at the same time; no weight may change after scoring begins — the rule that prevents weight-shopping is temporal, not technical. What the scoring drove: a recommendation, not an appointment — price negotiation and reference checks still run."
+      alternatives:
+        - "Adding a tiebreaker criterion (e.g., local support) post hoc: the classic governance breach; if the criterion matters it belongs in the published matrix."
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Show the score differential under each weight set — 0.05 apart — and ask what negotiation would do to the cost scores; scoring drives shortlists, not signatures."
+    numeric:
+      type: arith
+      note: "Weighted scores under base and sensitivity weights."
+      data:
+        weights: {cost: 0.30, technical: 0.40, sla: 0.20, transition: 0.10}
+        A: {cost: 4, technical: 3, sla: 5, transition: 2}
+        B: {cost: 2, technical: 5, sla: 3, transition: 4}
+        sens_weights: {cost: 0.25, technical: 0.45, sla: 0.20, transition: 0.10}
+      steps:
+        - {name: score_a, expr: "weights.cost*A.cost + weights.technical*A.technical + weights.sla*A.sla + weights.transition*A.transition", expect: 3.60, tol: 0.001}
+        - {name: score_b, expr: "weights.cost*B.cost + weights.technical*B.technical + weights.sla*B.sla + weights.transition*B.transition", expect: 3.60, tol: 0.001}
+        - {name: score_a_sens, expr: "sens_weights.cost*A.cost + sens_weights.technical*A.technical + sens_weights.sla*A.sla + sens_weights.transition*A.transition", expect: 3.55, tol: 0.001}
+        - {name: score_b_sens, expr: "sens_weights.cost*B.cost + sens_weights.technical*B.technical + sens_weights.sla*B.sla + sens_weights.transition*B.transition", expect: 3.75, tol: 0.001}
+        - {name: weight_sum_check, expr: "weights.cost + weights.technical + weights.sla + weights.transition", expect: 1.0, tol: 0.0001}
+  - id: CS-85
+    title: "Responding to the external AI audit"
+    domain: D10
+    level: L4
+    use: [homework]
+    lecture: 23
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [AI-audit, responsible-AI, governance, remediation, evidence]
+    concepts: [AI governance, audit response]
+    summary: "Respond to an external audit that found consent-scope drift, absent model cards, and unmonitored drift — triage and remediate."
+    context: "An external AI-governance audit of the churn product finds: (1) two features used data outside documented consent scope; (2) model cards exist for the original model but none for the last two retrains; (3) drift monitoring exists but no one reviews its alerts. Findings are factual; the product is revenue-critical."
+    problem: "Produce the audit response: finding triage, remediation plan with owners and dates, and the governance fix."
+    constraints:
+      - "Finding 1 is a compliance exposure — it cannot be triaged as 'improvement opportunity'."
+      - "Remediation must run alongside the product, not freeze it."
+      - "Each finding maps to the governance control that should have caught it."
+    tasks:
+      - "Triage the three findings with severity rationale."
+      - "Remediation plan: action, owner, date, verification."
+      - "Governance fix: the control set that prevents recurrence."
+    deliverables:
+      - "Triage table."
+      - "Remediation plan."
+      - "Governance control set."
+    discussion:
+      - "Why did monitoring exist while review did not — and is that a tooling failure or a governance one?"
+      - "What does 'consent scope' mean operationally at feature-engineering time?"
+    objectives:
+      - "Respond to governance findings with proportionate remediation."
+      - "Close the control gaps, not just the findings."
+    rubric: "Triage severity is defensible (30%); remediation is owned and dated (40%); governance fix closes controls (30%)."
+    solution:
+      model: "Finding-to-control remediation"
+      reasoning: "Triage: F1 consent-scope drift = critical (regulatory exposure, active) — the two features are masked from the next model build within the week; consent refresh or feature removal decided by governance board, not the product team. F2 missing model cards = high (evidence gap, compounding) — cards for both retrains within two weeks, generated from the training pipeline metadata so they cannot drift again. F3 unreviewed drift alerts = high (silent failure) — alert review enters the weekly operations rhythm with a named owner and an escalation path; three weeks of alert history reviewed now to establish whether drift occurred unobserved. Governance fix per finding: F1 — consent scope becomes a feature-level metadata field checked at pipeline gate (CS-56's gate suite extends); F2 — model card generation is a build artifact, not a document someone owes; F3 — alert review without an owner was monitoring theater; ownership is the control. The pattern: none of the three findings was caused by malice; all three were caused by controls that existed as intentions."
+      alternatives:
+        - "Freezing the product pending remediation: maximal caution, real revenue harm, and it removes the urgency that funds the fix — proportionate response beats maximal response here."
+      lesson_for_instructor: "Ask which finding would have appeared in a student's own capstone audit — all three, is the honest answer; the governance pattern is generic."
+  - id: CS-86
+    title: "The sponsor who wasn't there"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 7
+    seed: VOLTPAY
+    difficulty: expert
+    numerical: false
+    tags: [sponsor, engagement, escalation, decision-latency, governance]
+    concepts: [sponsor engagement, decision latency]
+    summary: "Fix a disengaged sponsor whose decision latency is the project's binding constraint — without going over their head prematurely."
+    context: "VoltPay's sponsor approves nothing in under three weeks; the product decisions queue: tiered pricing, the KYC vendor choice, the beta scope. The team has started assuming silence means consent — which is how assumptions become accidents."
+    problem: "Diagnose the engagement failure and design the decision-latency fix: triage, defaults, and the escalation path."
+    constraints:
+      - "The sponsor is disengaged, not hostile — workload, not politics."
+      - "Silence-as-consent must end without a confrontation."
+      - "The fix must state what happens when decisions still do not come."
+    tasks:
+      - "Decision inventory: what is blocked, value at stake, true deadline for each."
+      - "Design: decision triage (needs sponsor / needs anyone / needs no one), default-with-notice mechanism."
+      - "Escalation path: what triggers it and how it preserves the relationship."
+    deliverables:
+      - "Decision inventory."
+      - "Triage and default mechanism."
+      - "Escalation path."
+    discussion:
+      - "Why do teams convert silence into consent, and what does that convert into later?"
+      - "What is the difference between escalating and going around — in behavior, not wording?"
+    objectives:
+      - "Manage decision latency as a project constraint."
+      - "Design defaults that make inaction visible and bounded."
+    rubric: "Inventory is real (25%); triage mechanism reduces sponsor load (35%); default-with-notice ends silence-as-consent (25%); escalation preserves the relationship (15%)."
+    solution:
+      model: "Decision triage with default-with-notice"
+      reasoning: "Inventory first: of the queued decisions, KYC vendor is the true blocker (contract window closes), pricing is strategic (sponsor's actual job), beta scope is delegable (product lead's call with sponsor visibility). Triage: decisions the sponsor alone can make get a one-page decision memo with a stated default and a by-date; everything else gets decided by the named owner with the sponsor cc'd. Default-with-notice: 'If I hear nothing by Thursday, we proceed with option B' — silence stops being consent and becomes a decision the sponsor watched being made; the mechanism ends the pattern without accusing anyone. Escalation: if two default-with-notice memos expire untouched, the escalation is a calendar request, not an email escalation — 'I need 20 minutes to realign decision rights'; going around is doing the opposite of what the default announced, which the design forbids by construction. The sponsor's disengagement is workload: the one-page memo with a default is the accommodation that makes engagement cheap."
+      alternatives:
+        - "Replacing the sponsor: the org-level fix for a pattern this deep, but premature until default-with-notice has failed twice with visibility."
+      lesson_for_instructor: "Have each student name a decision currently blocked by silence in their own capstone — the default-with-notice mechanism works there on Monday."
+  - id: CS-87
+    title: "Phase-gated agile at program scale"
+    domain: D8
+    level: L4
+    use: [in-class]
+    lecture: 24
+    seed: GRIDSENSE
+    difficulty: expert
+    numerical: false
+    tags: [scaling, phase-gates, agile, program, interlock, governance]
+    concepts: [scaled agile, phase gates]
+    summary: "Design governance for 60 people across six teams: quarterly program increments, two hard gates, agile interiors."
+    context: "GRIDSENSE's program grows to six teams (3 feature, 1 platform, 1 data-quality, 1 integration). The sponsor needs quarterly commitment visibility; the integration team needs cross-team coordination; nobody wants SAFe's full ceremony."
+    problem: "Design the governance: cadence stack, the two hard gates, cross-team dependency management, and what stays lightweight."
+    constraints:
+      - "Quarterly program increment planning is fixed."
+      - "Two hard gates per increment: architecture review and integration readiness."
+      - "Team-level ceremony must not exceed Scrum + SoS."
+    tasks:
+      - "Cadence stack diagram: team / SoS / program / quarter, with attendees and outputs."
+      - "Gate specifications: entry evidence, authority, failure handling."
+      - "Dependency management across six teams."
+      - "The explicitly-lightweight list: what this design deliberately does not do."
+    deliverables:
+      - "Cadence stack."
+      - "Gate specifications."
+      - "Dependency design."
+      - "Lightweight list."
+    discussion:
+      - "Why two gates and not four — what breaks with more, what breaks with fewer?"
+      - "What does the lightweight list protect that governance documents cannot?"
+    objectives:
+      - "Design minimum-viable governance at program scale."
+      - "Protect team-level agility inside program structure."
+    rubric: "Cadence stack is lean and complete (35%); gates have real evidence and failure handling (35%); dependency design works (20%); lightweight list deliberate (10%)."
+    solution:
+      model: "Two-gate program frame"
+      reasoning: "Cadence stack: team sprints (existing) → SoS twice weekly (CS-33's design, now 6 teams: 20 min, leads only, dependency output) → monthly program sync (60 min, cross-team replanning, increment health) → quarterly PI planning (2 days, commitment, the two gates scheduled inside). Gates: architecture review before increment 2 of each PI — entry evidence: interface contracts for cross-team integrations and the platform capacity allocation (CS-33's 60/30/10 made contractual); integration readiness before the last increment — entry evidence: nightly cross-team integration green for two weeks and rollback evidence per team. Failure handling: a gate failure does not stop the increment — it converts the affected integration into the next increment's top dependency with named owners; stopping six teams for one failed contract is the failure mode gates must not create. Dependency management: the SoS dependency board scales — requester, provider, need-by, owner — reviewed at every SoS, aged items escalate to the monthly sync. Lightweight list: no portfolio kanban, no lean budgeting ceremony, no additional roles — the design's discipline is what it refuses: every added artifact must name the decision it enables, or it does not enter."
+      alternatives:
+        - "Full SAFe adoption: defensible when organizational alignment demands the vocabulary; the failure modes named here (six-team integration, platform capacity) need the mechanisms, not the framework's name."
+      lesson_for_instructor: "Ask which gate would have prevented CS-53's fast-tracking disaster — architecture review, with interface contracts as evidence. That is why the gate exists."
+  - id: CS-88
+    title: "Capstone feeder: the three-constraint recovery"
+    domain: D1
+    level: L5
+    use: [capstone]
+    lecture: null
+    seed: null
+    difficulty: expert
+    numerical: false
+    tags: [capstone-feeder, integration, trade-offs, recovery, synthesis]
+    concepts: [constraint integration, recovery strategy]
+    summary: "Integrate the course: a project is simultaneously 25% over budget, 6 weeks late, and facing a scope mandate — produce the integrated recovery strategy."
+    context: "A fictional integration case for capstone preparation: the system is 25% over forecast at month 9 of 14, the go-live is contractually fixed, and the sponsor adds a mandatory reporting module worth 10% of the original budget. Nothing in the case gives a single right answer; the grading is on the integration."
+    problem: "Produce the integrated recovery strategy: constraint resolution order, trade-off table, re-forecast, and the stakeholder sequence."
+    constraints:
+      - "The go-live date is contractual — moving it costs penalties and credibility."
+      - "The new module is regulator-mandated — it cannot be descoped."
+      - "Budget authority allows one re-baseline; use it deliberately or not at all."
+    tasks:
+      - "Constraint analysis: which constraint yields, in what order, and why."
+      - "Trade-off table: three candidate strategies × cost/schedule/scope/risk."
+      - "Re-forecast with stated assumptions."
+      - "Stakeholder sequence: who hears what, in what order."
+    deliverables:
+      - "Constraint resolution order."
+      - "Trade-off table."
+      - "Re-forecast."
+      - "Stakeholder sequence."
+    discussion:
+      - "Why does 'we'll do a bit of everything' fail as a recovery strategy?"
+      - "What does the contractual date actually protect — and is that worth its price?"
+    objectives:
+      - "Integrate cost, schedule, scope, and stakeholder analysis into one strategy."
+      - "Commit to a constraint resolution order with justification."
+    rubric: "Resolution order justified (30%); trade-off table is real and comparative (30%); re-forecast arithmetic-adjacent and stated (20%); sequence protects trust (20%)."
+    solution:
+      model: "Ordered constraint resolution"
+      reasoning: "Resolution order: scope yields first (the descoped items from the original build — non-mandate features go to a post-go-live phase), quality floor holds (the one yield that is forbidden is defect escape at a contractual go-live), budget yields second (the re-baseline happens once, with the descope's savings and the mandate's cost in the same motion), date holds last (the contractual date is the one constraint that cannot yield without penalty — so everything else arranges around it). Trade-off table candidates: (A) full descope + re-baseline (date safe, budget +15%, scope deferred); (B) crash with added resources (date safe, budget +25%, quality risk from new-hands effect); (C) phased go-live (date technically held, scope split, stakeholder trust risk). Selection: A, with B's crash limited to the mandate's critical path only. Re-forecast: original EAC 25% over; descope recovers ~12 points; mandate adds ~10; net re-baseline ≈ +23% with stated efficiency assumptions (CS-82's evidence test applies). Stakeholder sequence: sponsor (the trade-off, first), CCB (the re-baseline), delivery team (the truth about their month-9 position), regulator (the mandate's new date, early), end users (post-go-live phase plan, last — expectations, not secrets). 'A bit of everything' fails because it spends the re-baseline credibility on none of the constraints fully."
+      alternatives: []
+      lesson_for_instructor: "This is the dress rehearsal for CS-43/CS-105 — grade the resolution ORDER, because the order is where integration thinking lives or dies."
+  - id: CS-89
+    title: "Pricing the consent re-platform"
+    domain: D10
+    level: L4
+    use: [exam]
+    lecture: 28
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: true
+    tags: [privacy, consent, expected-cost, risk-quantification, data-governance]
+    concepts: [expected monetary value, data governance economics]
+    summary: "Quantify the expected annual cost of consent-scope breach risk, compare against re-platform cost, and make the governed recommendation."
+    context: "TelcoCare's consent model covers marketing use; two features drifted outside scope (CS-85's finding 1). Risk assessment: breach probability 0.15/year; impact = 800k remediation plus a fine distribution (60%: 500k, 40%: 2.0M). Consent re-platform: 150k/year run-rate, cutting breach probability to 0.05."
+    problem: "Compute expected impact, both expected annual costs, and the recommendation with its non-quantified factors."
+    constraints:
+      - "Expected impact = remediation + Σ (probability × fine)."
+      - "Expected annual cost = probability × expected impact (+ mitigation run-rate where applicable)."
+      - "The recommendation must name what the arithmetic does not capture."
+    tasks:
+      - "Compute expected impact of a breach."
+      - "Compute expected annual cost, unmitigated and mitigated."
+      - "Recommend, with the non-quantified factors stated."
+    deliverables:
+      - "Expected-impact computation."
+      - "Annual-cost comparison."
+      - "Recommendation."
+    discussion:
+      - "Why is a 40k annual saving possibly the wrong frame for this decision?"
+      - "Which number would a regulator want to see — and what does that tell you about the real objective function?"
+    objectives:
+      - "Quantify privacy risk economically."
+      - "Integrate quantitative and deontological reasoning in a governed decision."
+    rubric: "Arithmetic correct (45%); recommendation integrates both frames (40%); non-quantified factors named (15%)."
+    solution:
+      model: "EMV with governance overlay"
+      reasoning: "Expected impact = 800,000 + 0.6×500,000 + 0.4×2,000,000 = 800,000 + 300,000 + 800,000 = 1,900,000. Unmitigated annual = 0.15 × 1,900,000 = 285,000. Mitigated = 0.05 × 1,900,000 + 150,000 = 95,000 + 150,000 = 245,000. Net saving: 40,000/year — thin. The arithmetic alone says 'marginal'; the decision is not marginal: the 0.15 probability is an estimate of a distribution with a fat tail (the 2.0M fine has a sibling at 5.0M if the regulator finds the audit trail was ignored — CS-85 documents exactly that trail); consent scope is a rights question where expected-value framing underweights the harm to data subjects; and the audit finding makes 'we calculated it was cheaper' a public-position liability. Recommendation: proceed with the re-platform — the 40k is the wrong margin to optimize, the tail dominates the risk, and the governance posture (F1 already critical in CS-85) requires the fix regardless. The arithmetic's honest role: it shows the mitigation is affordable, not that it is mandatory — the mandatory comes from the governance analysis."
+      alternatives:
+        - "Deferring one year on the 40k logic: saves 40k, carries 285k expected exposure plus the audit-finding optics — the numbers argue against the deferral they seem to invite."
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Ask students to recompute with the fine at 5.0M (40% branch) — the annual saving becomes 296k and the 'marginal' framing collapses. Assumption sensitivity is the lesson."
+    numeric:
+      type: arith
+      note: "Expected impact and annual costs under both postures."
+      data:
+        p_breach: 0.15
+        p_mitigated: 0.05
+        remediation_pkr: 800000
+        fine_low_pkr: 500000
+        fine_low_p: 0.6
+        fine_high_pkr: 2000000
+        replatform_pkr: 150000
+      steps:
+        - {name: expected_impact_pkr, expr: "remediation_pkr + fine_low_p * fine_low_pkr + (1 - fine_low_p) * fine_high_pkr", expect: 1900000, tol: 1}
+        - {name: annual_unmitigated_pkr, expr: "p_breach * expected_impact_pkr", expect: 285000, tol: 1}
+        - {name: annual_mitigated_pkr, expr: "p_mitigated * expected_impact_pkr + replatform_pkr", expect: 245000, tol: 1}
+        - {name: annual_saving_pkr, expr: "annual_unmitigated_pkr - annual_mitigated_pkr", expect: 40000, tol: 1}
+  - id: CS-90
+    title: "The compliance test that was marked green"
+    domain: D10
+    level: L4
+    use: [in-class]
+    lecture: 28
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [integrity, compliance, whistleblowing, escalation, patient-safety]
+    concepts: [professional integrity, escalation]
+    summary: "Act on a discovered falsified compliance result: duties, sequence, proportion, and the cost of each path."
+    context: "A validation engineer shows you that the integration test result submitted to the regulator was marked green though two cases failed — the test lead 'fixed the report' to protect the go-live date. The failure cases are minor, but the falsification is in a submitted regulatory document."
+    problem: "Decide and sequence your action: obligations, paths, proportion, and the personal cost of each."
+    constraints:
+      - "A false regulatory submission is in the wild — this is not an internal quality issue."
+      - "The test lead acted under pressure, not for gain — proportionality applies to the person, not the act."
+      - "You must state what you would do if overruled at each level."
+    tasks:
+      - "Map the obligations: professional code, regulatory, employment."
+      - "Sequence the action with rationale for each step."
+      - "State the overruled-at-each-level contingency."
+      - "Draft the first sentence you say to the test lead."
+    deliverables:
+      - "Obligation map."
+      - "Action sequence."
+      - "Contingency statement."
+      - "First sentence."
+    discussion:
+      - "Why is 'the failures were minor' the most dangerous sentence in this case?"
+      - "What does the proportionality principle demand for the test lead — and what does it NOT permit?"
+    objectives:
+      - "Act on falsified compliance with disciplined escalation."
+      - "Separate the person's mitigation from the act's consequence."
+    rubric: "Obligation map complete (30%); sequence is disciplined (40%); contingency stated at each level (20%); first sentence is humane and unambiguous (10%)."
+    solution:
+      model: "Escalation with correction, not ambush"
+      reasoning: "Obligations: the professional codes (PMI, engineering) make honesty and responsibility non-negotiable; the regulatory regime makes a false submission the organization's legal exposure regardless of intent; employment law protects the messenger only if the messenger is precise. Sequence: (1) same day — verify the facts yourself (the two failed cases, the submitted result); (2) the test lead — the first sentence: 'Help me understand the green mark on the two failed cases' — correction begins with the person who can fix it fastest; a corrected submission within days is a different regulatory event than a discovered one; (3) if not corrected in 24h — your manager and the compliance officer, with the evidence; (4) the regulator is informed by the organization through counsel — a voluntary correction is categorically different from a discovered falsehood. Contingencies: overruled by the test lead → step 3; overruled by management → compliance officer directly, then the external channel exists and using it becomes proportionate. Proportionality: the test lead's pressure is mitigation for the person (coaching, possibly removal from sign-off authority), never for the act (the submission must be corrected). 'The failures were minor' is dangerous because it argues the falsification was harmless — but the regulator now cannot trust any green mark, and trust is the thing that was actually submitted."
+      alternatives:
+        - "Immediate external disclosure skipping internal correction: fastest to clean hands, and it converts a correctable error into a maximum-severity event for the patients whose system deployment it delays — the sequence exists to fix the record fast, not to launder your role."
+      lesson_for_instructor: "Run the first-sentence drill; students who open with accusation trigger defensiveness and lose the 24-hour correction window that makes everything after it unnecessary."
+  - id: CS-91
+    title: "The specialist two projects are fighting over"
+    domain: D3
+    level: L4
+    use: [exam]
+    lecture: 12
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: true
+    tags: [resource-allocation, shared-resources, leveling, escalation, float]
+    concepts: [resource allocation, cross-project leveling]
+    summary: "Resolve a shared-specialist conflict across two projects with capacity arithmetic, float analysis, and a costed recommendation."
+    context: "One integration specialist (3 days/week) serves two projects. P1 needs her 2 days/week, weeks 1–6. P2 needs her 2 days/week, weeks 3–8, and has 3 weeks of float. Project managers are escalating to the portfolio manager."
+    problem: "Quantify the conflict, evaluate the leveling options, and recommend with costs."
+    constraints:
+      - "Capacity: 3 days/week; demand weeks 3–6 is 4 days/week."
+      - "P2's float is 3 weeks; moving beyond float delays its committed end."
+      - "Options: delay P2, accelerate P1's need, or buy capacity (temp specialist 30k/week, minimum 1 week)."
+      - "A P2 delay beyond float triggers a 50k contractual penalty."
+    tasks:
+      - "Compute the overload window and magnitude."
+      - "Compute the delay required to clear it by moving P2, and check against float."
+      - "Cost the options and recommend."
+      - "State the governance fix that prevents the next escalation."
+    deliverables:
+      - "Overload computation."
+      - "Option analysis with costs."
+      - "Recommendation."
+      - "Governance fix."
+    discussion:
+      - "Why does float belong to the portfolio, not to whichever PM sees it first?"
+      - "What does the 50k penalty reveal about how the commitment was made?"
+    objectives:
+      - "Quantify shared-resource conflicts mechanically."
+      - "Recommend against costed options with governance follow-through."
+    rubric: "Overload and delay computations correct (40%); option costs correct (30%); recommendation coherent (20%); governance fix (10%)."
+    solution:
+      model: "Cross-project leveling with costed options"
+      reasoning: "Overload: weeks 3–6 demand 4 days against 3 capacity — four weeks, one day over each. Delay analysis: P2 must start late enough that its first week ends after P1's last — P2 start + 1 > 6 → start week 6... verifying: P2 occupies weeks (3+d)–(8+d); overlap with P1 (weeks 1–6) requires 3+d ≤ 6 for conflict → conflict clears when 3+d > 6, d = 4. But P2's float is 3 weeks: the move exceeds float by one week → 50k penalty. Options: (a) delay P2 by 4 weeks — 50k penalty, P2 ends a week late; (b) temp specialist for the 4 overloaded weeks — 120k, no penalty; (c) hybrid: delay P2 by 3 weeks (within float, no penalty) + temp for the 1 residual overlap week — 30k. The hybrid wins: 30k against 50k and 120k. Recommendation: hybrid, with the arithmetic shown to both PMs — the conflict was never about the specialist, it was about arithmetic nobody had run. Governance fix: shared specialists get a visible portfolio-level allocation calendar with commitment rules (changes need portfolio approval, not first-come-first-served), and float consumption by one project of another's slack requires the portfolio manager's sign-off — float is portfolio property."
+      alternatives:
+        - "Split the specialist 1.5/1.5 across the overload window: both projects run at partial speed, both slip informally, neither baseline survives — the unmanaged default this case exists to prevent."
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Make students find the hybrid option themselves; the 1-week residual overlap after a within-float delay is the insight the arithmetic exists to reveal."
+    numeric:
+      type: arith
+      note: "Overload window, required delay, float check, option costs."
+      data:
+        capacity_days_per_week: 3
+        p1: {start: 1, end: 6, days_per_week: 2}
+        p2: {start: 3, end: 8, days_per_week: 2, float_weeks: 3}
+        temp_cost_per_week_pkr: 30000
+        delay_penalty_pkr: 50000
+      steps:
+        - {name: demand_overload_weeks, expr: "p1.days_per_week + p2.days_per_week - capacity_days_per_week", expect: 1, tol: 0.01}
+        - {name: overload_week_count, expr: "min(p1.end, p2.end) - max(p1.start, p2.start) + 1", expect: 4, tol: 0.01}
+        - {name: required_delay_weeks, expr: "p1.end - p2.start + 1", expect: 4, tol: 0.01}
+        - {name: delay_beyond_float, expr: "required_delay_weeks - p2.float_weeks", expect: 1, tol: 0.01}
+        - {name: full_delay_cost_pkr, expr: "delay_penalty_pkr", expect: 50000, tol: 1}
+        - {name: full_temp_cost_pkr, expr: "temp_cost_per_week_pkr * overload_week_count", expect: 120000, tol: 1}
+        - {name: hybrid_cost_pkr, expr: "temp_cost_per_week_pkr * delay_beyond_float", expect: 30000, tol: 1}
+  - id: CS-92
+    title: "Sponsor reset: the new vice-chancellor"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 27
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [sponsor-change, re-baseline, politics, governance, credibility]
+    concepts: [sponsor transition, re-baselining]
+    summary: "Navigate a sponsor replacement who inherits the project at month 9 with a re-baseline request attached to their arrival."
+    context: "MedSync's sponsor departs; the replacement arrives with a mandate to 'reset expectations' — code, everyone knows, for a re-baseline that makes her first quarter look good. The project is genuinely behind (CPI 0.85) but the re-baseline request arrives before any assessment."
+    problem: "Handle the transition: what you offer the new sponsor, what you refuse, and the sequencing that protects both truth and the relationship."
+    constraints:
+      - "The re-baseline may be legitimate — but only after assessment, not before."
+      - "You owe the new sponsor honesty about the position within two weeks."
+      - "The old sponsor's commitments are not yours to disown — nor to honor blindly."
+    tasks:
+      - "The two-week assessment offer: what it contains and why that sequencing."
+      - "The refusal script: what you will not do and what you propose instead."
+      - "The commitment review: which inherited commitments stand, which get renegotiated, on what evidence."
+    deliverables:
+      - "Assessment offer."
+      - "Refusal script."
+      - "Commitment review table."
+    discussion:
+      - "Why is an early re-baseline attractive to a new sponsor — and corrosive to the project?"
+      - "What does the new sponsor need from you in week 1 that she does not know to ask for?"
+    objectives:
+      - "Manage sponsor transition without truth decay."
+      - "Separate legitimate re-baselining from cosmetic re-baselining."
+    rubric: "Offer sequences assessment before commitment (35%); refusal is principled and propositional (35%); commitment review is evidence-based (30%)."
+    solution:
+      model: "Assessment-first transition"
+      reasoning: "The offer: 'Within two weeks you will have a verified position — cost, schedule, risk, and the three decisions you actually own. I ask one thing first: no commitments to your stakeholders from me before day 14, so your first number is one you can defend.' This gives her what the arrival mandate denies her: a defensible position. The refusal: a re-baseline before assessment is not a reset, it is a fiction with a new date — propose instead the day-14 decision pack where a re-baseline, if the evidence supports one, is one of three options with their costs. Commitment review: each inherited commitment is classified — stands (the regulatory dates: facts, not favors), renegotiates (the go-live date's buffer, if the assessment supports it), or retires (promises made to the departing sponsor with no written basis). The political insight: her mandate says 'reset expectations', and the way to serve it is a truthful baseline that makes her later wins real — a cosmetic re-baseline makes her first quarter look good and her third quarter impossible. What she needs in week 1 that she won't ask for: the list of landmines — which commitments detonate when, so nothing surprises her."
+      alternatives:
+        - "Comply with the early re-baseline: short-term safety, long-term complicity — when the true position surfaces (it always does), the fiction carries both signatures."
+      lesson_for_instructor: "Ask who else in the organization knows the true CPI — the answer (the PMO, the finance partner, the team) is why cosmetic re-baselines always surface."
+  - id: CS-93
+    title: "BATNA preparation for the renewal negotiation"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 26
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [negotiation, BATNA, renewal, leverage, preparation]
+    concepts: [negotiation preparation, BATNA]
+    summary: "Prepare the renewal negotiation with the scoring vendor: your BATNA, theirs, leverage map, and the walk-away line."
+    context: "The scoring-API renewal approaches. TelcoCare's position: three years of dependency (CS-79's exit clauses are drafted but unexercised), a working product, and an internal replacement estimate of 12–18 months. The vendor knows all of this and priced the renewal up 30%."
+    problem: "Prepare the negotiation: both BATNAs, the leverage map, and the walk-away line with its evidence."
+    constraints:
+      - "The BATNA must be real: costed, scheduled, with a decision date."
+      - "The walk-away line is a number with a rationale, not a mood."
+      - "The leverage map must be honest about where TelcoCare is weak."
+    tasks:
+      - "Both BATNAs: TelcoCare's replacement path, the vendor's loss path."
+      - "Leverage map: strong, weak, and symmetric leverage."
+      - "Walk-away line with rationale and the decision date that enforces it."
+      - "Opening posture and first concession plan."
+    deliverables:
+      - "BATNA analysis (both sides)."
+      - "Leverage map."
+      - "Walk-away line."
+      - "Opening posture."
+    discussion:
+      - "Why is a BATNA you never intend to use still the core of your leverage?"
+      - "What does the vendor's 30% increase tell you about their read of your BATNA?"
+    objectives:
+      - "Prepare negotiations from BATNA analysis, not from grievances."
+      - "Set walk-away lines that survive the meeting room."
+    rubric: "BATNAs are real and costed (40%); leverage map is honest (30%); walk-away line enforceable (20%); opening posture coherent (10%)."
+    solution:
+      model: "BATNA-anchored preparation"
+      reasoning: "TelcoCare's BATNA: the internal replacement — 12–18 months, costed at ~2.5M, viable because CS-79's egress clause guarantees data portability and CS-62's shadow probes de-risk migration; the decision date that makes it real: 'replacement build starts March 1 unless renewal is signed by February 15 at ≤ current+10%.' The vendor's BATNA: losing the account — 3 years of revenue, a reference customer, and the renewal at ANY price is worth more than the 30% premium on a dead account; their weakness is that they priced for a customer with no exit, and the exit clauses weaken that read. Leverage: strong — the documented exit path and the shadow-replacement data; weak — the 12–18 month replacement window means a walk-away costs TelcoCare a year of feature velocity; symmetric — both sides lose real money in a rupture. Walk-away line: current+10% with the CS-79 exit clauses intact (the clauses are worth more than 20 points of price — they are what makes the NEXT negotiation survivable). Opening posture: not grievance-led ('your SLA record') but structure-led: 'Here is our replacement timeline and its trigger date; here is what a renewal needs to contain.' First concession planned: multi-year term for a lower escalator — trading commitment for price is the concession that costs least."
+      alternatives:
+        - "Negotiating without the trigger date: the BATNA becomes a threat instead of an option, and threats without dates get called — the February 15 date is what converts analysis into leverage."
+      lesson_for_instructor: "Ask what the vendor's side of the leverage map says — students who cannot write the counterparty's BATNA have not prepared; they have rehearsed."
+  - id: CS-94
+    title: "Decommissioning the legacy ledger"
+    domain: D10
+    level: L4
+    use: [homework]
+    lecture: 30
+    seed: GRIDSENSE
+    difficulty: expert
+    numerical: false
+    tags: [closure, decommission, archiving, ownership-transfer, sunset]
+    concepts: [project closure, decommissioning]
+    summary: "Plan the closure of a 9-year-old billing ledger: data retention, access sunset, ownership transfer, and the 'keep it running' temptation."
+    context: "GRIDSENSE's new billing platform is live; the legacy ledger still runs read-only for three departments' quarterly queries. Every closure attempt dies when a department says 'we might need it'. The ledger's OS is unsupported; its last maintainer left."
+    problem: "Produce the decommission plan: retention decision framework, sunset sequence, ownership transfer, and the politics of the final cutover."
+    constraints:
+      - "Regulatory retention: billing records retained 7 years — the data survives even if the system does not."
+      - "The three departments' queries must be mapped to replacements before sunset."
+      - "The plan must name the decision date that ends the 'might need it' cycle."
+    tasks:
+      - "Retention decision framework: data (keep), code (retire), system (sunset) — with criteria."
+      - "Sunset sequence with dates and fallbacks."
+      - "Query-migration plan for the three departments."
+      - "The cutover decision memo."
+    deliverables:
+      - "Retention framework."
+      - "Sunset sequence."
+      - "Query migration plan."
+      - "Cutover memo."
+    discussion:
+      - "Why does 'we might need it' win every meeting — and what changes when it meets a date?"
+      - "What is the real cost of the unsupported OS: risk or, more precisely, whose risk?"
+    objectives:
+      - "Decommission with retention discipline."
+      - "Convert open-ended preservation into dated decisions."
+    rubric: "Framework separates data/code/system (30%); sequence has real fallbacks (30%); migration plan covers all three (25%); memo forces the date (15%)."
+    solution:
+      model: "Data-kept, system-sunset decommission"
+      reasoning: "Framework: billing DATA is retained 7 years (regulatory) — exported to the archive with verified checksums and a retrieval SLA of 48h; CODE is retired with a tagged repository snapshot and build instructions; the SYSTEM is sunset — unsupported OS plus a departed maintainer means every month of delay compounds a risk someone else inherits silently. Sunset sequence: month 1 — export and verify archive (the data question is now closed); month 2 — the three departments' quarterly queries are mapped: two move to the new platform's reports, one becomes a scheduled extract owned by the data team (a named replacement per query is what kills 'might need it'); month 3 — read-only notice, cutover memo issued with the date: 'The ledger powers down on the 15th; retrieval requests go to the archive with 48h SLA.' The cutover memo forces the political moment: departments that 'might need it' must name the query by the date — after which the answer is the archive, not the ledger. The real cost of delay: unsupported OS risk is an unowned security exposure; the decommission decision is the risk-transfer decision, and deferring it just re-assigns the risk to whoever notices last."
+      alternatives:
+        - "Virtualizing the ledger and keeping it: defensible for one budget cycle; it moves the cost from visible decommission work to invisible maintenance, and 'might need it' remains undefeated."
+      lesson_for_instructor: "Ask what the archive's retrieval SLA implies the team must build BEFORE sunset — the 48h retrieval is the decommission plan's hidden deliverable."
+  - id: CS-95
+    title: "Portfolio rebalance under the mandate"
+    domain: D1
+    level: L4
+    use: [exam]
+    lecture: 2
+    seed: null
+    difficulty: expert
+    numerical: true
+    tags: [portfolio, prioritization, mandate, knapsack, governance]
+    concepts: [portfolio selection, constrained optimization]
+    summary: "Rebalance a five-project portfolio when a mandatory project arrives: maximize strategic score within the budget cap."
+    context: "A portfolio holds P1 (score 85, 2.0M, contractually committed), P2 (70, 1.5M), P3 (60, 1.0M), P4 (55, 0.8M), P5 (40, 0.7M) against a 5.0M cap. A regulatory mandate arrives: P6, 1.2M, no strategic score — it must be funded."
+    problem: "Compute the discretionary budget, find the optimal discretionary set, and critique the governance of what got cut."
+    constraints:
+      - "Cap 5.0M; P1 and P6 are committed — 3.2M is fixed."
+      - "Discretionary budget = cap − committed."
+      - "Maximize summed strategic score of discretionary projects within budget; no partial funding."
+    tasks:
+      - "Compute the discretionary budget."
+      - "Evaluate the feasible sets and find the score-maximizing one."
+      - "Compare with the naive choice (fund the highest-scoring project)."
+      - "Critique: what does the scoring model miss about P5's 0.7M?"
+    deliverables:
+      - "Discretionary budget computation."
+      - "Feasible-set analysis with the optimum."
+      - "Governance critique."
+    discussion:
+      - "Why does 'fund the best project' fail under budget constraints?"
+      - "What information would change the optimal set — and who holds it?"
+    objectives:
+      - "Solve a constrained portfolio selection."
+      - "Critique scoring-based selection with governance insight."
+    rubric: "Computation correct (40%); optimum identified (25%); critique substantive (35%)."
+    solution:
+      model: "Constrained portfolio selection"
+      reasoning: "Discretionary = 5.0 − 2.0 − 1.2 = 1.8M. Feasible sets from {P2 1.5/70, P3 1.0/60, P4 0.8/55, P5 0.7/40}: {P2} = 70 (0.3M unused); {P2,P5} = 110 (2.2M — over); {P3,P4} = 115 (1.8M exactly); {P3,P5} = 100 (1.7M); {P4,P5} = 95 (1.5M); {P2 alone} loses to {P3,P4}. Optimum: P3+P4, score 115. The naive answer — P2, the highest scorer — leaves 0.3M idle and scores 70: 45 points of value abandoned to budget blindness. Governance critique: (1) P5's 40 score may undervalue a 0.7M project that seeds next year's portfolio — scoring models price today's benefits, not options; (2) committed P1 escaped scoring entirely — it was 85 last cycle and might not survive this one, but commitment removed it from scrutiny, which is exactly how zombie projects survive; (3) the mandate consumed 1.2M with no score — governance must force mandates to at least state their regulatory basis and any dead zones they create (P5 cut as the mandate's casualty). What changes the optimum: P4's true cost (if 0.8M hides a 1.0M commitment tail, {P3,P5} at 1.7M wins) — the estimate quality of the marginal projects, held by their PMs, is the information the portfolio review must surface."
+      alternatives: []
+      calculations: "Worked in instructor key; machine-checked."
+      lesson_for_instructor: "Connect to CS-03's cut-line: the score is necessary, the constraint arithmetic is what makes it real — most portfolio disasters are arithmetic failures, not scoring failures."
+    numeric:
+      type: arith
+      note: "Discretionary budget and optimal set."
+      data:
+        cap_pkr: 5000000
+        committed: {P1: 2000000, P6: 1200000}
+        candidates: {P2: {cost: 1500000, score: 70}, P3: {cost: 1000000, score: 60}, P4: {cost: 800000, score: 55}, P5: {cost: 700000, score: 40}}
+      steps:
+        - {name: discretionary_pkr, expr: "cap_pkr - committed.P1 - committed.P6", expect: 1800000, tol: 1}
+        - {name: set_p3p4_cost, expr: "candidates.P3.cost + candidates.P4.cost", expect: 1800000, tol: 1}
+        - {name: set_p3p4_score, expr: "candidates.P3.score + candidates.P4.score", expect: 115, tol: 0.01}
+        - {name: set_p2_score, expr: "candidates.P2.score", expect: 70, tol: 0.01}
+        - {name: set_p3p5_cost, expr: "candidates.P3.cost + candidates.P5.cost", expect: 1700000, tol: 1}
+        - {name: set_p3p5_score, expr: "candidates.P3.score + candidates.P5.score", expect: 100, tol: 0.01}
+  - id: CS-96
+    title: "The expert who is the bus factor"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 25
+    seed: GRIDSENSE
+    difficulty: expert
+    numerical: false
+    tags: [bus-factor, knowledge-risk, leadership, succession, mitigation]
+    concepts: [knowledge risk, succession]
+    summary: "Lead the bus-factor mitigation for an expert who resists documentation — by changing what expertise means to be, not by ordering writing."
+    context: "GRIDSENSE's pipeline DSL exists because one engineer wrote it; he is brilliant, load-bearing, and openly hostile to documentation ('if they need a document to understand it, it's too complicated to matter'). Leadership has ordered documentation twice; both orders produced worthless PDFs."
+    problem: "Design the mitigation: the knowledge strategy that works with this expert, the succession mechanism, and the risk posture meanwhile."
+    constraints:
+      - "Another documentation order is known to fail — the strategy must differ in kind."
+      - "The expert's cooperation is needed, not his enthusiasm."
+      - "The risk posture must cover the 'he resigns tomorrow' scenario this month."
+    tasks:
+      - "Knowledge strategy: mechanism, format, and what makes it real to him."
+      - "Succession design: who, how, and the verifiable handover (CS-83's evidence standard)."
+      - "Interim risk posture: what the project does differently until transfer completes."
+    deliverables:
+      - "Knowledge strategy."
+      - "Succession design."
+      - "Interim posture."
+    discussion:
+      - "Why do documentation orders produce PDFs while pairing produces engineers?"
+      - "What is the expert actually protecting when he resists transfer — and is it legitimate?"
+    objectives:
+      - "Mitigate knowledge concentration without alienating its holder."
+      - "Design succession with verifiable transfer."
+    rubric: "Strategy differs in kind from documentation orders (40%); succession is verifiable (35%); interim posture is real (25%)."
+    solution:
+      model: "Expertise-reframed transfer"
+      reasoning: "The knowledge strategy must give the expert a role that transfer serves: make him the architect whose system outlives him — 'the DSL is your design; a design that dies with its designer is a hack, and you don't build hacks' reframes documentation as legacy rather than bureaucracy. Mechanism: not documents — a teaching rotation where he runs fortnightly design sessions on the DSL's decisions (why the scheduler is lazy, why validation is inline) recorded as design rationale; plus a supervised succession (CS-83's standard): the successor executes a full pipeline change from design through deploy with him reviewing, and the succession is complete when the successor's change ships without his edits. The legitimacy read: he is protecting scarcity-value and control — naming him architect converts the scarcity from job security into professional standing, which is the trade that gets cooperation without humiliation. Interim posture: the DSL's two most critical components get a second reviewer on every change this month; no DSL change ships without a second engineer who can explain it; the resignation scenario's exposure is capped by the review rule, not by hope. What the two failed PDFs prove: the format was the problem — documents encode conclusions, sessions and supervised changes transfer reasoning."
+      alternatives:
+        - "Hiring a second DSL expert: solves it with money and time; the design-session mechanism is still needed because a second expert transfers nothing to the team of five."
+      lesson_for_instructor: "Ask what happened to the two PDFs — they died because writing was the goal; in this design, writing is the byproduct of teaching, which is why it survives."
+  - id: CS-97
+    title: "Runway under the crisis"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 13
+    seed: VOLTPAY
+    difficulty: expert
+    numerical: true
+    tags: [runway, burn, crisis, cash-flow, revenue-ramp]
+    concepts: [burn rate, cash runway]
+    summary: "Compute the cash-out month under the base plan and under a 15% burn cut, then set the crisis decision calendar."
+    context: "VoltPay post-CS-45: cash 3.2M, monthly burn 1.15M. Revenue ramps from 200k in month 1, growing 150k/month. The board wants to know when the company dies on the current plan, and what a 15% burn cut buys."
+    problem: "Compute the runway arithmetic for both plans and set the decision calendar that matches."
+    constraints:
+      - "Net monthly burn = burn − revenue (revenue grows 150k/month from 200k)."
+      - "Runway ends the month cumulative net burn exceeds cash."
+      - "The 15% cut applies to burn only; revenue ramp is unchanged."
+    tasks:
+      - "Compute monthly net burn and cash position through cash-out (base plan)."
+      - "Recompute under the 15% cut."
+      - "Set the decision calendar: what must be decided by which month under each plan."
+    deliverables:
+      - "Cash-position table (both plans)."
+      - "Cash-out month for each."
+      - "Decision calendar."
+    discussion:
+      - "Why does the revenue ramp make the cut's value nonlinear rather than merely additive?"
+      - "What does a decision calendar do that a runway number alone cannot?"
+    objectives:
+      - "Compute cash runway under ramping revenue."
+      - "Convert runway arithmetic into a decision calendar."
+    rubric: "Base plan arithmetic correct (40%); cut plan correct (30%); calendar matches the arithmetic (30%)."
+    solution:
+      model: "Ramp-adjusted runway"
+      reasoning: "Base: revenue 200k, 350k, 500k, 650k, 800k in months 1–5; net burn 950k, 800k, 650k, 500k, 350k; cumulative 950k, 1.75M, 2.40M, 2.90M, 3.25M — cash 3.2M is exhausted during month 5: the company dies in month 5 with 50k of month-5 spend uncovered. Cut (burn 977.5k): net 777.5k, 627.5k, 477.5k, 327.5k, 177.5k, 27.5k in months 1–6; cumulative 2.3875M at month 5 — cash 812.5k — and month 6 adds 27.5k (cash 785k); month 7 revenue 1.1M exceeds burn: the company turns cash-positive in month 7 with 907.5k remaining. The cut's value: 2.5 extra months and — the nonlinear part — those two months contain the revenue crossover, so the cut doesn't extend death, it converts death into survival. Decision calendar (base plan): month 2 — the raise or the cut is decided (month-5 death with a 3-month decision-to-cash lag means deciding in month 2 is the last responsible moment); month 3 — term sheet or the cut executes. Under the cut: month 4 — the raise conversation resumes from strength (cash-positive trajectory is a different pitch than runway panic); month 6 — growth spending resumes. The calendar's principle: runway arithmetic is only decision-useful when mapped against the decision-to-cash lag."
+      alternatives:
+        - "Cutting 30% instead of 15%: buys more months but cuts into the revenue-driving team (CS-45's capability runway) — the arithmetic must be paired with what the cut amputates."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Ask why the month-5 death is 'during' the month, not 'at its end' — cumulative crossing mid-month matters when payroll dates are real."
+    numeric:
+      type: arith
+      note: "Cash positions and cash-out month under both plans."
+      data:
+        cash_pkr: 3200000
+        burn_pkr: 1150000
+        rev_start_pkr: 200000
+        rev_step_pkr: 150000
+        cut_fraction: 0.15
+      steps:
+        - {name: rev_m1, expr: "rev_start_pkr", expect: 200000, tol: 1}
+        - {name: rev_m2, expr: "rev_m1 + rev_step_pkr", expect: 350000, tol: 1}
+        - {name: rev_m3, expr: "rev_m2 + rev_step_pkr", expect: 500000, tol: 1}
+        - {name: rev_m4, expr: "rev_m3 + rev_step_pkr", expect: 650000, tol: 1}
+        - {name: rev_m5, expr: "rev_m4 + rev_step_pkr", expect: 800000, tol: 1}
+        - {name: net_m1, expr: "burn_pkr - rev_m1", expect: 950000, tol: 1}
+        - {name: net_m2, expr: "burn_pkr - rev_m2", expect: 800000, tol: 1}
+        - {name: net_m3, expr: "burn_pkr - rev_m3", expect: 650000, tol: 1}
+        - {name: net_m4, expr: "burn_pkr - rev_m4", expect: 500000, tol: 1}
+        - {name: net_m5, expr: "burn_pkr - rev_m5", expect: 350000, tol: 1}
+        - {name: cum_m4_base, expr: "net_m1 + net_m2 + net_m3 + net_m4", expect: 2900000, tol: 1}
+        - {name: cash_m4_base, expr: "cash_pkr - cum_m4_base", expect: 300000, tol: 1}
+        - {name: cash_m5_base, expr: "cash_m4_base - net_m5", expect: -50000, tol: 1}
+        - {name: burn_cut_pkr, expr: "burn_pkr * (1 - cut_fraction)", expect: 977500, tol: 1}
+        - {name: net_m5_cut, expr: "burn_cut_pkr - rev_m5", expect: 177500, tol: 1}
+        - {name: cum_m5_cut, expr: "(burn_cut_pkr - rev_m1) + (burn_cut_pkr - rev_m2) + (burn_cut_pkr - rev_m3) + (burn_cut_pkr - rev_m4) + net_m5_cut", expect: 2387500, tol: 1}
+        - {name: cash_m5_cut, expr: "cash_pkr - cum_m5_cut", expect: 812500, tol: 1}
+        - {name: rev_m7, expr: "rev_m5 + 2 * rev_step_pkr", expect: 1100000, tol: 1}
+        - {name: cash_m7_cut, expr: "cash_m5_cut - (burn_cut_pkr - (rev_m5 + rev_step_pkr)) - (burn_cut_pkr - rev_m7)", expect: 907500, tol: 1}
+  - id: CS-98
+    title: "Inspection readiness in five weeks"
+    domain: D2
+    level: L4
+    use: [homework]
+    lecture: 8
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [inspection, readiness, evidence, audit, healthcare, tailoring]
+    concepts: [regulatory readiness, evidence management]
+    summary: "Prepare a hospital AI feature for an announced regulatory inspection in five weeks: evidence gap analysis, triage, and the rehearsal."
+    context: "MedSync receives five weeks' notice of a regulator inspection covering the medication-reconciliation AI: consent documentation, validation evidence, incident handling, and change control. The team knows where the bodies are: two retrains lack complete model cards (CS-85's cousin), incident log entries are inconsistent, and the change-control trail has gaps around two hotfixes."
+    problem: "Produce the readiness plan: gap analysis, triage under the date, evidence assembly, and the mock inspection."
+    constraints:
+      - "Five weeks, fixed."
+      - "Gaps may be remediated or disclosed — concealment is not an option and the plan must say why."
+      - "The mock inspection happens in week 4, not week 5."
+    tasks:
+      - "Gap analysis: evidence area × current state × gap."
+      - "Triage: remediate / disclose / accept, with rationale per gap."
+      - "Evidence assembly plan by week."
+      - "Mock inspection design: who plays the inspector, what gets probed."
+    deliverables:
+      - "Gap analysis table."
+      - "Triage decisions."
+      - "Week-by-week assembly plan."
+      - "Mock inspection design."
+    discussion:
+      - "Why is disclosure of a known gap safer than remediation theater?"
+      - "What does the mock inspection catch that the gap analysis cannot?"
+    objectives:
+      - "Plan audit readiness under a fixed date."
+      - "Distinguish remediation from disclosure honestly."
+    rubric: "Gap analysis is specific (30%); triage is defensible (35%); assembly plan fits five weeks (20%); mock inspection is adversarial (15%)."
+    solution:
+      model: "Triage-then-rehearse readiness"
+      reasoning: "Gap analysis: model cards for two retrains (remediate — two weeks, generated from pipeline metadata per CS-85's fix); incident log inconsistency (remediate — normalize entries to one template, one week; the inconsistencies are formatting, not substance); hotfix change-control gaps (disclose — the hotfixes shipped under emergency provisions that exist on paper; the disclosure is 'our emergency path worked, our post-hoc documentation lagged; here is the fix' — hiding it invites the inspector to find it and reprice the whole evidence trail). Assembly: weeks 1–2 evidence inventory and card generation; week 3 incident log normalization and the disclosure memo drafted with counsel; week 4 the mock inspection — an internal reviewer with the regulator's public checklist plays inspector and probes the two areas the team is proudest of (pride hides gaps as reliably as fear); week 5 buffer and briefing. Why disclosure beats remediation theater: inspectors are professional gap-finders; a self-disclosed gap with a dated fix reads as control maturity, while a discovered one reads as control failure across everything else — the asymmetry is the whole strategy. The mock inspection in week 4 (not 5) exists because its findings need the buffer week."
+      alternatives:
+        - "Requesting postponement: available, and it converts a five-week sprint into a credibility question — defensible only if the gaps are beyond triage, which these are not."
+      lesson_for_instructor: "Run a five-minute mock inspection on the students' own capstone evidence; the panic is instructive and the gaps are always the same three."
+  - id: CS-99
+    title: "The padding dilemma"
+    domain: D10
+    level: L4
+    use: [in-class]
+    lecture: 28
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [ethics, estimates, padding, honesty, systemic-vs-individual]
+    concepts: [estimate integrity, systemic honesty]
+    summary: "Decide what to do when the entire team pads estimates — is this an honesty failure or a system failure, and what do you fix?"
+    context: "A junior engineer confides that everyone adds 25–40% to their estimates 'because the baseline gets weaponized'. Actual delivery history: the padded baseline is met 85% of the time; unpadded estimates would have been met 60% of the time. The sponsor believes the baseline is honest."
+    problem: "Decide: classify the problem, choose the intervention, and manage the disclosure problem."
+    constraints:
+      - "The team's behavior is rational within the current system — interventions must change the system, not just the behavior."
+      - "The sponsor's 85% success view is built on the padded baseline."
+      - "You may not fix this by exposing individuals."
+    tasks:
+      - "Classify: individual dishonesty vs systemic response to incentive design."
+      - "Design the intervention: estimate process changes that remove the padding incentive."
+      - "Manage the disclosure: what the sponsor is told, and when."
+    deliverables:
+      - "Classification with reasoning."
+      - "Intervention design."
+      - "Disclosure plan."
+    discussion:
+      - "Why is padding 'for safety' different from padding 'for ease' — and where does the difference show up in the numbers?"
+      - "What does the 85% figure prove, and what does it hide?"
+    objectives:
+      - "Diagnose systemic dishonesty without blaming individuals."
+      - "Redesign estimate incentives, not just estimate behavior."
+    rubric: "Classification is systemic, not moralistic (35%); intervention removes the incentive (40%); disclosure plan is honest and staged (25%)."
+    solution:
+      model: "System-fix over moral fix"
+      reasoning: "Classification: this is a system failure wearing an honesty costume. Padding at 25–40% that lands at 85% success is not lying — it is the team restoring the buffer that the planning process removed; the baseline gets weaponized (variance is punished as failure rather than read as information), so rational agents re-add the safety the process stripped. The intervention removes the incentive: (1) separate the estimate conversation from the commitment conversation — estimates carry ranges with stated confidence, commitments are made at a chosen percentile (CS-65's logic); (2) estimate calibration reviews — past estimates vs actuals, team-level, blame-free (CS-14's correction factor institutionalized); (3) variance read as information: the question after a miss is 'what did we learn about our estimating', never 'who is responsible'. The 85% figure proves the baseline is achievable; it hides that the organization is paying 30% more for its projects than its honest forecasts would cost — that is the disclosure the sponsor needs, eventually: 'our baselines carry an embedded 30% buffer; here is the calibration data; here is what honest baselines would buy you (earlier starts, more projects) and cost you (a 60% hit rate until calibration improves).' Disclosure is staged because dropping the buffer overnight converts a systemic fix into a team punishment — the sponsor hears it when the calibration mechanism exists to receive it."
+      alternatives:
+        - "Zero tolerance on padding: treats a system output as a character flaw, produces better liars — the one intervention this case exists to rule out."
+      lesson_for_instructor: "Ask who benefits from the padded baseline — the team avoids pain, and the sponsor gets a success story; padding persists because both parties are secretly satisfied. That is why the fix must be structural."
+  - id: CS-100
+    title: "The secondary-use request"
+    domain: D10
+    level: L4
+    use: [in-class]
+    lecture: 28
+    seed: MEDSYNC
+    difficulty: expert
+    numerical: false
+    tags: [privacy, consent, secondary-use, data-governance, patient-data]
+    concepts: [data governance, consent scope]
+    summary: "Rule on a request to reuse medication data for a research model: consent scope, governance path, and the refusal script."
+    context: "A research group requests MedSync's medication-reconciliation data to train a polypharmacy-risk model — genuinely valuable research, genuinely outside the consent scope ('treatment coordination only'). The data can be de-identified; the governance board meets in two weeks; the research team has funding that expires."
+    context_note: "Data governance decision with a rights dimension — the funding deadline is a pressure tactic, not a criterion."
+    problem: "Rule on the request: consent analysis, governance path, alternatives, and the refusal-or-approval script."
+    constraints:
+      - "Consent scope says treatment coordination; research is a different purpose."
+      - "De-identification reduces but does not eliminate the consent question."
+      - "The funding deadline is not a governance criterion."
+    tasks:
+      - "Consent analysis: what was consented, what is requested, what gap remains."
+      - "Governance path: who decides, on what evidence, in what sequence."
+      - "Alternatives: consented cohort, synthetic data, prospective consent."
+      - "The script: what the research team is told today."
+    deliverables:
+      - "Consent analysis."
+      - "Governance path."
+      - "Alternatives assessment."
+      - "Response script."
+    discussion:
+      - "Why does 'de-identified, so it's fine' fail as an argument — and where does it partially succeed?"
+      - "What does the funding deadline do to governance discipline if it's allowed to matter?"
+    objectives:
+      - "Apply consent-scope analysis to a real secondary-use request."
+      - "Resist deadline pressure in governance decisions."
+    rubric: "Consent analysis precise (40%); governance path correct (25%); alternatives substantive (20%); script is respectful and firm (15%)."
+    solution:
+      model: "Consent-scope analysis with alternatives"
+      reasoning: "Consent analysis: patients consented to treatment coordination — a purpose defined by relationship and expectation; research model-building is a different purpose even when de-identified, because the consent question is about purpose, not identifiability alone. De-identification changes the regulatory exposure, not the ethical gap — and 'partially succeeds' where the data is aggregated beyond re-identification risk, which the request does not claim. Governance path: the board decides in its own cycle — the funding deadline is noted and given zero decisional weight (the script says this out loud: 'the deadline is your constraint, not our criterion'); the board needs the de-identification method, the re-identification risk assessment, and the research protocol before ruling. Alternatives: (1) a consented cohort — prospective consent for the research use, slower and clean; (2) synthetic data generated from the schema and statistics — weaker science, zero consent exposure, available immediately; (3) federated or aggregate statistics that answer the research question without record-level access. The script today: 'The request is outside consent scope as written. The board will consider it in its cycle. Here are three paths that could start this week — synthetic data is the fastest legitimate one.' What makes this expert rather than bureaucratic: the alternatives are real and offered with energy — governance that only says no trains requesters to route around it."
+      alternatives:
+        - "Broad consent renegotiation with the patient population: the durable fix for the institution, irrelevant to this request's two-week clock."
+      lesson_for_instructor: "Ask what the synthetic-data alternative costs in research validity — the honest answer ('some power, some novelty') is why governance survives: it can be generous without being permissive."
+  - id: CS-101
+    title: "The four-week crisis: go-live triage"
+    domain: D1
+    level: L4
+    use: [in-class]
+    lecture: 20
+    seed: CAMPUSHUB
+    difficulty: expert
+    numerical: false
+    tags: [crisis, go-live, triage, war-room, decision-velocity]
+    concepts: [crisis management, triage]
+    summary: "Run the first four weeks after a failed go-live: stabilization, triage rules, communication freeze, and the restart decision."
+    context: "CAMPUSHUB's go-live failed in 48 hours: registration queues corrupted, 3,000 students in limbo, rollback executed. The system is stable in rollback mode; the semester starts in four weeks. The war room has 11 people and no rules."
+    problem: "Design the crisis operation: stabilization exit criteria, triage rules for the defect pile, the communication freeze, and the go/no-go framework."
+    constraints:
+      - "Rollback mode is stable but painful — manual workarounds cost the registrar 3 FTE-equivalents daily."
+      - "The defect pile: 8 blockers, 14 majors, 60+ minors."
+      - "Communication has fragmented: five different status stories are circulating."
+    tasks:
+      - "Stabilization exit criteria: what makes rollback-mode acceptable to formalize."
+      - "Triage rules: who classifies, on what criteria, with what authority."
+      - "Communication freeze: single source, cadence, audience map."
+      - "Go/no-go framework: criteria, decision date, decision owner."
+    deliverables:
+      - "Exit criteria."
+      - "Triage rules."
+      - "Communication freeze design."
+      - "Go/no-go framework."
+    discussion:
+      - "Why does an 11-person war room without rules produce less than 8 people with them?"
+      - "What does the go/no-go decision date protect — and what does it risk?"
+    objectives:
+      - "Impose decision structure on crisis chaos."
+      - "Design triage and communication that survive pressure."
+    rubric: "Exit criteria measurable (25%); triage rules with authority (30%); freeze ends the five-story problem (25%); framework has a real decision date (20%)."
+    solution:
+      model: "Ruled war room"
+      reasoning: "Exit criteria for formal rollback mode: data integrity verified (no further corruption possible), workaround procedures documented and trained for the registrar's staff, daily cost of rollback quantified (3 FTE-equivalents — this number drives everything else). Triage: the 8 blockers are re-verified as blockers (crisis inflates severity), then each gets an owner, a fix estimate, and a verification method; the 14 majors freeze — they enter the backlog and are touched only if re-triaged as blockers; the 60+ minors are formally out of scope until after restart. Classification authority: the tech lead, daily, with the PM overriding only to REMOVE items from the crisis scope (adding is the failure mode). Communication freeze: one status doc, updated twice daily at fixed times, one voice (the PM), audience-mapped (registrar gets operational detail, VC gets risk posture, students get service status) — the five stories die because there is one doc and every inquiry is answered with its link. Go/no-go: decision date day 21 (a week of stabilization margin), criteria: all blockers fixed AND verified under load test, rollback cost projected for semester-start week, and a named fallback (postpone to week 3 of semester with the registrar's manual process — decided now, not under pressure). The date's purpose: crises expand to fill all available time; a fixed go/no-go date converts 'fix everything' into 'be ready to decide on day 21'."
+      alternatives: []
+      lesson_for_instructor: "Ask which of the 8 blockers might be a major in disguise — the re-verification step catches it, and the answer ('usually two') is why triage starts with doubt."
+  - id: CS-102
+    title: "Leadership succession during recovery"
+    domain: D9
+    level: L4
+    use: [homework]
+    lecture: 27
+    seed: VOLTPAY
+    difficulty: expert
+    numerical: false
+    tags: [succession, handover, recovery, leadership, continuity]
+    concepts: [succession, continuity]
+    summary: "Design your own handover: you are leaving a recovery project in month 4 of a 6-month recovery plan — what does the project need from you in the final weeks?"
+    context: "You led VoltPay's recovery from month 1; the plan is half-executed and working (CPI recovered from 0.80 to 0.93, the team re-committed). You are leaving for an opportunity that will not wait. The replacement is internal, capable, and has never led a recovery."
+    problem: "Design the handover: what transfers, what the replacement must decide themselves, and the exit that strengthens rather than wounds."
+    constraints:
+      - "Four weeks of overlap, maximum."
+      - "The recovery's credibility depends on continuity — your departure must not read as abandonment."
+      - "The replacement will lead differently; the handover must not set them up to fail by your standard."
+    tasks:
+      - "Handover inventory: documents, relationships, decisions-in-flight, and the unwritten context."
+      - "The deliberate gaps: what you leave undecided and why."
+      - "The announcement: what is said to the team, the sponsor, and the board."
+    deliverables:
+      - "Handover inventory."
+      - "Deliberate-gaps list."
+      - "Announcement script (three audiences)."
+    discussion:
+      - "Why do recovering projects suffer more from successor failure than stable ones?"
+      - "What is the difference between transferring your plan and transferring your judgment?"
+    objectives:
+      - "Design succession for a fragile context."
+      - "Exit without converting your departure into a trust event."
+    rubric: "Inventory covers the unwritten context (35%); deliberate gaps are real (30%); announcement protects continuity (35%)."
+    solution:
+      model: "Judgment-transfer handover"
+      reasoning: "Inventory: the documents (recovery plan, decision log, commitment ledger) transfer in week 1; the relationships — sponsor, the two team leads, the vendor's executive sponsor — get joint meetings in weeks 2–3 where the replacement leads and you attend silently (transfer of relationship is by introduction and visible endorsement, never by email); the unwritten context — which commitments are soft, which stakeholder trusts are thin, where the recovery's numbers are honest but fragile — gets written as a private memo to the replacement, not a deck. Deliberate gaps: the two decisions scheduled for month 5 (pricing revision, contractor release) are left unmade — a successor who inherits only executed decisions executes someone else's plan; leaving real decisions is what converts inheritance into ownership. Announcement: to the team — 'the recovery is yours now; the plan works because you made it work; my departure is opportunity, not flight, and I am here for four weeks of whatever you need'; to the sponsor — the continuity facts plus the day you stop having opinions; to the board — the metrics and the successor's name with your endorsement. The difference between transferring plan and judgment: the plan is 40 pages; the judgment is 'when the CPI dips below 0.9 for two weeks, we talk to the sponsor before the numbers do' — that sentence is the handover."
+      alternatives:
+        - "Staying through month 6: maximal continuity, and it converts the successor into a deputy for two more months — four weeks of deliberate overlap beats six of accidental shadowing."
+      lesson_for_instructor: "Ask what happens to a recovery when the departing leader keeps 'helping' after the handover — the deliberate-gaps list exists partly to give the successor room the predecessor's presence would deny."
+  - id: CS-103
+    title: "Escaping the feature-store lock-in"
+    domain: D7
+    level: L4
+    use: [homework]
+    lecture: 18
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: false
+    tags: [lock-in, architecture, portability, procurement, strategy]
+    concepts: [lock-in escape, portability]
+    summary: "Design the escape from a proprietary feature store: abstraction boundary, migration sequencing, and the negotiation posture it enables."
+    context: "TelcoCare's churn model reads features from a proprietary feature store — three years of transformations live as vendor-specific DSL. License renewal is +35%. The vendor knows the model is entangled; the engineering team estimates 9 months to re-platform."
+    problem: "Design the escape: abstraction strategy, migration sequencing, and the negotiation posture the escape enables."
+    constraints:
+      - "The model must keep serving during migration — no big-bang cutover."
+      - "The abstraction boundary must be real (an interface), not a naming convention."
+      - "The escape must change the renewal negotiation, not just the architecture."
+    tasks:
+      - "Abstraction design: what interface, what stays vendor-side, what comes in-house."
+      - "Migration sequence: which features move first and why."
+      - "Dual-run plan with verification (CS-62's parallel-path pattern)."
+      - "Negotiation posture: what the 9-month clock does to the +35% renewal."
+    deliverables:
+      - "Abstraction design."
+      - "Migration sequence."
+      - "Dual-run plan."
+      - "Negotiation posture."
+    discussion:
+      - "Why does the abstraction boundary deliver value even if the migration never completes?"
+      - "When is paying the +35% the right answer anyway?"
+    objectives:
+      - "Design architectural escape from vendor dependency."
+      - "Connect engineering strategy to negotiation leverage."
+    rubric: "Abstraction is a real boundary (30%); migration sequence is sound (30%); dual-run verified (20%); posture connects clock to leverage (20%)."
+    solution:
+      model: "Abstraction-first escape"
+      reasoning: "Abstraction: define an in-house FeatureRequest interface (name, entity, time-range, freshness requirement) — the model reads the interface; a thin adapter routes to the vendor store today and to the in-house warehouse as features migrate. The boundary is real because the model code changes once and never again; the adapter is the only vendor-coupled artifact. Migration sequence: move features by (1) transformation simplicity — the 40 features that are plain aggregations move first (mechanical translation of DSL to SQL, verifiable row-by-row); (2) then the 15 complex features, each with the dual-run verification (CS-62's pattern: shadow-compute both paths for two weeks, compare distributions, then flip); (3) last, the 8 features whose DSL semantics are undocumented — these get reverse-engineered with the vendor's migration assistance priced into the exit (CS-79's clause pattern). Dual-run: every migrated feature is verified against the vendor's output for two weeks before the model switches — silent semantic differences (timezone handling, null semantics) are the migration's real risk, and comparison is the only defense. Negotiation posture: the 9-month clock inverts the leverage — at month 0, TelcoCare cannot leave; at month 9, the vendor's remaining hook is 8 features. The renewal strategy: sign a 12-month extension NOW at +10% (not 35%) with the migration running underneath; the posture is honest — 'we are leaving in a year unless the price reflects a customer with alternatives.' When is +35% right anyway: if the 9 months would consume more engineering than the +35% costs over five years — the escape must be priced against the alternative, not against zero."
+      alternatives:
+        - "Full migration before negotiating: cleaner position, and it spends 9 months of engineering on a hedge — the extension-plus-migration path buys the same leverage for a tenth of the cost."
+      lesson_for_instructor: "Ask what the interface costs to build even if the migration is cancelled — two weeks; the cheapest option in the case is also the one that creates all the others."
+  - id: CS-104
+    title: "Benefits shortfall at the six-month review"
+    domain: D10
+    level: L4
+    use: [exam]
+    lecture: 29
+    seed: TELCOCARE
+    difficulty: expert
+    numerical: true
+    tags: [benefits-realization, shortfall, attribution, deployment-gap, governance]
+    concepts: [benefits realization, variance decomposition]
+    summary: "Decompose a benefits shortfall into deployment and lift components, assign ownership, and design the recovery review."
+    context: "TelcoCare's churn product promised 4.2M/year in retention value, premised on 1.4% churn-rate reduction across the full eligible base. At the six-month review: deployment covers 70% of the eligible base, realized lift is 0.8%, and realized annualized value is therefore well under promise."
+    problem: "Compute realized value and the gap, decompose the shortfall, and design the month-9 recovery review."
+    constraints:
+      - "Realized = promised × deployment ratio × (realized lift ÷ promised lift)."
+      - "Each shortfall component gets an owner and a mechanism — not a shrug."
+      - "The review must distinguish project failure from adoption failure."
+    tasks:
+      - "Compute realized annualized value and the gap."
+      - "Decompose: deployment component vs lift component."
+      - "Assign ownership and mechanism per component."
+      - "Design the month-9 review: what evidence, what decisions."
+    deliverables:
+      - "Realized-value computation."
+      - "Decomposition with ownership."
+      - "Month-9 review design."
+    discussion:
+      - "Why is the deployment gap a project problem and the lift gap a model problem — and who owns the boundary?"
+      - "What does a benefits shortfall do to the NEXT business case from this team?"
+    objectives:
+      - "Decompose benefits variance quantitatively."
+      - "Govern benefits recovery with ownership and dates."
+    rubric: "Computation correct (35%); decomposition and ownership precise (40%); review design decides things (25%)."
+    solution:
+      model: "Multiplicative benefits decomposition"
+      reasoning: "Lift ratio = 0.8/1.4 = 0.5714. Realized = 4,200,000 × 0.7 × 0.5714 = 1,680,000. Gap = 2,520,000. Decomposition: deployment component — 30% of the base unserved, worth 4,200,000 × 0.3 × 0.5714 ≈ 719,900 of the gap; lift component — the model's realized lift is 57% of promise across the covered base, worth the remainder ≈ 1,800,100 (verify: deployment-only shortfall assumes full lift on covered base: 4.2M × 0.7 = 2.94M vs full promise 4.2M → 1.26M; then lift shortfall on covered base: 2.94M × (1 − 0.5714) = 1.26M... recomputing cleanly: gap = 4.2M − 1.68M = 2.52M; deployment share = 4.2M×(1−0.7)×0.5714 = 719,892; lift share = 4.2M×0.7×(1−0.5714) = 1,260,108; interaction = 4.2M×0.3×0.4286 = 540,036 — the three parts sum to 2.52M ✓). Ownership: deployment (719.9k) — delivery lead; mechanism: the rollout plan for the remaining 30%, which is usually integration debt, not marketing; lift (1.26M) — model owner; mechanism: segment analysis (CS-74's slices) to find where lift is under-realizing, retrain or threshold work; interaction (540k) — joint, and it is why partial fixes mislead: closing deployment alone recovers only the deployment share plus the interaction's redeployment. Month-9 review: evidence — deployment percentage, per-segment realized lift, retention delta against baseline; decisions — continue/redirect the rollout, fund a model iteration, or re-baseline the benefit statement to what the evidence supports. The distinction that matters: a benefits shortfall is a PROJECT failure only if deployment is the cause; a lift shortfall is a modeling question, and conflating them produces both bad engineering and bad governance."
+      alternatives:
+        - "Re-baselining the benefit immediately to 1.68M: honest about reality, and it surrenders the 2.52M question before the two owned mechanisms have run — the month-9 review is where re-baselining belongs."
+      calculations: "Worked decomposition in instructor key; machine-checked."
+      lesson_for_instructor: "The interaction term surprises everyone — ask what the deployment-only fix recovers (719.9k + the interaction it unlocks: 540k more when the added 30% also gets the lift) and connect to why benefits cases are system problems, not multiplicative tickets."
+    numeric:
+      type: arith
+      note: "Realized value, gap, and variance decomposition."
+      data:
+        promised_pkr: 4200000
+        deployment_ratio: 0.7
+        lift_promised: 1.4
+        lift_realized: 0.8
+      steps:
+        - {name: lift_ratio, expr: "lift_realized / lift_promised", expect: 0.5714, tol: 0.001}
+        - {name: realized_pkr, expr: "promised_pkr * deployment_ratio * lift_ratio", expect: 1680000, tol: 2000}
+        - {name: gap_pkr, expr: "promised_pkr - realized_pkr", expect: 2520000, tol: 2000}
+        - {name: deployment_share_pkr, expr: "promised_pkr * (1 - deployment_ratio) * lift_ratio", expect: 720000, tol: 2000}
+        - {name: lift_share_pkr, expr: "promised_pkr * deployment_ratio * (1 - lift_ratio)", expect: 1260000, tol: 2000}
+        - {name: interaction_pkr, expr: "promised_pkr * (1 - deployment_ratio) * (1 - lift_ratio)", expect: 540000, tol: 2000}
+        - {name: decomposition_sum_check, expr: "deployment_share_pkr + lift_share_pkr + interaction_pkr", expect: 2520000, tol: 5000}
+  - id: CS-105
+    title: "Capstone feeder: the delivery strategy memo"
+    domain: D1
+    level: L5
+    use: [capstone]
+    lecture: null
+    seed: null
+    difficulty: expert
+    numerical: false
+    tags: [capstone-feeder, synthesis, strategy, memo, integration]
+    concepts: [delivery strategy, synthesis]
+    summary: "Write the delivery strategy memo for a new initiative, drawing on every unit of the course — the final integration exercise."
+    context: "A fictional greenfield initiative for capstone preparation: a university launches a predictive student-success service (early-warning analytics for at-risk students) with 18 months, a 6M budget, mixed governance (academic + regulatory), and an audience of students, faculty, and the registrar. No plan exists; you are writing the strategy memo that the project will be built from."
+    problem: "Write the 4-page delivery strategy memo: approach selection, governance design, risk posture, team design, and the benefits case."
+    constraints:
+      - "The memo must commit: an approach (predictive/agile/hybrid) with justification, not a survey."
+      - "Governance must handle academic autonomy and regulatory data-protection simultaneously."
+      - "The benefits case must be owned and measurable from day one."
+      - "Every choice must name its major risk and the response posture."
+    tasks:
+      - "Approach selection with justification against the initiative's uncertainty profile."
+      - "Governance design: boards, gates, decision rights."
+      - "Risk posture: top five risks with response strategies."
+      - "Team design: structure, roles, the stakeholder engagement model."
+      - "Benefits case: owners, measures, review cadence."
+    deliverables:
+      - "The 4-page memo."
+      - "One-page appendix: the decision log of the memo's own choices."
+    discussion:
+      - "Which unit of the course does this memo lean on most — and what does that reveal about the initiative?"
+      - "What would you need to know to change your approach recommendation?"
+    objectives:
+      - "Synthesize the full course into a coherent delivery strategy."
+      - "Commit to choices with named risks and review points."
+    rubric: "Per the capstone strategy rubric: commitment quality, integration coherence, risk honesty, benefits ownership — see instructor rubric pack."
+    solution:
+      model: "Committed strategy with named risks"
+      reasoning: "Approach: hybrid — predictive spine (18 months, fixed regulatory dates for the data-protection review and the semester-cycle deployment windows) with agile delivery inside (model development and dashboards iterate; the consent framework and privacy review gate them). Governance: three-tier — project board monthly (registrar, faculty senate delegate, data protection officer, sponsor); delivery gates quarterly (data-use approval, model validation per CS-32's DoD, deployment readiness per CS-71's evidence standard); agile teams with working agreements (CS-34) and the model DoD as a quality floor. Risk posture: (1) consent refusal by student body — response: consent design work in month 1, fallback to opt-in cohort analytics; (2) model unfairness across student segments (CS-74's pattern is certain here) — response: slice evaluation in the model DoD, carve-out rules pre-agreed; (3) faculty autonomy resistance — response: faculty senate delegate on the board from day one, engagement before announcement; (4) regulatory scope change — response: the predictive spine's gates make re-planning cheap; (5) benefits attribution dispute — response: CS-104's decomposition method agreed with finance before launch. Team: product owner from the registrar's office (the benefits owner), model lead, platform lead, data governance lead embedded — the DPO relationship is a role, not a meeting. Benefits case: retention delta for flagged students vs matched comparison — owned by the registrar, measured quarterly, reviewed with CS-104's decomposition so deployment and lift shortfalls are separable. The decision-log appendix is the discipline device: every choice above, its alternative, and why it lost."
+      alternatives: []
+      lesson_for_instructor: "This is the course's final artifact — grade it against the decision log: students who cannot say what they rejected have made choices, not decisions."

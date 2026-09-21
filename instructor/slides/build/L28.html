@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L28 · Ethics, Governance &amp;amp; Professional Responsibility (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L28 · Ethics, Governance &amp; Professional Responsibility</h1>
+<h2>The decisions that outlive the project</h2>
+<p>Week 14 · Unit U6 · CLO6 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Apply</strong> the PMI Code's four values to concrete project dilemmas</li><li><strong>Use</strong> a defensible decision framework (facts → stakeholders → options → test → decide)</li><li><strong>Design</strong> governance structures that make ethical action easier, not harder</li><li><strong>Write</strong> a reasoned position on a responsible-AI dilemma</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CLO6's home lecture. CS-39 is a written-positions instrument — grading is on reasoning quality, not conclusions. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The four values, under load</h2>
+<table><tr><th>PMI Code value</th><th>Tested when…</th></tr><tr><td><strong>Responsibility</strong></td><td>the slip is yours but the story could be someone else's</td></tr><tr><td><strong>Respect</strong></td><td>the stakeholder is powerless and annoying</td></tr><tr><td><strong>Fairness</strong></td><td>the vendor offers you 'advisory' hospitality</td></tr><tr><td><strong>Honesty</strong></td><td>the status is green if you exclude the thing you know</td></tr></table>
+<li>Ethics failures are usually <strong>gradual</strong>: small exclusions, normalized</li><li>Governance exists because good people under pressure need structure</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The 'green if you exclude it' row is the honesty trap the final exam's judgment section echoes. The gradualism point is the package's framing. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>A decision framework that survives review</h2>
+<div class="mermaid">
+flowchart LR
+  F["Facts&lt;br&gt;(verified)"] --&gt; ST["Stakeholders&lt;br&gt;(affected, incl. silent)"]
+  ST --&gt; O["Options&lt;br&gt;(≥ 3, incl. escalate)"]
+  O --&gt; T["Tests&lt;br&gt;(reversibility, publicity, Code)"]
+  T --&gt; D["Decide + document"]
+</div>
+<li><strong>Publicity test:</strong> could you defend this choice on the record? If not, why are you making it?</li><li><strong>Reversibility test:</strong> if wrong, what does undoing it cost — and who pays?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The two tests are the package's quick instruments. 'Escalate' as a legitimate option legitimizes raising hard calls — L04's ethics seed resolves here. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Governance that makes ethics cheaper</h2>
+<li><strong>Decision log</strong> — who decided, when, with what evidence (CS-13's change log, grown up)</li><li><strong>Escalation paths</strong> — named, rehearsed, blame-free</li><li><strong>Data governance board</strong> — consent, retention, model-risk gates (L27's spine, formalized)</li><li>Whistleblowing channels that <strong>actually function</strong> — tested, not poster-grade</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The governance-as-friction-reducer framing is the lecture's constructive turn: rules exist so individuals don't carry institutional weight alone. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> the 'temporary' analytics backdoor that survived three handovers — governance holes outlive intent</li><li><strong>DS:</strong> a bias discovered post-launch: disclose, patch, or quiet-retrain? Each option has stakeholders without a seat</li><li>Responsible AI: fairness thresholds (L23's gate), explainability for affected users, honest model cards — <strong>all already in your plan</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The last line ties CLO6 to artifacts students already built — ethics as project work, not sermon. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-39</strong> — <em>Four ethics dilemmas in writing</em>: positions of ≤ 120 words each, using the framework; the third dilemma is a responsible-AI consent case</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Written instrument — the key's rubric scores framework use, stakeholder completeness, and the tests applied. Key: instructor/answer-keys/cases/CS-39.md. 25 minutes in class.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Is it ethical to A/B test a feature on users who cannot opt out? Where exactly does the line cross?</li><li>Your sponsor asks you to exclude a known risk from the register 'to keep the board confident'. Draft your one-sentence reply.</li><li>Which governance artifact from this course would have prevented your worst group-project experience?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2 is the rehearsal that matters — the sentence exists (register integrity, sponsor's own interest, EAC honesty). 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Four values under load; failures are gradual and structural</li><li>Framework: facts → stakeholders → options → tests → decide <strong>and document</strong></li><li>Governance makes ethical action cheaper — build it into the plan</li></ul>
+<p><strong>Exit ticket (2 min):</strong> name one decision in your capstone that needs the publicity test before M4 — and the test's outcome so far.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M4's governance section. Preview L29: sustainability and benefits — the 'after the project' lecture.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI <em>Code of Ethics and Professional Conduct</em> (responsibility · respect · fairness · honesty)</li><li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — stewardship principle</li><li>Teaching package: <code>instructor/teaching-packages/U6-integration-ethics-closing/L28-28-ethics-governance.md</code></li><li><strong>Next:</strong> L29 — Sustainability &amp; Benefits Realization</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L29 with the compute-footprint case (CS-40, numeric) and the benefits map.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

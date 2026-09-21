@@ -1,0 +1,7 @@
+# Monitoring worksheet (Lab 12) — week 9 RAG dashboard
+dimension,status,threshold_met,evidence,next_review
+Schedule,RED,NO,"SPI 0.87 (Lab 13)",weekly
+Cost,RED,NO,"CPI 0.87",weekly
+Scope,AMBER,PARTIAL,"E percent-claim vs 40% audit; F integration ticket open",weekly
+Quality,AMBER,NO,"no critical escapes; E evidence incomplete",weekly
+Risk,RED,NO,"R8 Critical 16; R1/R3/R5 High",weekly

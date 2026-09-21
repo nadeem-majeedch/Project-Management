@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L05 · Life Cycles: Predictive, Adaptive, Hybrid (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L05 · Life Cycles: Predictive, Adaptive, Hybrid</h1>
+<h2>Choosing how you will deliver before deciding what you deliver</h2>
+<p>Week 3 · Unit U2 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Compare</strong> predictive, iterative, incremental, and adaptive life cycles on change and certainty</li><li><strong>Match</strong> a project's uncertainty profile to a life cycle — and defend the match</li><li><strong>Design</strong> a hybrid life cycle with an explicit handover point</li><li><strong>Justify</strong> why life-cycle choice is a governance decision, not a fashion</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The spectrum is the core visual; CS-06's five vignettes exercise it. Keep definitions tight — the misconceptions live in the teaching package (e.g., 'agile = no planning'). Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The delivery spectrum</h2>
+<div class="mermaid">
+flowchart LR
+  PR["Predictive&lt;br&gt;(plan the work,&lt;br&gt;work the plan)"] --&gt; IT["Iterative&lt;br&gt;(prototype loops)"]
+  IT --&gt; IN["Incremental&lt;br&gt;(releases in slices)"]
+  IN --&gt; AD["Adaptive&lt;br&gt;(sprints, backlog)"]
+  PR --- AD
+  classDef axis fill:none,stroke:none;
+  PR:::axis ~~~ AD:::axis
+</div>
+<li>Left: requirements <strong>known</strong>, change is expensive → <strong>predictive</strong></li><li>Right: requirements <strong>emerging</strong>, change is expected → <strong>adaptive</strong></li><li>Most real projects live <strong>between</strong> — iterative or incremental</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Anchor with the teaching package's change/certainty table. Ask for one example of each extreme from student experience. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Life cycle × change × certainty</h2>
+<table><tr><th>Life cycle</th><th>Requirements</th><th>Change</th><th>Feedback cadence</th></tr><tr><td>Predictive</td><td>fixed early</td><td>costly, controlled</td><td>milestones</td></tr><tr><td>Iterative</td><td>refined via prototypes</td><td>moderate</td><td>prototype loops</td></tr><tr><td>Incremental</td><td>stable per release</td><td>staged</td><td>each release</td></tr><tr><td>Adaptive</td><td>discovered per sprint</td><td>expected</td><td>every sprint</td></tr></table>
+<li>Same triangle (L01) applies on <strong>every</strong> cell — only the feedback rate differs</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Emphasize the last bullet: life cycle changes HOW you steer, not WHETHER the triangle binds. Sets up CS-07's regulated hybrid. 3 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Hybrid: the regulated data product</h2>
+<p><strong>CS-07 pattern</strong> — a regulated data product needs both:</p>
+<li><strong>Predictive spine:</strong> compliance gates, audit evidence, sign-offs — fixed dates</li><li><strong>Adaptive flesh:</strong> model iteration between gates</li></ul>
+<div class="mermaid">
+flowchart LR
+  G1["Gate 1&lt;br&gt;(compliance)"] --&gt; A["Sprints 1–3&lt;br&gt;(model iteration)"]
+  A --&gt; G2["Gate 2&lt;br&gt;(evidence pack)"] --&gt; B["Sprints 4–6"]
+  B --&gt; G3["Release gate"]
+</div>
+<li>The handover point is a <strong>contract</strong>: what evidence moves forward?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This is the CS-07 solution shape. Stress the handover contract — students often design hybrids without saying what crosses the gate. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a payments integration — vendor API fixed, UX still fluid → predictive for the API layer, incremental releases for UX</li><li><strong>DS:</strong> an NLP classifier for a regulator — gates for evidence, sprints for tuning</li><li>Choosing 'agile because it's modern' is a governance failure, not a style</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The last line is the assessment sentence — it appears in QB-U2 and the final exam's judgment section. 2 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-06</strong> — <em>Life-cycle choice for five vignettes</em>: five mini-projects, five decisions, one defense each <strong>CS-07</strong> — <em>Hybrid decision for a regulated data product</em>: design the gates and the handover contract</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-06 in pairs (15 min), CS-07 as a plenary design. Keys in instructor/answer-keys/cases/. Bridge to L06: whatever the cycle, every project still needs a charter.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Your FYP advisor insists on waterfall; your team wants Scrum. What evidence would settle the argument?</li><li>When is a <strong>pure</strong> life cycle actually the right answer?</li><li>What breaks in a hybrid when the gate evidence is written <em>after</em> the gate?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 previews L26 change control — gates with retrospective evidence are theatre, not governance. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Life cycle = <strong>feedback cadence</strong> chosen from change/certainty, not preference</li><li>Hybrids need an explicit <strong>handover contract</strong> at every gate</li><li>The triangle binds on every cell of the spectrum</li></ul>
+<p><strong>Exit ticket (2 min):</strong> place your capstone on the spectrum, mark its <strong>center of gravity</strong>, and write the one gate it must have.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed the L08 tailoring lecture — small projects still tailor, and this gives each student a concrete object to tailor.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — development approach &amp; life-cycle domain</li><li>Agile Manifesto (2001) — <em>Principles behind the Agile Manifesto</em></li><li>Teaching package: <code>instructor/teaching-packages/U2-lifecycles-initiating/L05-05-lifecycles.md</code></li><li><strong>Next:</strong> L06 — Project Charters: one page that starts the work</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Standards match the syllabus reference list. Preview L06 with the charter-under-pressure framing.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

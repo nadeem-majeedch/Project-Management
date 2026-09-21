@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L08 · Tailoring for Software &amp;amp; Data Projects (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 9">
+<h1>L08 · Tailoring for Software &amp; Data Projects</h1>
+<h2>Shrinking the framework to fit the project — not the other way round</h2>
+<p>Week 4 · Unit U2 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 9">
+<h2>Learning objectives</h2>
+<li><strong>Distinguish</strong> tailoring from skipping: what is <em>simplified</em>, what is <em>kept</em></li><li><strong>Apply</strong> a tailoring pass to a heavyweight template for a six-week project</li><li><strong>Justify</strong> each cut with a risk argument, not laziness</li><li><strong>Explain</strong> which artifacts are never tailorable away</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-11 is the whole lecture's spine — a heavyweight template meets a 6-week project. Capstone M1 due next milestone; tailoring rationale is graded there. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 9">
+<h2>The tailoring process</h2>
+<div class="mermaid">
+flowchart LR
+  SEL["Select&lt;br&gt;(which domains matter)"] --&gt; DEP["Set depth&lt;br&gt;(how much per domain)"]
+  DEP --&gt; CUT["Cut with rationale&lt;br&gt;(risk-based, documented)"]
+  CUT --&gt; REV["Review&lt;br&gt;(sponsor + PMO)"]
+</div>
+<li>Tailoring decides <strong>depth</strong>, never skips <strong>accountability</strong></li><li>Every cut is a bet: name the risk you are accepting</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The four-step flow is from the teaching package. Emphasize 'documented' — an undocumented cut is invisible until it detonates. 3 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 9">
+<h2>Never tailorable away</h2>
+<li><strong>Authorization</strong> — someone must own the go/no-go (L04/L06)</li><li><strong>Success criteria</strong> — otherwise "done" is an opinion (L06)</li><li><strong>Change control</strong> — even if it is a text message and a decision log (L26)</li><li><strong>Risk naming</strong> — a two-person project still has unknowns (L15)</li></ul>
+<p>What <em>can</em> shrink: document length, sign-off rounds, artifact formality — <strong>not</strong> the decisions behind them</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This slide is the exam anchor for CLO2's tailoring question. The four kept items map to QB-U2 items. 4 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 9">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a 6-week campus API — charter 1 page, WBS 2 levels, weekly 15-min change call</li><li><strong>DS:</strong> a two-week data-clean-up sprint — no formal quality plan, but a named data validator and an exit criterion</li><li>Same framework, smaller numbers — <strong>not</strong> a different religion</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Both examples come from the teaching package. Ask: which of the four untouchables would students most like to cut — and why are they wrong? 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 9">
+<h2>Case anchor:</h2>
+<p><strong>CS-11</strong> — <em>Tailoring a heavyweight template to a 6-week project</em>: mark each template section keep / shrink / cut, and defend three cuts with named risks</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>15-minute individual pass, then defend. Key: instructor/answer-keys/cases/CS-11.md. Grade signal: cuts without risk arguments score lowest on the rubric.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 9">
+<h2>Discussion</h2>
+<li>Which is riskier: tailoring too much or too little — and for whom?</li><li>Who should <em>approve</em> a tailoring decision, and when?</li><li>What does tailoring look like on a <strong>capstone</strong>? Which template pages will you keep?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 directly preps the capstone M1 artifact set — students should leave with a tailoring intention for their own plan. 6 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 9">
+<h2>Summary &amp; exit ticket</h2>
+<li>Tailoring = depth decisions with documented risk rationale</li><li>Authorization, success criteria, change control, risk naming: <strong>never cut</strong></li><li>A cut is a bet — name the risk you are accepting</li></ul>
+<p><strong>Exit ticket (2 min):</strong> name one artifact you will <strong>cut</strong> in your capstone and the risk you accept for cutting it.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M1's tailoring rationale section. Remind: Lab 2 due this week; U2 closes next lecture with Quiz 2 at L12.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 9">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — tailoring (section 3)</li><li>ISO 21502:2020 — tailoring guidance</li><li>Teaching package: <code>instructor/teaching-packages/U2-lifecycles-initiating/L08-08-tailoring.md</code></li><li><strong>Next:</strong> L09 — Scope &amp; the WBS: decomposing work you can actually verify (Unit U3 opens)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>U3 preview: the quantitative core begins — WBS, estimation, CPM, cost. Bring calculators.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+# ==============================================================================
+# Case Catalog — 105 Progressive Cases (meta only)
+# ==============================================================================
+# Case definitions live in planning/cases/band-{1..4}-*.yaml, merged by
+# tools/scaffold.py and tools/validate.py in glob (band) order:
+#
+#   band-1-beginner.yaml      CS-01..CS-20   Beginner
+#   band-2-intermediate.yaml  CS-21..CS-45   Intermediate
+#   band-3-advanced.yaml      CS-46..CS-75   Advanced
+#   band-4-expert.yaml        CS-76..CS-105  Expert
+#
+# Progression axes (planning/08-case-study-architecture.md):
+#   L1 single-concept drills        L2 two-concept applied
+#   L3 multi-concept analysis       L4 cross-domain integration (quantitative)
+#   L5 open-ended strategic (capstone-grade)
+#
+# Domains: D1 foundations | D2 lifecycle/initiating | D3 scope/schedule
+#          D4 cost | D5 risk | D6 quality/data | D7 procurement
+#          D8 adaptive delivery | D9 teams/stakeholders | D10 ethics/sustainability/closure
+#
+# Per-case schema (band files):
+#   id, title, domain, level, use, lecture (anchors only), seed, difficulty,
+#   numerical, tags, concepts, summary, context, problem, constraints[],
+#   tasks[], deliverables[], discussion[], objectives[], rubric,
+#   solution{model, reasoning, alternatives[], calculations?},
+#   numeric{type, note?, data, expected}?   ← machine-checked by tools/check_cases.py
+#
+# `use` values: in-class | homework | exam | portfolio | capstone
+# ==============================================================================
+
+meta:
+  total_cases: 105
+  anchor_cases: 100   # cases with a lecture anchor (published as lecture-linked briefs)
+  extension_cases: 5  # distributed via LMS (portfolio/capstone feeders)
+  portfolio_required: 12   # students write 12 portfolio analyses, chosen from portfolio-eligible cases
+  numerical_target: 30     # gate 12: at least this many machine-checkable numeric cases
+  difficulty_bands:
+    beginner:     {range: "CS-01..CS-20",  count: 20}
+    intermediate: {range: "CS-21..CS-45",  count: 25}
+    advanced:     {range: "CS-46..CS-75",  count: 30}
+    expert:       {range: "CS-76..CS-105", count: 30}
+  seed_projects:           # recurring fictional settings so cases build on each other
+    - id: MEDSYNC
+      name: "MedSync — hospital medication-reconciliation platform"
+      context: "Regulated health data, multi-site rollout"
+    - id: TELCOCARE
+      name: "TelcoCare — telecom customer-churn ML product"
+      context: "Commercial ML product, quarterly targets"
+    - id: CAMPUSHUB
+      name: "CampusHub — university student-services portal"
+      context: "Campus system, mixed stakeholders, fixed semester budget"
+    - id: GRIDSENSE
+      name: "GridSense — smart-grid streaming analytics platform"
+      context: "IoT telemetry, real-time pipelines, safety-critical alerts"
+    - id: VOLTPAY
+      name: "VoltPay — fintech payments migration"
+      context: "Regulated transactions, hard cutover dates, vendor-heavy"
+    - id: AGROSENSE
+      name: "AgroSense — agricultural IoT + yield prediction"
+      context: "Field hardware, seasonal deadlines, noisy sensor data"
+    - id: CIVICFLOW
+      name: "CivicFlow — municipal permits digitization"
+      context: "Public-sector procurement, transparency law, legacy records"

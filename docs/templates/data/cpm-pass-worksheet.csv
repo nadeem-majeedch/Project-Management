@@ -1,0 +1,12 @@
+# CPM pass worksheet (Lab 4) — fill every column from your forward/backward pass
+# ES/EF = forward pass; LS/LF = backward pass; TF = LS-ES; FF = min(ES of succs) - EF
+# Critical = TRUE when TF = 0 (answer-checker reads this column; TRUE/FALSE)
+id,duration_weeks,predecessors,es,ef,ls,lf,total_float,free_float,critical
+A,2,,0,2,0,2,0,0,TRUE
+B,3,A,,,,,,,
+C,4,B,,,,,,,
+D,5,B,,,,,,,
+E,4,D,,,,,,,
+F,3,"B, C",,,,,,,
+G,2,"C, E, F",,,,,,,
+H,1,G,,,,,,,

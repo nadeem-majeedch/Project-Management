@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L14 · Quality &amp;amp; Data-Quality Planning (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 9">
+<h1>L14 · Quality &amp; Data-Quality Planning</h1>
+<h2>Quality is planned in, not inspected in — including data quality</h2>
+<p>Week 7 · Unit U3 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 9">
+<h2>Learning objectives</h2>
+<li><strong>Write</strong> quality metrics with thresholds before delivery starts</li><li><strong>Classify</strong> costs of quality (prevention, appraisal, internal/external failure)</li><li><strong>Define</strong> data-quality dimensions and enforce them as executable rules</li><li><strong>Argue</strong> why quality planning is the cheapest quality work you will ever do</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This lecture is the DS cohort's bridge into governance territory (returns at L27). CS-19's eight rules are the practical centerpiece. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 9">
+<h2>From requirements to quality metrics</h2>
+<div class="mermaid">
+flowchart LR
+  REQ["Requirement&lt;br&gt;(&lt; 5 s lookup)"] --&gt; MET["Metric&lt;br&gt;(p95 latency, 200 users)"]
+  MET --&gt; THR["Threshold&lt;br&gt;(pass/fail line)"]
+  THR --&gt; METHOD["Measurement method&lt;br&gt;(who, when, how)"]
+</div>
+<li>A metric without a threshold is a wish; a threshold without a method is a fight waiting to happen</li><li>Cost of quality: <strong>prevention</strong> (cheap) → <strong>appraisal</strong> → <strong>internal failure</strong> → <strong>external failure</strong> (a 100× climb, roughly)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The 4-step chain is from the teaching package. The 100× claim: present as the package's rough industry ratio, not a law. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 9">
+<h2>Data quality: six dimensions, executable rules</h2>
+<table><tr><th>Dimension</th><th>Rule example (customer dataset)</th></tr><tr><td>Completeness</td><td>phone present in ≥ 98% of active rows</td></tr><tr><td>Validity</td><td><code>signup_date &lt;= today</code> for every row</td></tr><tr><td>Uniqueness</td><td>customer_id duplicated in ≤ 0.1% of rows</td></tr><tr><td>Consistency</td><td><code>churn_date</code> implies <code>status = churned</code></td></tr><tr><td>Timeliness</td><td>feed refreshed within 24 h of source</td></tr><tr><td>Accuracy</td><td>2% sample re-verified monthly</td></tr></table>
+<p><em>(Dimension set follows the classic completeness/validity/uniqueness/consistency/timeliness/accuracy model used in the teaching package)</em></p>
+<li><strong>CS-19's exercise:</strong> turn eight vague complaints into eight executable rules</li><li>A rule you cannot run in SQL/validation code is a hope, not a rule</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The complaint→rule conversion is CS-19's core skill and directly feeds the responsible-AI agenda (L27). Ask: which dimension does a duplicate-row bug violate? (uniqueness AND consistency — good argument material.) 6 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 9">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a registration system where "tested" meant "the demo worked once" — CS-18 fixes metrics with thresholds</li><li><strong>DS:</strong> the churn model trained on a 4%-duplicated dataset — every downstream metric was quietly wrong; the failure was <strong>quality planning</strong>, not modelling</li><li>Data quality defects are external failures by the time anyone notices them</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The churn example is the teaching package's DS anchor. Connect: this is why L27 treats data governance as a project-management topic, not an IT chore. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 9">
+<h2>Case anchor:</h2>
+<p><strong>CS-18</strong> — <em>Quality metrics for a registration system</em>: write metric + threshold + method for five vague requirements <strong>CS-19</strong> — <em>Eight data-quality rules for a customer dataset</em>: convert complaints into executable rules with owners</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-18 in pairs, CS-19 as a table exercise — both feed Lab 8 (quality plan). Keys: instructor/answer-keys/cases/CS-18.md, CS-19.md. Quiz 3 (L26) will reuse the cost-of-quality ladder.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 9">
+<h2>Discussion</h2>
+<li>Who should <em>own</em> a data-quality rule: the data engineer, the analyst, or the data owner from L07?</li><li>Is 100% data quality ever the right target? What would it cost?</li><li>Your model's accuracy drops after a source-schema change. Which quality dimension failed — and which <em>process</em>?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1 ties back to L07's RACI/ownership discussion; Q3's expected answer: consistency (technical) with timeliness (process) — the process answer is the graded one. 6 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 9">
+<h2>Summary &amp; exit ticket</h2>
+<li>Metric → threshold → method, agreed before delivery</li><li>Prevention is the cheapest quality work; external failure is the most expensive lesson</li><li>Data quality = dimensions turned into executable, owned rules</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write one executable data-quality rule for your capstone's dataset — dimension, threshold, owner.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M2's quality artifact. U3 closes here; U4 opens with risk. Remind: Assignment 1 (scope &amp; schedule) is due after L16 per the syllabus.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 9">
+<h2>References &amp; next lecture</h2>
+<li>PMI. (2021). <em>PMBOK® Guide</em> (7th ed.) — Quality principle; Measurement &amp; Delivery domains</li><li>PMI. (2017). <em>PMBOK® Guide</em> (6th ed.) — "Plan Quality Management" (cost-of-quality taxonomy)</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/quality-plan-template.md</code></a> · Lab 8: <a href="../../docs/labs/index.md"><code>docs/labs/lab-08-quality-plan.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U3-planning-the-work/L14-14-quality-data-quality.md</code></li><li><strong>Next:</strong> L15 — Risk Management: naming the unknowns before they name themselves (Unit U4 opens)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>ISO/IEC 25012 grounds the six dimensions — check it is in the syllabus reference list (it is, per QB-U3). Preview L15 with the P×I matrix.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# CAMPUS-MEND risk score answer key (Labs 9-10) — verified by check_answers.py gate D
+# Score = max(S,C,Q) x P; Bands: Low <=5, Medium 6-11, High 12-15, Critical 16-25
+risk_id,P,S_impact,C_impact,Q_impact,score,band
+R1,3,4,2,3,12,High
+R2,2,5,3,2,10,Medium
+R3,3,1,2,5,15,High
+R5,4,3,2,2,12,High
+R6,2,3,2,2,6,Medium
+R7,2,4,3,1,8,Medium
+R8,4,3,2,4,16,Critical

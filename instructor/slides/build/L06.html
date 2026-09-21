@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L06 · Project Charter &amp;amp; Business Case (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L06 · Project Charter &amp; Business Case</h1>
+<h2>One page that starts the work</h2>
+<p>Week 3 · Unit U2 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Compose</strong> a one-page charter that a sponsor could actually sign</li><li><strong>Separate</strong> scope (in/out) from success criteria (verifiable)</li><li><strong>Explain</strong> what authorization legally and practically means</li><li><strong>Reject</strong> vague objectives using the SMART test</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Lab 1 this week uses exactly this anatomy on the CAMPUS-MEND brief — say so up front. Keep the anatomy slide canonical; students will reuse it in their capstone M1. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>What a charter must settle</h2>
+<div class="mermaid">
+flowchart TD
+  C["Charter"] --&gt; O["Objectives&lt;br&gt;(SMART)"]
+  C --&gt; S["Scope&lt;br&gt;(in / out)"]
+  C --&gt; SC["Success criteria&lt;br&gt;(verifiable)"]
+  C --&gt; ST["Sponsor &amp; PM&lt;br&gt;(named)"]
+  C --&gt; AU["Authorization&lt;br&gt;(signature = spent authority)"]
+</div>
+<li>One page. If it needs two, the <strong>second page is a scope statement</strong> — move it (L09)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The one-page discipline is the teaching package's core rule. Preview: scope statement is the charter's deeper sibling, next lecture. 3 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>SMART objectives vs success criteria</h2>
+<table><tr><th>Charter field</th><th>Bad</th><th>Good</th></tr><tr><td>Objective</td><td>"Improve the portal"</td><td>"Cut average result-lookup time from 40 s to under 5 s by semester start"</td></tr><tr><td>Success criterion</td><td>"Users like it"</td><td>"≥ 70% of sampled users complete lookup unaided in usability test"</td></tr></table>
+<li>Objectives = <strong>what we intend</strong> · Success criteria = <strong>how we will know</strong></li><li>If you cannot name the measurement, it is not a criterion</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The 40s→5s example is from the teaching package's worked example. Make students convert one of their own FYP goals live. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Authorization is not a rubber stamp</h2>
+<li>Signature = the sponsor <strong>spends authority</strong>: budget released, team may commit</li><li>Undersigned charters produce the classic failure: work proceeds, decisions stall</li><li><strong>CS-08's trap:</strong> under deadline pressure, the team <em>started</em> before authorization — recover, don't just finish</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-08 is the pressure case; its key discusses recovery via retroactive ratification vs restart. Connect to L04: authorization is the sponsor's A in the RACI. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a hackathon-winning prototype that skipped its charter — six months later, nobody can say who owns it</li><li><strong>DS:</strong> a "quick analysis" request that became a four-month model build — the charter that was never written is the scope that was never agreed</li><li>Lab 1: you will write CAMPUS-MEND's charter from a messy sponsor email</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS 'quick analysis' pattern is the cohort's most common future failure — name it directly. Point to Lab 1 (docs/labs/lab-01-charter.md) and the template in docs/templates/. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-08</strong> — <em>One-page charter under pressure</em>: sponsor announces a demo in 72 hours; write the charter anyway, then defend what you cut</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>15-minute in-class write against Lab 1's template, then defend. Key: instructor/answer-keys/cases/CS-08.md. The teaching package's preparation notes have the pressure details.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Who should <em>write</em> the charter — sponsor or PM? Who <em>signs</em> it, and why must those differ?</li><li>Can success criteria change mid-project? What does that imply about the charter?</li><li>What is the minimum viable charter for a two-week spike?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 connects to L21's spike concept — even exploratory work needs an exit criterion. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Charter = objectives + scope + success criteria + named authority + signature</li><li>SMART objectives <strong>intend</strong>; success criteria <strong>prove</strong></li><li>Authorization releases real authority — treat it as spending, not ceremony</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write one SMART objective for your capstone, and the success criterion that would <em>falsify</em> it.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The falsification framing is deliberate — it pre-loads the quality-metrics mindset for L17. Skim tickets before L07.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — initiating processes &amp; project charter</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/charter-template.md</code></a></li><li>Lab 1 brief: <a href="../../docs/labs/index.md"><code>docs/labs/lab-01-charter.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U2-lifecycles-initiating/L06-06-charter.md</code></li><li><strong>Next:</strong> L07 — Stakeholders: who can stop your project, and what they want</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L07 with the CS-09 stakeholder hunt. Lab 1 is due in a week per the syllabus schedule.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

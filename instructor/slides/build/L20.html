@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L20 · Monitoring, Dashboards &amp;amp; Change Control (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 9">
+<h1>L20 · Monitoring, Dashboards &amp; Change Control</h1>
+<h2>Measure what matters, control change, keep baselines honest</h2>
+<p>Week 10 · Unit U4 · CLO4 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 9">
+<h2>Learning objectives</h2>
+<li><strong>Design</strong> a sponsor dashboard from leading and lagging indicators</li><li><strong>Distinguish</strong> leading from lagging signals — and name their failure modes</li><li><strong>Run</strong> a change-control flow that protects the baseline without strangling work</li><li><strong>Explain</strong> what a CCB decides, and what it must never decide</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This closes U4; the mock CCB (CS-27) is the unit's integrative exercise and rehearses midterm judgment questions. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 9">
+<h2>Leading vs lagging: what each can and cannot say</h2>
+<table><tr><th>Type</th><th>Example</th><th>Can do</th><th>Cannot do</th></tr><tr><td>Lagging</td><td>CPI, SPI, defect counts</td><td>prove what happened</td><td>prevent it</td></tr><tr><td>Leading</td><td>open risks trend, review latency, WIP age</td><td>warn in time</td><td>lie convincingly</td></tr></table>
+<li>Dashboards die of <strong>vanity metrics</strong>: counts that always look fine</li><li>Rule: every tile on a sponsor dashboard must have a <strong>decision</strong> it feeds</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The decision-feeds rule is the package's dashboard discipline — any tile without a consumer gets cut. Ask for a vanity metric from student experience ('lines of code' always lands). 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 9">
+<h2>Change control: the baseline's immune system</h2>
+<div class="mermaid">
+flowchart LR
+  REQ["Change request&lt;br&gt;(why + impact)"] --&gt; ASS["Impact analysis&lt;br&gt;(scope/time/cost/risk)"]
+  ASS --&gt; CCB{"CCB decision"}
+  CCB --&gt;|approve| UPD["Baselines updated&lt;br&gt;(re-baseline PV/EV)"]
+  CCB --&gt;|reject| LOG["Logged with reason"]
+  UPD --&gt; MON["Monitored like&lt;br&gt;baseline work"]
+</div>
+<li>Emergency changes: <strong>decide fast, document immediately</strong> — an undocumented emergency is indistinguishable from scope creep (CS-13 returns)</li><li>CCB decides <em>changes to baselines</em>; it does not do the work, and it does not design</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The emergency-change discipline is the CS-13 linkage — the change log from L09 now has teeth. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 9">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a sponsor dashboard with one tile per risk band + SPI/CPI trend + top-three issue ages — nothing else survives review</li><li><strong>DS:</strong> model-drift monitors are <em>leading</em> indicators — but only if someone subscribed to the alert; an unread alert is a vanity metric</li><li>In DS projects, the data-quality rule status (L14) belongs on the sponsor dashboard</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The drift-alert point connects L14's rules to L20's monitoring — one system, not two. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 9">
+<h2>Case anchor:</h2>
+<p><strong>CS-27</strong> — <em>Sponsor dashboard and mock CCB</em>: design the five-tile dashboard, then run the change request against it in a mock CCB with role cards</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Role-play exercise — assign sponsor/PM/lead/QA cards from the key. The key grades decision quality and process adherence, not outcomes. Key: instructor/answer-keys/cases/CS-27.md.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 9">
+<h2>Discussion</h2>
+<li>Which is more dangerous: a CCB that approves everything, or one that approves nothing? For whom?</li><li>Your best leading indicator contradicts your lagging ones. Which do you report to the sponsor first?</li><li>What changes on an Agile project — and what still needs control? (Preview of U5.)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2's expected answer: the leading one, with the lagging context — but say why in one sentence (decision timing). Q3 bridges to L21. 6 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 9">
+<h2>Summary &amp; exit ticket</h2>
+<li>Leading indicators warn; lagging indicators prove — dashboards need both, feeding decisions</li><li>Change control protects the baseline; emergencies are documented <em>immediately</em></li><li>CCB governs baselines, never the work itself</li></ul>
+<p><strong>Exit ticket (2 min):</strong> name one leading indicator for your capstone and the decision it feeds. If no decision, rename or drop it.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed the M2 monitoring artifact. U5 opens next lecture with Scrum.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 9">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — measurement domain, change control</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/monitoring-dashboard-template.md</code></a> · Lab 12: <a href="../../docs/labs/index.md"><code>docs/labs/lab-12-communication.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U4-risk-uncertainty-control/L20-20-monitoring-control.md</code></li><li><strong>Next:</strong> L21 — Scrum in Practice: roles, events, artifacts — and how they fail (Unit U5 opens)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview U5 with the roles/events/artifacts map; Quiz 3 lands at L26 covering L21–L26.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

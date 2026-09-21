@@ -1,0 +1,10 @@
+# CAMPUS-MEND CPM answer key (Lab 4) — verified by tools/check_answers.py gate C
+id,duration_weeks,predecessors,es,ef,ls,lf,total_float,free_float,critical
+A,2,,0,2,0,2,0,0,TRUE
+B,3,A,2,5,2,5,0,0,TRUE
+C,4,B,5,9,7,11,2,0,FALSE
+D,5,B,5,10,5,10,0,0,TRUE
+E,4,D,10,14,10,14,0,0,TRUE
+F,3,"B, C",9,12,11,14,2,2,FALSE
+G,2,"C, E, F",14,16,14,16,0,0,TRUE
+H,1,G,16,17,16,17,0,0,TRUE

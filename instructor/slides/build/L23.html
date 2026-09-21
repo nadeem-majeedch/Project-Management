@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L23 · Agile for Data Science &amp;amp; ML Projects (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L23 · Agile for Data Science &amp; ML Projects</h1>
+<h2>Sprints that respect experiments, data discovery, and model work</h2>
+<p>Week 12 · Unit U5 · CLO5 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Rewrite</strong> feature-first backlog items as hypothesis-first experiments</li><li><strong>Define</strong> a model Definition of Done with evaluation evidence</li><li><strong>Insert</strong> a model-risk gate into an adaptive life cycle (L05's hybrid, grown up)</li><li><strong>Plan</strong> DS sprints with an explicit discovery allowance</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This is the cohort's signature lecture — everything else transfers, this one transforms. CS-31/CS-32 are both workshop cases. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Feature-first vs hypothesis-first</h2>
+<table><tr><th>Feature-first (fails)</th><th>Hypothesis-first (works)</th></tr><tr><td>"Build churn-score API"</td><td>"Test: 30-day inactivity predicts churn with AUC ≥ 0.75"</td></tr><tr><td>Done = code merged</td><td>Done = hypothesis <strong>supported or refuted, with evidence</strong></td></tr><tr><td>Failure = wasted sprint</td><td>Refutation = <strong>bought knowledge</strong>, budgeted like any deliverable</td></tr></table>
+<li>A refuted hypothesis that kills a doomed feature <em>saved</em> the project — celebrate it in review, not retro</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The refutation-as-value reframe is the lecture's core attitude shift. Rewrite one student backlog item live. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The model Definition of Done</h2>
+<div class="mermaid">
+flowchart LR
+  DATA["Data passes&lt;br&gt;quality rules (L14)"] --&gt; BASE["Beats baseline&lt;br&gt;on held-out data"]
+  BASE --&gt; FAIR["Fairness &amp;&lt;br&gt;leakage checks"]
+  FAIR --&gt; DOC["Model card:&lt;br&gt;limits + intended use"]
+  DOC --&gt; DONE["Done"]
+</div>
+<li>"Model improved" is not Done — <strong>evidence</strong> is Done: baseline comparison, held-out evaluation, failure analysis</li><li>The model card's 'limits' section is where responsible AI becomes a <em>deliverable</em> (L27 preview)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The five-stage DoD is the package's checklist. The leakage check is where student models most often die — say why (temporal leakage in time-series features). 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>The model-risk gate</h2>
+<li>L05's handover contract, grown up: between modelling sprints, a <strong>gate</strong> checks</li><ul><li>data drift since last gate · fairness metrics vs threshold · explainability evidence for decisions</li></ul><li>Fail → iterate inside the sprint; pass → deploy path opens</li><li>This is PMBOK's uncertainty domain meeting the adaptive approach — <strong>by design, not apology</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The gate structure is CS-32's architecture. Tie to L05's gate-evidence discipline: same mechanism, new evidence types. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a backend team adopts experiment framing for performance work: "hypothesis: caching cuts p95 to &lt; 200 ms" — same discipline</li><li><strong>DS:</strong> CS-31 rewrites a feature backlog into a hypothesis board; CS-32 drafts the model DoD with named fairness metrics</li><li>Discovery allowance: budget 20–30% of sprint capacity for unbooked exploration — pretend otherwise and discovery happens anyway, unmanaged</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The discovery-allowance number is the package's planning guidance — the honest alternative to pretend-certainty. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-31</strong> — <em>Feature-first to hypothesis-first backlog rewrite</em>: convert eight items; argue which refutations would change the project <strong>CS-32</strong> — <em>Model definition-of-done</em>: draft the five-stage DoD with thresholds your team could hold</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Workshop cases — keys grade the evidence discipline, not the specific hypotheses. Keys: instructor/answer-keys/cases/CS-31.md, CS-32.md. Both feed the capstone M3 iteration plan.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>What does a burndown chart even mean on a discovery-heavy sprint — and what would you chart instead?</li><li>Who owns the model-risk gate decision: PO, team, or a governance board? What changes with each answer?</li><li>Is a refuted hypothesis 'wasted effort' under your university's grading rules? Should it be?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2's answer trade: PO-owned gates are fast but soft; board-owned gates are slow but defensible — the capstone will force this choice. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Hypothesis-first items make refutation valuable and evidence central</li><li>Model DoD = quality rules + baseline + fairness + model card</li><li>Model-risk gates give adaptive projects their governance spine</li></ul>
+<p><strong>Exit ticket (2 min):</strong> rewrite one of your capstone's backlog items as a testable hypothesis with a numeric success threshold.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M3. Preview L24: when one team isn't enough — scaling without ceremony sprawl.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>Amershi et al. (2019) <em>Software Engineering for Machine Learning: A Case Study</em> — ICSE-SEIP (industry practice for ML pipelines; syllabus-listed)</li><li>Mitchell et al. (2019) <em>Model Cards for Model Reporting</em>, FAT\* (public, syllabus-consistent)</li><li>Teaching package: <code>instructor/teaching-packages/U5-adaptive-delivery-teams/L23-23-agile-data-ml.md</code></li><li><strong>Next:</strong> L24 — Scaling Frameworks &amp; Hybrid Delivery</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Both citations are real, public, and syllabus-consistent (verified against the L23 package's reading list). Preview L24 with the 40-person program case.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

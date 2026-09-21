@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L07 · Stakeholder Identification &amp;amp; Analysis (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L07 · Stakeholder Identification &amp; Analysis</h1>
+<h2>Who can stop your project — and what they want</h2>
+<p>Week 4 · Unit U2 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Identify</strong> stakeholders through exchanges (what each side needs), not name lists</li><li><strong>Assess</strong> power and interest with evidence, not intuition</li><li><strong>Design</strong> engagement strategies per grid quadrant — and move stakeholders when needed</li><li><strong>Detect</strong> the silent stakeholders who surface late and cost most</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The exchanges framing is the teaching package's core idea and the grid is its visual heart. Labs 2 uses both — point at the brief early. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Exchanges, not name lists</h2>
+<div class="mermaid">
+flowchart LR
+  PM["Project"] --&gt;|needs: data access, sign-off| RG["Regulator"]
+  RG --&gt;|needs: audit evidence, no public risk| PM
+  PM --&gt;|needs: adoption, feedback| US["End users"]
+  US --&gt;|needs: less friction in daily work| PM
+</div>
+<li>A stakeholder entry without an exchange is <strong>incomplete</strong></li><li>The exchange tells you <em>what to offer</em>, the grid tells you <em>where to aim it</em></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Do one live exchange for a student-named stakeholder (registrar, data owner, DPO...). The two-way arrows matter: your side of the exchange is your leverage. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The power–interest grid</h2>
+<div class="mermaid">
+quadrantChart
+  title Power vs interest
+  x-axis Low --&gt; High
+  y-axis Low --&gt; High
+  quadrant-1 Manage closely
+  quadrant-2 Keep satisfied
+  quadrant-3 Monitor
+  quadrant-4 Keep informed
+  Sponsor: [0.85, 0.9]
+  Data owner: [0.8, 0.35]
+  End users: [0.25, 0.7]
+  Vendor: [0.4, 0.4]
+</div>
+<li><strong>Keep satisfied</strong> (high power, low interest) is where projects die quietly</li><li>Strategy per quadrant: manage closely · keep satisfied · keep informed · monitor</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The data-owner placement is the DS cohort's signature pattern (Lab 2 builds this). Ask where a DPO sits on a student's project — usually high power, low interest until something goes wrong. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Moving stakeholders</h2>
+<li>The grid is a <strong>snapshot</strong>; engagement is <strong>movement</strong></li><li><em>Keep satisfied</em> → <em>manage closely</em>: brief early, before they ask</li><li><em>Monitor</em> → <em>keep informed</em>: a silent skeptic becomes an active blocker at review time</li><li>Every movement plan costs hours — budget them in the communication plan (L18)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-10 is the engagement-gap exercise. The movement-cost point sets up L18's comms planning arithmetic. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a campus portal rollout — the registrar can stop it with one signature; students (users) can starve it of adoption</li><li><strong>DS:</strong> a hospital analytics project — the <em>data owner</em> holds access, the <em>clinicians</em> hold truth, the DPO holds consent rules (CS-09's hunt)</li><li>Silent stakeholders in DS projects: the people whose data you are modelling</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The last line lands the responsible-data point that returns in L27's governance lecture. CS-09/CS-10 are the paired in-class exercises. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-09</strong> — <em>Stakeholder hunt on a hospital analytics project</em>: find the eight stakeholders hiding in the scenario <strong>CS-10</strong> — <em>Power–interest grid and engagement plan</em>: place them, then close the engagement gaps</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Run CS-09 as a hunt (10 min), CS-10 as grid-building on CS-09's results (10 min). Keys: instructor/answer-keys/cases/CS-09.md, CS-10.md. Lab 2 extends this to the CAMPUS-MEND register.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Who is a stakeholder of <em>your</em> FYP that nobody has contacted yet?</li><li>Can a stakeholder be fully satisfied and still block you? What does that reveal about the grid's limits?</li><li>When is it ethical to <em>avoid</em> engaging a stakeholder?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 is the governance seed — opponents with legitimate claims still deserve hearing, not silence; full treatment in L29. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Stakeholders are defined by <strong>exchanges</strong>, discovered by <strong>hunting</strong>, aimed at via the <strong>grid</strong></li><li>The dangerous quadrant is <em>keep satisfied</em> — high power, ignored interest</li><li>Engagement is movement over time, budgeted like any other work</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write one exchange (both directions) between your capstone and its most dangerous stakeholder.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets preview the M1 capstone stakeholder register. Formative only.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — stakeholder performance domain</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/stakeholder-register-template.md</code></a> · Lab 2 brief: <a href="../../docs/labs/index.md"><code>docs/labs/lab-02-stakeholders.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U2-lifecycles-initiating/L07-07-stakeholders.md</code></li><li><strong>Next:</strong> L08 — Tailoring: shrinking the framework to fit the project</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L08 with the six-week-project tailoring exercise (CS-11).</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

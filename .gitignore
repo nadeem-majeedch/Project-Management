@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# MkDocs build output
+site/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+
+# Agent metadata
+.freebuff/

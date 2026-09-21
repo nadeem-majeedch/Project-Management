@@ -1,0 +1,37 @@
+# =============================================================================
+# Semester Schedule Configuration — INSTRUCTOR-OWNED
+# =============================================================================
+# The ONLY place where calendar dates live. Everything downstream
+# (weekly schedule, calendar pages, CSV/ICS exports) is generated from this
+# file plus the fixed course roster (planning/course-data.yaml).
+#
+# UNTIL `configured: true`, every generated calendar shows relative weeks
+# (Week 1..16) and NO specific dates. This keeps the site honest: it never
+# claims institutional dates the instructor has not set.
+#
+# Edit this file, then regenerate:
+#   python tools/scaffold.py && python tools/calendar.py && python tools/validate.py
+
+# Has the instructor configured real semester dates?
+#   false -> calendars show Week 1..16 only (no dates claimed)
+#   true  -> calendars compute and display real dates from the fields below
+configured: false
+
+# ----- Fields required when `configured: true` -------------------------------
+
+# First teaching day of Week 1 (the day of the first lecture).
+# Any weekday works; the generator counts teaching days, not calendar weeks.
+# Format: YYYY-MM-DD
+semester_start: 2026-09-14   # placeholder default — ignored while configured: false
+
+# Days of week on which lectures are delivered (two per week by design).
+# 1 = Monday .. 7 = Sunday
+teaching_days: [1, 3]        # placeholder default: Monday & Wednesday
+
+# Dates with no teaching (public holidays, campus closures, exam weeks
+# outside the course). A lecture that would land on a holiday slides to the
+# next available teaching day. List as YYYY-MM-DD strings.
+holidays: []                 # e.g. [2026-11-09, 2026-12-25]
+
+# Optional label shown on generated calendars, e.g. "Fall 2026".
+term_label: ""

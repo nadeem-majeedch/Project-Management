@@ -1,0 +1,5 @@
+# WBS hours worksheet (Lab 3 / Lab 6 feed) — fill hours from your decomposition
+# Educational data: CAMPUS-MEND reference values live in campus-mend-hours.csv
+wbs_id,package_name,dev_hours,qa_hours,de_hours,pm_hours,owner,acceptance_criterion
+1.1,,, ,,,
+1.2,,, ,,,

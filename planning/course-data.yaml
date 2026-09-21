@@ -1,0 +1,1098 @@
+# ==============================================================================
+# Project Management — Course Data (Single Source of Truth)
+# ==============================================================================
+# Audience : 7th-semester BS Computer Science & BS Data Science students
+# Instructor: Dr. Muhammad Nadeem Majeed
+# Structure : 16 weeks x 2 lectures/week x 2 hours = 32 lectures, 64 hours
+#
+# Every planning artifact (curriculum map, schedule, CLO map, case catalog,
+# lecture skeletons) is GENERATED from this file by tools/scaffold.py.
+# Edit here, regenerate — never hand-edit generated files.
+#
+# Per-lecture schema:
+#   num      — lecture number 1..32
+#   week     — teaching week 1..16
+#   unit     — course unit (U1..U7)
+#   code     — short code used in schedules (L01..L32)
+#   slug     — file name stem under docs/lectures/
+#   title    — lecture title
+#   tagline  — one-line summary for the curriculum map
+#   clo      — CLOs covered (list of CLO1..CLO6)
+#   bloom    — highest Bloom level targeted (Remember..Create)
+#   cases    — case-study cluster referenced by the lecture
+#   tools    — named tools/frameworks exercised (informational)
+#   topics   — ordered content blocks: title + bullet points
+#   activities — in-class activities (2-hour session plan anchors)
+#   assessment — assessment component anchored at this lecture (or null)
+# ==============================================================================
+
+course:
+  code: PM-401
+  title: Project Management
+  level: Semester 7
+  programs: [BS Computer Science, BS Data Science]
+  credits: 3+1
+  contact_hours: 64
+  lecture_hours: 32
+  lecture_length_hours: 2
+  duration_weeks: 16
+  instructor: Dr. Muhammad Nadeem Majeed
+  version: "1.0"
+  last_reviewed: 2026-09-19
+
+standards:
+  pmBok: "PMBOK Guide, 7th Edition (PMI, 2021) — 12 principles, 8 performance domains"
+  pmp: "PMP Exam Content Outline (PMI, 2021) — domains: People (42%), Process (50%), Business Environment (8%)"
+  pmbok6_reference: "PMBOK Guide, 6th Edition (PMI, 2017) — retained for 49-process and ITTO vocabulary"
+  iso21502: "ISO 21502:2020 — Guidance on project management"
+  iso31000: "ISO 31000:2018 — Risk management guidelines"
+  agile: "Agile Manifesto (2001); Scrum Guide 2020 (Schwaber & Sutherland)"
+  pmbok8: "PMBOK Guide, 8th Edition (PMI, 2025) — cited where publicly documented; verify before publication"
+
+clos:
+  - id: CLO1
+    statement: >-
+      Given a PMBOK 7 performance-domain map, define and correctly classify
+      the twelve principles, the eight performance domains, and predictive,
+      adaptive, and hybrid life-cycle models; given a project vignette, justify
+      a life-cycle choice using at least three explicit criteria (requirements
+      volatility, regulatory exposure, feedback cadence, team distribution).
+    bloom: Understand
+    assessment: Midterm, quizzes
+    lectures: [1, 2, 3, 4, 5, 6, 8]
+  - id: CLO2
+    statement: >-
+      Given a project brief, construct a deliverable-oriented WBS that passes
+      the 100% rule, derive three-point (PERT) estimates for its work
+      packages, build a CPM network with correctly computed float, and produce
+      a levelled, time-feasible Gantt baseline within a fixed window.
+    bloom: Apply
+    assessment: Assignment 1, Labs 1-4, Midterm
+    lectures: [6, 9, 10, 11, 12]
+  - id: CLO3
+    statement: >-
+      Given activity cost data, develop a bottom-up budget with S-curve and a
+      quality/data-quality plan containing at least four measurable metrics
+      and eight enforceable data-quality rules; given PV, EV, and AC, compute
+      the full earned-value set (CV, SV, CPI, SPI, EAC variants, TCPI)
+      correctly.
+    bloom: Apply
+    assessment: Midterm (primary); practiced via CS-17, CS-26, CS-57, CS-62 and capstone budget
+    lectures: [13, 14, 18]
+  - id: CLO4
+    statement: >-
+      Given a project scenario, identify at least eighteen distinct risks as
+      normalized cause-risk-effect statements, quantify at least one risk via
+      EMV or Monte Carlo simulation, and propose responses with named owners,
+      triggers, and residual risk; given PV/EV/AC data, diagnose project
+      health and recommend a justified recovery action.
+    bloom: Analyze/Evaluate
+    assessment: Assignment 3, Labs 7-8, Midterm, Capstone checkpoint
+    lectures: [15, 16, 17, 18, 19, 20]
+  - id: CLO5
+    statement: >-
+      Given a delivery context, operate Scrum, Kanban, and hybrid flow
+      systems: produce a sprint plan with a single-sentence goal and capacity
+      check, set WIP limits justified by flow metrics, rewrite a feature-first
+      backlog into a hypothesis-driven one for a data/ML project, and prepare
+      a working agreement plus a BATNA-based negotiation plan for a sponsor
+      conflict.
+    bloom: Apply
+    assessment: Assignment 4, Labs 9-12, Case portfolio, Capstone
+    lectures: [5, 7, 8, 21, 22, 23, 24, 25, 26]
+  - id: CLO6
+    statement: >-
+      Given a project brief, design a complete, internally consistent project
+      management plan (scope, schedule, and cost baselines plus risk,
+      communication, quality, and data-governance plans), then defend its
+      trade-offs — tailoring cuts, risk investments, ethics and AI-use
+      positions — in a rubric-scored oral defense with follow-up questions.
+    bloom: Create
+    assessment: Capstone, Final exam, Case portfolio
+    lectures: [27, 28, 29, 30, 31, 32]
+
+# Knowledge areas (PMBOK/ISO vocabulary) mapped to CLOs and carrying lectures.
+# Used by docs/syllabus/detailed-syllabus.md and checked by tools/validate.py gate 9:
+# every area must touch >=1 lecture; every lecture must touch >=1 area.
+knowledge_areas:
+  - id: KA-METHODS
+    title: Predictive, Agile & Hybrid Methods
+    clos: [CLO1, CLO5]
+    lectures: [5, 8, 21, 22, 23, 24]
+    description: >-
+      Choosing and operating the delivery approach: predictive phases,
+      Scrum/Kanban mechanics, hybrid wrappers for regulated or platform work.
+  - id: KA-GOVERNANCE
+    title: Project Initiation & Governance
+    clos: [CLO1, CLO6]
+    lectures: [1, 2, 3, 6, 28]
+    description: >-
+      Portfolio alignment, charter authority, stage gates, decision rights,
+      steering structures (ISO 21502 vocabulary).
+  - id: KA-SCOPE
+    title: Scope Management
+    clos: [CLO2]
+    lectures: [9, 27]
+    description: Scope statements, WBS, acceptance criteria, creep control.
+  - id: KA-SCHEDULE
+    title: Schedule Management
+    clos: [CLO2]
+    lectures: [10, 11, 12, 27]
+    description: Estimation, CPM/PERT, compression, levelling, baselining.
+  - id: KA-COST
+    title: Cost Management
+    clos: [CLO3]
+    lectures: [13, 16, 27]
+    description: Estimating, budgeting, S-curve, contingency, cloud-cost realities.
+  - id: KA-QUALITY
+    title: Quality & Data Quality
+    clos: [CLO3]
+    lectures: [14, 27]
+    description: Quality planning, metrics, verification vs validation, data-quality rules.
+  - id: KA-RESOURCES
+    title: Resource & Team Management
+    clos: [CLO2, CLO5]
+    lectures: [4, 12, 25]
+    description: RACI, capacity, levelling, team development and motivation.
+  - id: KA-RISK
+    title: Risk & Uncertainty
+    clos: [CLO4]
+    lectures: [15, 16, 17, 18, 27]
+    description: ISO 31000 process, qualification, quantification, responses, reserves.
+  - id: KA-COMMS
+    title: Communications & Stakeholders
+    clos: [CLO5]
+    lectures: [7, 26, 27]
+    description: Identification, engagement planning, matrices, negotiation, bad news.
+  - id: KA-PROCUREMENT
+    title: Procurement
+    clos: [CLO3]
+    lectures: [18]
+    description: Make-or-buy, contract types, SLAs, vendor lifecycle.
+  - id: KA-CONTROL
+    title: Monitoring, Change Control & Closure
+    clos: [CLO4, CLO6]
+    lectures: [19, 20, 30, 32]
+    description: EVM, dashboards, integrated change control, closure discipline.
+  - id: KA-LEADERSHIP
+    title: Team Leadership & Professional Ethics
+    clos: [CLO5, CLO6]
+    lectures: [25, 26, 28]
+    description: Team development, psychological safety, conflict, PMI Code values.
+  - id: KA-DATA-AI
+    title: Data Governance & Responsible AI
+    clos: [CLO3, CLO4, CLO6]
+    lectures: [14, 23, 28, 29, 31]
+    description: >-
+      Data-quality gates and stewardship, model risk gates and fairness
+      thresholds, privacy and bias ethics, AI-assisted PM with verification
+      duties and disclosure norms.
+  - id: KA-SUSTAIN
+    title: Sustainability & Benefits Realization
+    clos: [CLO6]
+    lectures: [29, 30]
+    description: Compute footprint, benefit maps, operations handover.
+
+units:
+  - id: U1
+    title: Foundations & Strategy
+    weeks: [1, 2]
+    lectures: [1, 2, 3, 4]
+    description: >-
+      Why projects fail; strategic alignment; project, program, portfolio;
+      PMBOK 7 principles and performance domains; roles and the PM profession.
+  - id: U2
+    title: Life Cycles & Initiating
+    weeks: [3, 4]
+    lectures: [5, 6, 7, 8]
+    description: >-
+      Predictive, agile, hybrid life cycles; charter and stakeholder analysis;
+      agile role system; tailoring for software and data projects.
+  - id: U3
+    title: Planning the Work
+    weeks: [5, 6, 7]
+    lectures: [9, 10, 11, 12, 13, 14]
+    description: >-
+      Scope and WBS; estimation; CPM/PERT scheduling; cost, budget, quality,
+      and data-quality planning.
+  - id: U4
+    title: Risk, Uncertainty & Control
+    weeks: [8, 9, 10]
+    lectures: [15, 16, 17, 18, 19, 20]
+    description: >-
+      Risk management aligned to ISO 31000; PERT and simulation; procurement;
+      EVM and adaptive monitoring; change control.
+  - id: U5
+    title: Adaptive Delivery & Teams
+    weeks: [11, 12, 13]
+    lectures: [21, 22, 23, 24, 25, 26]
+    description: >-
+      Scrum, Kanban, SAFe overview, hybrid; team performance; stakeholder
+      communication and negotiation; data-specific team topologies.
+  - id: U6
+    title: Integration, Ethics & Closing
+    weeks: [14, 15]
+    lectures: [27, 28, 29, 30]
+    description: >-
+      Master planning; ethics and professional responsibility (PMI Code);
+      sustainability; closure, lessons learned, benefits realization.
+  - id: U7
+    title: Synthesis & Capstone
+    weeks: [16]
+    lectures: [31, 32]
+    description: >-
+      AI-assisted project management; capstone defense and course synthesis.
+
+lectures:
+  # ── Unit 1: Foundations & Strategy ─────────────────────────────────────────
+  - num: 1
+    week: 1
+    unit: U1
+    code: L01
+    slug: 01-why-projects-fail
+    title: "Why Projects Fail: The Case for Project Management"
+    tagline: Failure statistics, the iron triangle, and what disciplined management changes.
+    clo: [CLO1]
+    bloom: Understand
+    cases: [CS-01, CS-02]
+    tools: [none]
+    topics:
+      - title: The project landscape in software & data
+        bullets:
+          - Project success/failure patterns in the software industry
+          - Famous failures vs famous successes; what the differences trace back to
+      - title: The iron triangle and its limits
+        bullets:
+          - Scope, time, cost, and quality as competing constraints
+          - Why the triangle alone does not explain failure
+      - title: What a project manager actually does
+        bullets:
+          - From 'note-taker' to integrator of scope, risk, and stakeholders
+          - Value of method vs value of judgment
+    activities: ["Failure autopsy: small groups map a well-known failure onto the iron triangle", "Baseline quiz: what would you have done first?"]
+    assessment: null
+
+  - num: 2
+    week: 1
+    unit: U1
+    code: L02
+    slug: 02-strategy-portfolio
+    title: "Strategy, Portfolios, Programs & Projects"
+    tagline: How organizations select the right projects before running them well.
+    clo: [CLO1]
+    bloom: Understand
+    cases: [CS-03]
+    tools: [value scorecards]
+    topics:
+      - title: Portfolio, program, project, and operations
+        bullets:
+          - Definitions and boundaries (PMBOK 7 vocabulary)
+          - Why portfolio selection mistakes dwarf execution mistakes
+      - title: Strategic alignment mechanisms
+        bullets:
+          - Benefits realization as the bridge from strategy to delivery
+          - Stage gates and go/no-go criteria
+      - title: Selecting projects
+        bullets:
+          - Weighted scoring, NPV/payback intuition for technical audiences
+          - Balance across risk horizons
+    activities: ["Score 6 candidate projects with a weighted matrix; defend the cut line", "Map one real company's portfolio to its strategy"]
+    assessment: null
+
+  - num: 3
+    week: 2
+    unit: U1
+    code: L03
+    slug: 03-pmbok7-principles-domains
+    title: "PMBOK Guide 7: Principles & Performance Domains"
+    tagline: The 12 principles and 8 performance domains as the course's backbone.
+    clo: [CLO1]
+    bloom: Understand
+    cases: [CS-04]
+    tools: [PMBOK 7 map]
+    topics:
+      - title: From processes to principles
+        bullets:
+          - Why PMI moved from 49 processes (PMBOK 6) to 12 principles (PMBOK 7)
+          - Principle groups — stewardship, team, stakeholders, value, systems thinking, leadership, tailoring, quality, complexity, risk, adaptability, resilience
+      - title: The 8 performance domains
+        bullets:
+          - Stakeholders, team, development approach & life cycle, planning, project work, delivery, measurement, uncertainty
+          - How domains interact on a real project
+      - title: Models, methods, artifacts
+        bullets:
+          - PMBOK 7's 'choose your tools' stance and what it means for tailoring
+    activities: ["Domain-mapping drill: place 20 real artifacts into the 8 domains", "Principle-to-failure tracing using lecture 1 cases"]
+    assessment: null
+
+  - num: 4
+    week: 2
+    unit: U1
+    code: L04
+    slug: 04-roles-profession
+    title: "Roles, Competencies & the PM Profession"
+    tagline: Who does what — sponsor, PM, product owner, scrum master — and what competence means.
+    clo: [CLO1]
+    bloom: Remember
+    cases: [CS-05]
+    tools: [PMI Talent Triangle]
+    topics:
+      - title: Role anatomy on technical projects
+        bullets:
+          - Sponsor, PM, product owner, scrum master, tech lead, data lead, SM
+          - RACI for a typical software project
+      - title: Competence frameworks
+        bullets:
+          - PMI Talent Triangle — ways of working, power skills, business acumen
+          - Technical vs leadership vs strategic competence
+      - title: Certification landscape
+        bullets:
+          - CAPM, PMP, PMI-ACP, PMI-PBA — what each signals
+    activities: ["RACI workshop for a campus app project", "Talent-triangle self-assessment"]
+    assessment: Quiz 1 (L01-L04)
+
+  # ── Unit 2: Life Cycles & Initiating ───────────────────────────────────────
+  - num: 5
+    week: 3
+    unit: U2
+    code: L05
+    slug: 05-lifecycles
+    title: "Life Cycles: Predictive, Adaptive, Hybrid"
+    tagline: Choosing the development approach before choosing any tool.
+    clo: [CLO1, CLO5]
+    bloom: Understand
+    cases: [CS-06, CS-07]
+    tools: [Stacey matrix]
+    topics:
+      - title: Life-cycle spectrum
+        bullets:
+          - Predictive (waterfall), iterative, incremental, adaptive, hybrid
+          - When requirements uncertainty chooses the approach for you
+      - title: Decision aids
+        bullets:
+          - Stacey matrix; requirements volatility; regulatory constraints
+          - Data projects vs software projects vs platform projects
+      - title: Sequencing and flow
+        bullets:
+          - Phase gates vs sprints vs continuous flow
+    activities: ["Pick the life cycle for 5 project vignettes and defend it", "Volatility assessment of a capstone-style project"]
+    assessment: null
+
+  - num: 6
+    week: 3
+    unit: U2
+    code: L06
+    slug: 06-charter
+    title: "Project Charter & Business Case"
+    tagline: The two documents that authorize and justify everything that follows.
+    clo: [CLO1, CLO2]
+    bloom: Apply
+    cases: [CS-08]
+    tools: [canvas templates]
+    topics:
+      - title: Business case essentials
+        bullets:
+          - Problem, options, benefits, costs, risks; do-nothing baseline
+          - SMART benefit statements for data projects
+      - title: Project charter
+        bullets:
+          - Authority, objectives, high-level scope, milestones, sponsor signature
+          - Charter anti-patterns (vague objectives, unowned assumptions)
+      - title: From case to charter
+        bullets:
+          - Traceability from benefits to objectives to success criteria
+    activities: ["Write a one-page charter for a familiar campus system", "Peer-review charters against a 10-point checklist"]
+    assessment: null
+
+  - num: 7
+    week: 4
+    unit: U2
+    code: L07
+    slug: 07-stakeholders
+    title: "Stakeholder Identification & Analysis"
+    tagline: Mapping everyone who can help or hurt the project — early.
+    clo: [CLO5]
+    bloom: Apply
+    cases: [CS-09, CS-10]
+    tools: [power-interest grid]
+    topics:
+      - title: Identification techniques
+        bullets:
+          - Brainstorming, org-chart crawling, data-lineage tracing for data projects
+          - Hidden stakeholders in analytics and ML systems (auditors, data owners)
+      - title: Analysis & prioritization
+        bullets:
+          - Power/interest, influence/impact, salience models
+          - Engagement assessment matrix (unaware → leading)
+      - title: Stakeholder register
+        bullets:
+          - What to record; when to refresh it
+    activities: ["Stakeholder hunt on a hospital analytics project vignette", "Build a power/interest grid; plan engagement for 3 hostile stakeholders"]
+    assessment: null
+
+  - num: 8
+    week: 4
+    unit: U2
+    code: L08
+    slug: 08-tailoring
+    title: "Tailoring for Software & Data Projects"
+    tagline: No template survives contact with your project — tailor deliberately.
+    clo: [CLO1, CLO5]
+    bloom: Apply
+    cases: [CS-11]
+    tools: [tailoring worksheets]
+    topics:
+      - title: Tailoring logic
+        bullets:
+          - Project size, criticality, regulatory exposure, team distribution
+          - What to scale down (documents) vs never scale down (risk, quality)
+      - title: Software-project tailoring
+        bullets:
+          - Startup vs enterprise vs regulated (health/finance) contexts
+      - title: Data-project tailoring
+        bullets:
+          - Data availability risk; model-uncertainty milestones; experiment-driven planning
+    activities: ["Tailor a heavyweight template down to a 6-week student project", "Compare two real tailoring decisions and their consequences"]
+    assessment: null
+
+  # ── Unit 3: Planning the Work ──────────────────────────────────────────────
+  - num: 9
+    week: 5
+    unit: U3
+    code: L09
+    slug: 09-scope-wbs
+    title: "Scope & Work Breakdown Structure"
+    tagline: If it is not in the WBS, it is not in the project.
+    clo: [CLO2]
+    bloom: Apply
+    cases: [CS-12, CS-13]
+    tools: [WBS templates]
+    topics:
+      - title: Scope statements
+        bullets:
+          - In/out lists, deliverable-oriented thinking, acceptance criteria
+      - title: WBS construction
+        bullets:
+          - 100% rule; decomposition depth; work packages as control points
+          - WBS dictionary entries
+      - title: Scope creep vs gold plating
+        bullets:
+          - Detection heuristics and control mechanisms
+    activities: ["Build a 3-level WBS for a student-information portal", "Scope-creep spotting drill on a change-request log"]
+    assessment: null
+
+  - num: 10
+    week: 5
+    unit: U3
+    code: L10
+    slug: 10-estimation
+    title: "Estimation: Size, Effort, Duration"
+    tagline: Point estimates lie; distributions and ranges tell the truth.
+    clo: [CLO2]
+    bloom: Apply
+    cases: [CS-14]
+    tools: [planning poker, three-point sheet]
+    topics:
+      - title: Estimation approaches
+        bullets:
+          - Expert judgment, analogous, parametric, bottom-up, three-point
+          - PERT weighting (O+4M+P)/6 and why it works
+      - title: Software estimation families
+        bullets:
+          - Story points & velocity; function points (concept); COCOMO awareness
+          - Estimate vs target vs commitment
+      - title: Common failure modes
+        bullets:
+          - Anchor bias, padding, planning fallacy; calibration practice
+    activities: ["Planning poker on 8 capstone backlog items", "Convert team estimates to PERT distributions"]
+    assessment: null
+
+  - num: 11
+    week: 6
+    unit: U3
+    code: L11
+    slug: 11-cpm-pert
+    title: "Network Logic, CPM & PERT"
+    tagline: Find the critical path before it finds you.
+    clo: [CLO2]
+    bloom: Apply
+    cases: [CS-15]
+    tools: [network diagrams]
+    topics:
+      - title: Precedence & networks
+        bullets:
+          - FS, SS, FF, SF dependencies; leads and lags; AON diagramming
+      - title: Critical Path Method
+        bullets:
+          - Forward/backward pass; ES, EF, LS, LF; total & free float
+      - title: Compression decisions
+        bullets:
+          - Crashing (cost trade-off) vs fast-tracking (risk trade-off)
+    activities: ["Solve a 14-activity network by hand", "Crash a network under a budget constraint"]
+    assessment: null
+
+  - num: 12
+    week: 6
+    unit: U3
+    code: L12
+    slug: 12-schedule-tools
+    title: "Schedules, Gantt Charts & Resource Levelling"
+    tagline: From network logic to a working, resource-feasible schedule.
+    clo: [CLO2]
+    bloom: Apply
+    cases: [CS-16]
+    tools: [Gantt (draw.io / open tool)]
+    topics:
+      - title: Gantt construction and milestones
+        bullets:
+          - Baselines; milestone discipline; hammock/summary tasks
+      - title: Resources & levelling
+        bullets:
+          - Overallocation detection; time-constrained vs resource-constrained scheduling
+      - title: Schedule quality checks
+        bullets:
+          - Missing logic, constraints abuse, long durations; DCMA 14-point awareness
+    activities: ["Build and baseline a 10-week project Gantt", "Level an overallocated resource plan"]
+    assessment: Quiz 2 (L09-L12)
+
+  - num: 13
+    week: 7
+    unit: U3
+    code: L13
+    slug: 13-cost-budget
+    title: "Cost Estimating & Budgeting"
+    tagline: From activity costs to a time-phased, controllable budget.
+    clo: [CLO3]
+    bloom: Apply
+    cases: [CS-17]
+    tools: [cost worksheets]
+    topics:
+      - title: Cost types & estimating
+        bullets:
+          - Direct/indirect, fixed/variable; contingency vs management reserve
+          - Bottom-up, analogous, parametric cost estimating
+      - title: Budget assembly
+        bullets:
+          - Cost aggregation; funding-limit reconciliation; S-curve shape intuition
+      - title: Data-project cost realities
+        bullets:
+          - Compute & storage costs, cloud pricing volatility, license vs build
+    activities: ["Bottom-up cost estimate for a 6-person, 9-month data project", "S-curve sketch from a cost baseline"]
+    assessment: null
+
+  - num: 14
+    week: 7
+    unit: U3
+    code: L14
+    slug: 14-quality-data-quality
+    title: "Quality & Data-Quality Planning"
+    tagline: Quality is planned in, not inspected in — including data quality.
+    clo: [CLO3]
+    bloom: Apply
+    cases: [CS-18, CS-19]
+    tools: [quality checklists]
+    topics:
+      - title: Quality management essentials
+        bullets:
+          - Grade vs quality; cost of quality; prevention over inspection
+          - ISO 9000 vocabulary; verification vs validation
+      - title: Quality metrics for software
+        bullets:
+          - Defect density, test coverage, review effectiveness
+      - title: Data quality framework
+        bullets:
+          - Dimensions — accuracy, completeness, consistency, timeliness, validity, uniqueness
+          - Data-quality rules, profiling, and gates in ML pipelines
+    activities: ["Draft quality metrics for a course-registration system", "Write 8 data-quality rules for a customer dataset"]
+    assessment: Assignment 1 released (WBS + estimates)
+
+  # ── Unit 4: Risk, Uncertainty & Control ────────────────────────────────────
+  - num: 15
+    week: 8
+    unit: U4
+    code: L15
+    slug: 15-risk-foundations
+    title: "Risk Management Foundations (ISO 31000 Alignment)"
+    tagline: Identify early, quantify honestly, respond deliberately.
+    clo: [CLO4]
+    bloom: Analyze
+    cases: [CS-20, CS-21]
+    tools: [risk register]
+    topics:
+      - title: Risk vocabulary & process
+        bullets:
+          - Individual vs overall project risk; threat vs opportunity
+          - ISO 31000 process — scope/context/criteria, assessment, treatment, monitoring
+      - title: Identification techniques
+        bullets:
+          - Checklists, interviews, assumption analysis, SWOT, prompt lists (PESTLE, VUCA)
+      - title: Qualitative analysis
+        bullets:
+          - Probability/impact scales; risk data quality; heat maps
+    activities: ["Identify 20 risks for a streaming-analytics project", "Build a 5x5 heat map and defend the thresholds"]
+    assessment: null
+
+  - num: 16
+    week: 8
+    unit: U4
+    code: L16
+    slug: 16-quant-risk-simulation
+    title: "Quantitative Risk: PERT, Trees & Simulation"
+    tagline: Monte Carlo for schedules and budgets — without fear.
+    clo: [CLO4]
+    bloom: Analyze
+    cases: [CS-22]
+    tools: [Monte Carlo (Python)]
+    topics:
+      - title: Expected monetary value
+        bullets:
+          - Decision trees; EMV of threats and opportunities
+      - title: Schedule & cost simulation
+        bullets:
+          - Monte Carlo basics; P80/P50 confidence targets; correlation pitfalls
+          - Reading a tornado chart
+      - title: Contingency sizing
+        bullets:
+          - Simulation-derived contingency vs flat 10% rules
+    activities: ["Run a 1000-trial Monte Carlo on a class schedule model", "Set P80 targets and derive contingency"]
+    assessment: null
+
+  - num: 17
+    week: 9
+    unit: U4
+    code: L17
+    slug: 17-risk-response
+    title: "Risk Responses, Issues & Reserves"
+    tagline: Strategies for threats and opportunities, and who owns each one.
+    clo: [CLO4]
+    bloom: Evaluate
+    cases: [CS-23]
+    tools: [response planning sheet]
+    topics:
+      - title: Threat strategies
+        bullets:
+          - Escalate, avoid, mitigate, transfer, accept — with technical examples
+      - title: Opportunity strategies
+        bullets:
+          - Exploit, share, enhance, accept
+      - title: Operationalizing responses
+        bullets:
+          - Risk owners; triggers; secondary & residual risk; issue management
+    activities: ["Write response plans for 10 high-priority risks", "Assign risk owners and triggers; critique weak responses"]
+    assessment: null
+
+  - num: 18
+    week: 9
+    unit: U4
+    code: L18
+    slug: 18-procurement
+    title: "Procurement & Vendor Management"
+    tagline: Buying well is a project skill — contracts, cloud, and outsourcing.
+    clo: [CLO3, CLO4]
+    bloom: Apply
+    cases: [CS-24, CS-25]
+    tools: [contract comparison sheet]
+    topics:
+      - title: Make-or-buy & sourcing
+        bullets:
+          - Make-or-buy analysis; build vs buy vs subscribe for data platforms
+      - title: Contract types
+        bullets:
+          - FP, T&M, CR (cost-plus); risk allocation by contract type
+      - title: Vendor lifecycle
+        bullets:
+          - RFP anatomy, proposal evaluation, SLA & exit clauses; outsourcing pitfalls
+    activities: ["Choose a contract type for 4 sourcing scenarios", "Draft SLA acceptance criteria for an ML-API vendor"]
+    assessment: null
+
+  - num: 19
+    week: 10
+    unit: U4
+    code: L19
+    slug: 19-evm
+    title: "Earned Value Management"
+    tagline: One number set that tells you cost AND schedule health.
+    clo: [CLO4]
+    bloom: Analyze
+    cases: [CS-26]
+    tools: [EVM calculator]
+    topics:
+      - title: EVM building blocks
+        bullets:
+          - PV, EV, AC, BAC; variances and indices (CV, SV, CPI, SPI)
+      - title: Forecasting
+        bullets:
+          - EAC variants, ETC, TCPI; interpretation traps
+      - title: EVM in technical projects
+        bullets:
+          - Work-package sizing; EVM in agile contexts; milestone-based EV rules
+    activities: ["Hand-compute an EVM set from a case and diagnose the project", "Argue CPI vs schedule realism in a recovery debate"]
+    assessment: null
+
+  - num: 20
+    week: 10
+    unit: U4
+    code: L20
+    slug: 20-monitoring-control
+    title: "Monitoring, Dashboards & Change Control"
+    tagline: Measure what matters, control change, and keep baselines honest.
+    clo: [CLO4]
+    bloom: Evaluate
+    cases: [CS-27]
+    tools: [burn-down charts, CCB]
+    topics:
+      - title: Monitoring systems
+        bullets:
+          - Leading vs lagging indicators; burn-down/burn-up; cumulative flow
+      - title: Integrated change control
+        bullets:
+          - CCB anatomy; change-request lifecycle; baseline maintenance
+      - title: Dashboards & reporting
+        bullets:
+          - RAG status honesty; report design for sponsors vs teams
+    activities: ["Design a one-page sponsor dashboard", "Run a mock CCB on 5 change requests"]
+    assessment: Midterm window opens (L01-L20)
+
+  # ── Unit 5: Adaptive Delivery & Teams ──────────────────────────────────────
+  - num: 21
+    week: 11
+    unit: U5
+    code: L21
+    slug: 21-scrum
+    title: "Scrum in Practice"
+    tagline: Roles, events, artifacts — and how they fail in real teams.
+    clo: [CLO5]
+    bloom: Apply
+    cases: [CS-28, CS-29]
+    tools: [Scrum board]
+    topics:
+      - title: Scrum framework
+        bullets:
+          - Accountabilities (PO, SM, developers); the five events; three artifacts
+          - Commitments — product goal, sprint goal, definition of done
+      - title: Running sprints
+        bullets:
+          - Sprint planning patterns; daily scrums that work; reviews vs demos
+      - title: Failure modes
+        bullets:
+          - Scrumbut, velocity weaponization, PO-as-proxy
+    activities: ["Plan a 2-week sprint for the course capstone", "DoD workshop: write your team's definition of done"]
+    assessment: null
+
+  - num: 22
+    week: 11
+    unit: U5
+    code: L22
+    slug: 22-kanban-flow
+    title: "Kanban, Flow & Throughput"
+    tagline: Visualize work, limit WIP, measure flow — the data scientist's native method.
+    clo: [CLO5]
+    bloom: Apply
+    cases: [CS-30]
+    tools: [Kanban board, CFD]
+    topics:
+      - title: Kanban method
+        bullets:
+          - Visualize, limit WIP, manage flow, policies, feedback loops, improve
+      - title: Flow metrics
+        bullets:
+          - Lead vs cycle time; throughput; WIP limits as throttles; Little's Law
+      - title: Choosing Scrum vs Kanban
+        bullets:
+          - Cadence needs, interrupt-driven work, team maturity
+    activities: ["Simulate a pull system with/without WIP limits", "Compute cycle-time percentiles from a card history"]
+    assessment: null
+
+  - num: 23
+    week: 12
+    unit: U5
+    code: L23
+    slug: 23-agile-data-ml
+    title: "Agile for Data Science & ML Projects"
+    tagline: Sprints that respect experiments, data discovery, and model risk.
+    clo: [CLO5]
+    bloom: Apply
+    cases: [CS-31, CS-32]
+    tools: [Data-ML lifecycle canvas]
+    topics:
+      - title: Why vanilla agile struggles on data work
+        bullets:
+          - CRISP-DM phases vs sprint shape; discovery spikes; negative results
+      - title: Data/ML-adapted delivery
+        bullets:
+          - Outcome-driven backlogs; model risk gates; MLOps touchpoints
+          - Definition of done for models (metrics, fairness, monitoring)
+      - title: Planning under uncertainty
+        bullets:
+          - Uncertainty budget; hypothesis backlog; pivot/hold/kill reviews
+    activities: ["Rewrite a model backlog from feature-first to hypothesis-first", "Draft a model DoD for a churn-prediction project"]
+    assessment: null
+
+  - num: 24
+    week: 12
+    unit: U5
+    code: L24
+    slug: 24-scaling-hybrid
+    title: "Scaling Frameworks & Hybrid Delivery"
+    tagline: SAFe at a distance, Scrum-of-Scrums, and pragmatic hybrids.
+    clo: [CLO5]
+    bloom: Understand
+    cases: [CS-33]
+    tools: [program board]
+    topics:
+      - title: Why scale, and what breaks
+        bullets:
+          - Dependencies, integration debt, decision latency
+      - title: Scaling patterns
+        bullets:
+          - Scrum of Scrums; LeSS awareness; SAFe overview (program level)
+          - Critical view of SAFe adoption
+      - title: Hybrid delivery
+        bullets:
+          - Predictive wrapper + adaptive core; phase-gated agile; when hybrid helps
+    activities: ["Map a 40-person program onto Scrum-of-Scrums", "Design a hybrid approach for a regulated data product"]
+    assessment: null
+
+  - num: 25
+    week: 13
+    unit: U5
+    code: L25
+    slug: 25-team-performance
+    title: "Team Performance & Leadership"
+    tagline: From Tuckman to psychological safety to motivation that works.
+    clo: [CLO5]
+    bloom: Evaluate
+    cases: [CS-34, CS-35]
+    tools: [team canvas]
+    topics:
+      - title: Team development
+        bullets:
+          - Tuckman stages; team kickoffs; working agreements
+      - title: Safety & performance
+        bullets:
+          - Psychological safety; learning from failures; conflict handling modes
+      - title: Motivation & leadership styles
+        bullets:
+          - Servant leadership; situational leadership; recognition that lands
+    activities: ["Draft a team working agreement", "Conflict-mode case discussion with role cards"]
+    assessment: null
+
+  - num: 26
+    week: 13
+    unit: U5
+    code: L26
+    slug: 26-communication-negotiation
+    title: "Stakeholder Communication & Negotiation"
+    tagline: Communicating bad news early is a technical skill.
+    clo: [CLO5]
+    bloom: Apply/Evaluate
+    cases: [CS-36, CS-37]
+    tools: [communication matrix]
+    topics:
+      - title: Communication planning
+        bullets:
+          - Communication matrix; audience/channel/cadence mapping
+          - Meeting hygiene; asynchronous communication for distributed teams
+      - title: Negotiation essentials
+        bullets:
+          - BATNA; interests vs positions; saying no with options
+      - title: Difficult conversations
+        bullets:
+          - Slipping dates, changing scope, underperforming teammates
+    activities: ["Negotiation role-play: scope cut with a sponsor", "Write and deliver a bad-news update"]
+    assessment: Quiz 3 (L21-L26)
+
+  # ── Unit 6: Integration, Ethics & Closing ──────────────────────────────────
+  - num: 27
+    week: 14
+    unit: U6
+    code: L27
+    slug: 27-master-plan
+    title: "The Master Project Plan: Integrating Everything"
+    tagline: One coherent plan from scope to risk to communication.
+    clo: [CLO6]
+    bloom: Create
+    cases: [CS-38]
+    tools: [plan template]
+    topics:
+      - title: Plan architecture
+        bullets:
+          - Baselines (scope, schedule, cost) and subsidiary plans
+          - Traceability across artifacts; internal consistency checks
+      - title: Consistency stress tests
+        bullets:
+          - Schedule ↔ resource ↔ budget alignment; risk ↔ contingency ↔ reserve
+      - title: Plan review discipline
+        bullets:
+          - Walkthroughs, red teams, sign-off gates
+    activities: ["Assemble the capstone master plan skeleton", "Peer red-team review of two plans"]
+    assessment: Capstone plan draft due
+
+  - num: 28
+    week: 14
+    unit: U6
+    code: L28
+    slug: 28-ethics-governance
+    title: "Ethics, Governance & Professional Responsibility"
+    tagline: The PMI Code of Ethics and the hard cases behind it.
+    clo: [CLO6]
+    bloom: Evaluate
+    cases: [CS-39]
+    tools: [PMI Code of Ethics]
+    topics:
+      - title: PMI Code of Ethics
+        bullets:
+          - Responsibility, respect, fairness, honesty — aspirational & mandatory
+      - title: Governance structures
+        bullets:
+          - Steering committees, gates, audit; decision rights
+      - title: Technical-ethics collisions
+        bullets:
+          - Padding estimates under pressure; data privacy; reporting bad news upward
+    activities: ["Ethics dilemma workshop with 4 written scenarios", "Draft a governance model for the capstone"]
+    assessment: null
+
+  - num: 29
+    week: 15
+    unit: U6
+    code: L29
+    slug: 29-sustainability-benefits
+    title: "Sustainability & Benefits Realization"
+    tagline: Projects end; products and their impacts persist.
+    clo: [CLO6]
+    bloom: Evaluate
+    cases: [CS-40]
+    tools: [benefits map]
+    topics:
+      - title: Sustainability in project delivery
+        bullets:
+          - Environmental, social, economic lenses (GPM awareness)
+          - Compute footprint of data projects
+      - title: Benefits realization
+        bullets:
+          - Benefit maps; owners; measurement plans after go-live
+      - title: Operations handover
+        bullets:
+          - Support models; knowledge transfer; product vs project mindset
+    activities: ["Build a benefits map for a campus analytics product", "Estimate and reduce a training-run compute footprint"]
+    assessment: null
+
+  - num: 30
+    week: 15
+    unit: U6
+    code: L30
+    slug: 30-closure-lessons
+    title: "Closing Projects & Lessons Learned"
+    tagline: "Finishing well: acceptance, archives, and organizational memory."
+    clo: [CLO6]
+    bloom: Evaluate
+    cases: [CS-41]
+    tools: [closure checklist]
+    topics:
+      - title: Closure steps
+        bullets:
+          - Acceptance criteria verification; contract closure; release of resources
+      - title: Lessons learned
+        bullets:
+          - Retrospective formats; turning lessons into templates
+      - title: Closure documents
+        bullets:
+          - Final report; archive; celebration and recognition
+    activities: ["Run a retrospective on the course itself", "Write closure checklist for the capstone"]
+    assessment: null
+
+  # ── Unit 7: Synthesis & Capstone ───────────────────────────────────────────
+  - num: 31
+    week: 16
+    unit: U7
+    code: L31
+    slug: 31-ai-assisted-pm
+    title: "AI-Assisted Project Management"
+    tagline: What AI changes in estimation, risk, reporting — and what it must not.
+    clo: [CLO6]
+    bloom: Evaluate/Create
+    cases: [CS-42]
+    tools: [AI PM tooling survey]
+    topics:
+      - title: AI in the PM toolbox
+        bullets:
+          - Estimation support, risk mining, status automation; forecast quality caveats
+      - title: Guardrails
+        bullets:
+          - Verification duties; bias and privacy; disclosure norms for AI-assisted work
+      - title: Skill shift for PMs
+        bullets:
+          - Judgment, stakeholder trust, and framing remain human work
+    activities: ["Use an AI assistant to draft a risk register, then critique it", "Define course norms for AI use in the capstone"]
+    assessment: null
+
+  - num: 32
+    week: 16
+    unit: U7
+    code: L32
+    slug: 32-capstone-synthesis
+    title: "Capstone Defense & Course Synthesis"
+    tagline: Defend the plan you built across the semester.
+    clo: [CLO6]
+    bloom: Create
+    cases: [CS-43]
+    tools: [defense rubric]
+    topics:
+      - title: Capstone defense
+        bullets:
+          - 10-minute defense + 5-minute Q&A per team against the rubric
+      - title: Course synthesis
+        bullets:
+          - The 20 ideas that matter; from course to career path
+      - title: PMP and beyond
+        bullets:
+          - Certification pathways; continued learning map
+    activities: ["Capstone defenses", "Course retrospective and feedback"]
+    assessment: Capstone due; Final exam window
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Assessment plan (weights sum to 100)
+# ─────────────────────────────────────────────────────────────────────────────
+assessment_plan:
+  - id: A1
+    name: Quizzes (best 2 of 3)
+    weight: 10
+    clos: [CLO1, CLO2, CLO5]
+    schedule: "L04, L12, L26"
+  - id: A2
+    name: Assignment 1 — Scope & Schedule (WBS, estimates, network, Gantt)
+    weight: 10
+    clos: [CLO2]
+    schedule: "Release L14, due L16"
+  - id: A3
+    name: Assignment 2 — Risk Register & Response Plans
+    weight: 10
+    clos: [CLO4]
+    schedule: "Release L17, due L19"
+  - id: A4
+    name: Assignment 3 — EVM Case Analysis
+    weight: 10
+    clos: [CLO4]
+    schedule: "Release L19, due L21"
+  - id: A5
+    name: Midterm Exam (L01-L20)
+    weight: 20
+    clos: [CLO1, CLO2, CLO3, CLO4]
+    schedule: "Week 10-11 window"
+  - id: A6
+    name: Case Portfolio (12 of 105 cases, individual write-ups)
+    weight: 10
+    clos: [CLO1, CLO2, CLO4, CLO5]
+    schedule: "Rolling, 3 due per unit"
+  - id: A7
+    name: Capstone Project & Defense (team)
+    weight: 25
+    clos: [CLO5, CLO6]
+    schedule: "Team formation L08; plan draft L27; defense L32"
+  - id: A8
+    name: Final Exam (comprehensive, emphasis L21-L32)
+    weight: 5
+    clos: [CLO1, CLO6]
+    schedule: "Exam week"
+
+  # NOTE for editors: keep weights summing to 100; validated by tools/validate.py

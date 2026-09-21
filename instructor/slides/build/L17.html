@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L17 · Risk Responses, Issues &amp;amp; Reserves (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L17 · Risk Responses, Issues &amp; Reserves</h1>
+<h2>Strategies for threats and opportunities — and who owns each one</h2>
+<p>Week 9 · Unit U4 · CLO4 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Match</strong> response strategies to threats and opportunities — and defend the match</li><li><strong>Distinguish</strong> a risk from an issue (and why the register split matters)</li><li><strong>Allocate</strong> contingency and management reserves to the right owners</li><li><strong>Write</strong> response plans with triggers, owners, and costs</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The response table is the lecture's spine; CS-23 applies it to the top ten risks from CS-20's register. Assignment 2 (risk register) releases after L17 per the syllabus. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The response playbook</h2>
+<table><tr><th>Threats</th><th>Opportunities</th></tr><tr><td><strong>Avoid</strong> — change the plan so it can't happen</td><td><strong>Exploit</strong> — make it certain</td></tr><tr><td><strong>Mitigate</strong> — reduce P or I</td><td><strong>Enhance</strong> — raise P or I</td></tr><tr><td><strong>Transfer</strong> — move it (insurance, contract)</td><td><strong>Share</strong> — partner for the upside</td></tr><tr><td><strong>Accept</strong> — document, watch, no action</td><td><strong>Accept</strong> — take the free upside</td></tr></table>
+<li>Every response has a <strong>cost</strong> — including acceptance (the watch hours)</li><li>A response without a <strong>trigger</strong> is a wish with a deadline</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The trigger point is the package's misconception #2 — 'monitor' is a real strategy with real hours. Ask which strategy a fixed-price contract is (transfer — and CS-24 will complicate that). 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Risk vs issue: the register split</h2>
+<div class="mermaid">
+flowchart LR
+  R["Risk&lt;br&gt;(uncertain, scored)"] --&gt;|it happened| I["Issue&lt;br&gt;(certain, owned, dated)"]
+  I --&gt; A["Action log&lt;br&gt;(who, by when)"]
+  A -.-&gt;|recurring?| R["Back to risk register"]
+</div>
+<li>Issues do not get probabilities — they get <strong>owners and dates</strong></li><li>A risk that fires twice is a <em>process defect</em> wearing a costume — back to the register with a structural response</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The recurring-risk point is the teaching package's live lesson. Connect to L20: issue aging is a control signal. 4 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Reserves: who holds which money</h2>
+<table><tr><th>Reserve</th><th>Covers</th><th>Held by</th><th>Baseline?</th></tr><tr><td>Contingency</td><td>identified risks (EMV-derived)</td><td>PM</td><td><strong>in</strong> the baseline</td></tr><tr><td>Management reserve</td><td>unknown-unknowns</td><td>sponsor</td><td><strong>out</strong> (L13)</td></tr></table>
+<li>Contingency is spent <em>through change control</em> — not on a first-come basis</li><li>Depleting contingency early is a <strong>schedule</strong> message too: re-forecast EAC (L19 next lecture)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The change-control discipline for contingency spend links L13 and L20. Bridge sentence: next lecture gives you the number set that shows whether the spend worked. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a launch-platform DDoS risk — mitigate (CDN) vs transfer (cloud shielding SLA) vs accept (hope) — priced in the case</li><li><strong>DS:</strong> an <em>opportunity</em> register entry: a public dataset release could add a benchmark — exploit/share with the university lab</li><li>Opportunity registers are not decoration: they are where DS projects find their headline results</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS opportunity example lands the ISO definition from L15 — full circle. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-23</strong> — <em>Response plans for the top ten risks</em>: strategy + trigger + owner + cost for each; defend two transfers and one acceptance</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Qualitative case; the key grades completeness (trigger/owner/cost) and the defense of acceptance decisions. Key: instructor/answer-keys/cases/CS-23.md. Assignment 2 brief releases today.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Insurance transfers risk — does it <em>reduce</em> it? What does the insurer's price tell you about your EMV?</li><li>Can a mitigation be worse than the risk? Construct one.</li><li>Who should sign off an 'accept' decision on a high-band risk?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1's expected direction: price signals the insurer's (better-calibrated) EMV plus margin — a free calibration check. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Four strategies per side; every one costs something — including watching</li><li>Issues get owners and dates; recurring issues are structural defects</li><li>Contingency = identified risks, PM-held, spent via change control</li></ul>
+<p><strong>Exit ticket (2 min):</strong> take one risk from your capstone register and write its response line: strategy, trigger, owner, cost.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed Assignment 2 directly — the A2 rubric's response column matches this format.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>ISO 31000:2018 — risk treatment</li><li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — uncertainty domain, responses</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/risk-register-template.md</code></a> · Assignment 2: <a href="../../docs/assignments/index.md"><code>docs/assignments/a2-risk-register.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U4-risk-uncertainty-control/L17-17-risk-response.md</code></li><li><strong>Next:</strong> L18 — Procurement &amp; Vendor Management: buying well as a project skill</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L18 with the contract-type selection: fixed price, T&amp;M, FPIF — CS-24/CS-25 both land there.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

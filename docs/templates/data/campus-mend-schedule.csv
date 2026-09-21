@@ -1,0 +1,10 @@
+# CAMPUS-MEND core schedule (docs/labs/data-pack.md §A) — educational data
+id,name,predecessors,duration_weeks
+A,Legacy audit & requirements sign-off,,2
+B,Database & schema design,A,3
+C,Portal web app build,B,4
+D,Analytics repository,B,5
+E,Streaming feature pipeline,D,4
+F,LMS adapter build,"B, C",3
+G,System & performance testing,"C, E, F",2
+H,Rollout & 48h result SLA validation,G,1

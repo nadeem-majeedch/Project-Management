@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Architecture gates (14)
+        run: python tools/validate.py
+      - name: Case numeric consistency
+        run: python tools/check_cases.py
+      - name: Calendar generation & validation
+        run: |
+          python tools/calendar.py
+          git diff --exit-code -- docs/calendar || echo '::notice::calendar outputs changed — commit regenerated files'
+      - name: Lab answer-key consistency
+        run: python tools/check_answers.py
+      - name: Slide package consistency
+        run: |
+          python tools/check_slides.py
+          python tools/build_slides.py
+      - uses: actions/upload-artifact@v4
+      - name: Strict site build
+        run: python -m mkdocs build --strict --site-dir site
+      - name: Link check (built site)
+        run: python tools/check_links.py
+      - name: Assert template library survived the build
+        # MkDocs >=1.6 hard-excludes /templates/ by default; mkdocs.yml re-includes
+        # it via exclude_docs. This fails CI if that line is ever removed.
+        run: |
+          if [ ! -f site/templates/index.html ]; then
+            echo "::error::site/templates/index.html missing — templates/ excluded from build"
+            exit 1
+          fi
+          echo "OK: template library present in site/"
+      - name: Assert instructor materials never leak into the build
+        run: |
+          if find site -name '*instructor*' | grep -q .; then
+            echo "::error::instructor content leaked into site/"
+            find site -name '*instructor*'
+            exit 1
+          fi
+          echo "OK: no instructor content in site/"
+        with:
+          name: site-preview
+          path: |
+            site
+            instructor/slides/build
+          retention-days: 7

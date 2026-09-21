@@ -1,0 +1,1147 @@
+# ==============================================================================
+# Band 2 — INTERMEDIATE (CS-21..CS-45) · two-to-three concepts, some ambiguity
+# Difficulty: intermediate. 9 machine-checkable numeric cases (CS-21, CS-22,
+# CS-24, CS-25, CS-26, CS-28, CS-30, CS-40, CS-45).
+# ==============================================================================
+
+cases:
+  - id: CS-21
+    title: "Heat-map thresholds on trial"
+    domain: D5
+    level: L1
+    use: [in-class]
+    lecture: 15
+    seed: GRIDSENSE
+    difficulty: intermediate
+    numerical: true
+    tags: [probability-impact, heat-map, EMV, thresholds]
+    concepts: [probability-impact matrix, expected monetary value]
+    summary: "Score six risks on a 5×5 P×I scale, band them, and re-rank by EMV to expose where the heat map misleads."
+    context: "GridSense maintains a 5×5 risk matrix (bands: low ≤6, medium 8–12, high ≥15). Six register entries carry both scale scores and, where estimated, real probabilities and money impacts. The sponsor challenges whether the heat map's ranking reflects actual exposure."
+    problem: "Compute scores and bands, compute EMV where money data exists, and explain any disagreement between the two rankings."
+    constraints:
+      - "Score = P×I on the 5×5 scale; bands fixed as low ≤6, medium 8–12, high ≥15."
+      - "EMV = probability × money impact where both are given."
+      - "Do not re-score; work with the register as given."
+    tasks:
+      - "Compute score and band for each of the six risks."
+      - "Compute EMV for each risk with money data and rank the six by EMV."
+      - "Identify the risk the heat map under-weights relative to EMV and explain why."
+    deliverables:
+      - "Scoring table: score, band, EMV, EMV rank."
+      - "150-word note on heat-map vs EMV disagreement."
+    discussion:
+      - "Why can a 'medium' band risk carry the largest EMV?"
+      - "When is the ordinal heat map still the right tool despite this flaw?"
+    objectives:
+      - "Apply P×I scoring and banding correctly."
+      - "Contrast ordinal scoring with monetary exposure and explain the gap."
+    rubric: "Scores and bands correct (30%); EMVs correct (30%); disagreement analysis identifies the scale-vs-money mechanism (40%)."
+    solution:
+      model: "Dual-ranking reconciliation"
+      reasoning: "Scores and bands follow mechanically from P×I; EMV from probability × money. The heat map ranks by ordinal severity; EMV ranks by expected loss. They disagree when a medium-banded risk has a high probability or a large money impact — ordinal scales compress tails. The register as given puts sensor drift (band high, EMV 1.0M) top by both, but key-engineer-exit (band medium, EMV 450k) outranks vendor-API-change (band medium, EMV 280k) on money while looking similar on the map. The lesson: banding drives conversation priority; EMV drives reserve sizing."
+      alternatives:
+        - "Keep heat map as sole ranking: defensible for communication simplicity, but the sponsor's challenge in this case is precisely about exposure, so EMV must enter."
+      calculations: "Full table in instructor key; machine-checked via numeric block."
+      lesson_for_instructor: "Ask which risk they would buy insurance for — money, not color, decides."
+    numeric:
+      type: pxi
+      note: "5×5 scores, banding, EMVs, and top-risk identification."
+      data:
+        bands: {low_max: 6, medium_max: 12}
+        risks:
+          - {id: R1, name: "Late data feed",       p: 3, i: 4, prob: 0.30, money_pkr: 1200000}
+          - {id: R2, name: "Sensor drift",         p: 4, i: 4, prob: 0.40, money_pkr: 2500000}
+          - {id: R3, name: "Key engineer exit",    p: 2, i: 5, prob: 0.15, money_pkr: 3000000}
+          - {id: R4, name: "Vendor API change",    p: 5, i: 2, prob: 0.70, money_pkr: 400000}
+          - {id: R5, name: "Office move",          p: 1, i: 5, prob: 0.05, money_pkr: 2000000}
+          - {id: R6, name: "Test env contention",  p: 3, i: 3, prob: 0.35, money_pkr: 500000}
+      expected:
+        scores: {R1: 12, R2: 16, R3: 10, R4: 10, R5: 5, R6: 9}
+        bands:  {R1: medium, R2: high, R3: medium, R4: medium, R5: low, R6: medium}
+        emv_pkr: {R1: 360000, R2: 1000000, R3: 450000, R4: 280000, R5: 100000, R6: 175000}
+        total_emv_pkr: 2365000
+        top_emv: R2
+
+  - id: CS-22
+    title: "Monte Carlo on a class schedule"
+    domain: D5
+    level: L3
+    use: [in-class]
+    lecture: 16
+    seed: null
+    difficulty: intermediate
+    numerical: true
+    tags: [Monte-Carlo, schedule-risk, percentiles, contingency]
+    concepts: [Monte Carlo simulation, percentile targets]
+    summary: "Interpret a 10,000-trial simulation histogram for a 16-week schedule; compute P(on-time), median, and overrun."
+    context: "A team simulated their 16-week class-project schedule (10,000 trials, three-point task inputs, correlated feed risks removed). The output histogram of total duration is given by week bracket."
+    problem: "From the histogram, compute the probability of meeting the deadline, the median completion week, and expected overrun."
+    constraints:
+      - "Deadline: 16 weeks."
+      - "The '20+' bracket counts as exactly 20 weeks for arithmetic."
+      - "Do not re-run the simulation; analyze the given output."
+    tasks:
+      - "Compute P(completion ≤ 16 weeks)."
+      - "Identify the median (P50) completion week from cumulative counts."
+      - "Compute mean overrun among late trials, and the unconditional mean overrun."
+      - "Recommend a commitment date for P70 confidence."
+    deliverables:
+      - "Histogram analysis table."
+      - "Commitment-date recommendation with reasoning."
+    discussion:
+      - "Why is the P50 date a bad commitment date?"
+      - "What would correlation between feed slips do to this histogram that the given run lacks?"
+    objectives:
+      - "Read simulation output as decision information."
+      - "Commit to dates using explicit confidence targets."
+    rubric: "Probability and median correct (40%); overrun arithmetic correct (30%); commitment rationale uses percentile logic (30%)."
+    solution:
+      model: "Histogram-to-decision analysis"
+      reasoning: "P(on-time) = cumulative trials at ≤16 weeks ÷ 10,000 = 64%. The median is the bracket where cumulative first crosses 5,000 — the 16-week bracket. Late-trial mean overrun uses only the 3,600 late trials (1×2100 + 2×1000 + 3×400 + 4×100)/3600 = 1.58 weeks; unconditional mean = 5,700/10,000 = 0.57 weeks — the delay most projects will actually experience, far smaller than the late-projects' pain suggests, and the gap between the two numbers is exactly why survivorship-biased reporting misleads. P70 sits in the 17-week bracket, so the commitment date is 17 weeks with the residual 30% risk named. P50 as a commitment fails half the time by construction — sponsors remember the misses, not the method."
+      alternatives:
+        - "Committing to 16 with a contingency reserve: defensible if the reserve is sponsor-controlled and explicitly drawn; the simulation says reserve ≈ 1.5 weeks (late mean)."
+      calculations: "Worked arithmetic in instructor key; machine-checked."
+      lesson_for_instructor: "Link back to Lab 11: students who ran the simulation recognize the histogram shape; those who didn't must read it cold."
+    numeric:
+      type: histogram_stats
+      note: "P(on-time), median bracket, late-trial and unconditional mean overrun, P70 bracket."
+      data:
+        trials: 10000
+        deadline_weeks: 16
+        histogram:
+          - {completion_weeks: 14, count: 1200}
+          - {completion_weeks: 15, count: 2300}
+          - {completion_weeks: 16, count: 2900}
+          - {completion_weeks: 17, count: 2100}
+          - {completion_weeks: 18, count: 1000}
+          - {completion_weeks: 19, count: 400}
+          - {completion_weeks: 20, count: 100}
+      expected:
+        on_time_trials: 6400
+        p_on_time: 0.64
+        median_week: 16
+        late_trials: 3600
+        mean_overrun_late_weeks: 1.583
+        mean_overrun_all_weeks: 0.57
+        p70_bracket_weeks: 17
+
+  - id: CS-23
+    title: "Response plans for the top ten risks"
+    domain: D5
+    level: L4
+    use: [in-class]
+    lecture: 17
+    seed: GRIDSENSE
+    difficulty: intermediate
+    numerical: false
+    tags: [risk-response, avoid, transfer, mitigate, accept, secondary-risk]
+    concepts: [risk response strategies, secondary risks]
+    summary: "Design responses for the ten highest risks; every response must name its secondary risk."
+    context: "From the CS-20/CS-21 register, the top ten risks need treatment. Strategies available: avoid, transfer, mitigate, accept (escalate where the sponsor owns the call). Each treatment changes the project."
+    problem: "Assign a strategy to each of the ten, specify the action, owner, and the secondary risk the action creates."
+    constraints:
+      - "Every response names: strategy, concrete action, owner, residual exposure, secondary risk."
+      - "At least one risk must be accepted with justification, not treated."
+      - "Transfer must be a real transfer (contract/insurance), not wishful thinking."
+    tasks:
+      - "Response table for all ten risks."
+      - "Mark the two responses that change the critical path or budget baseline."
+      - "Flag any response that is secretly a scope change needing CCB approval."
+    deliverables:
+      - "Ten-row response table with secondary risks."
+      - "Baseline-impact flags."
+    discussion:
+      - "When does mitigating a risk cost more than accepting it?"
+      - "Who owns a secondary risk created by the response?"
+    objectives:
+      - "Match response strategy to risk nature, not habit."
+      - "Account for the cost and side-effects of every treatment."
+    rubric: "Strategy fit per risk (40%); secondary risks identified and owned (30%); baseline-impact flags correct (30%)."
+    solution:
+      model: "Strategy-fit with secondary-risk accounting"
+      reasoning: "Sensor drift (high EMV): mitigate via reference-sensor comparison — secondary risk: false alarms erode trust in alerts. Key-engineer exit: mitigate via pairing and documentation; secondary: velocity dip during knowledge transfer. Vendor API change: transfer into the vendor contract (version-support clause) — secondary: higher subscription fee. Office move: accept (low EMV, treatment exceeds exposure) with a dated review. The baseline-flagged ones are sensor mitigation (adds a data task) and pairing (adds labor). The scope-change flag: any 'mitigation' that adds a feature (e.g., a redundant feed) is CCB territory."
+      alternatives:
+        - "Transferring key-person risk via a retention bonus: defensible; changes it from project risk to HR budget line — name that move explicitly."
+      lesson_for_instructor: "Inspect the accept cases first; students under-accept because accepting feels like doing nothing."
+
+  - id: CS-24
+    title: "Contract-type selection scenarios"
+    domain: D7
+    level: L2
+    use: [in-class, exam]
+    lecture: 18
+    seed: null
+    difficulty: intermediate
+    numerical: true
+    tags: [contracts, FPIF, incentive-fee, risk-transfer, procurement]
+    concepts: [contract types, point of total assumption]
+    summary: "Compute the incentive mechanics of an FPIF and select contract types for three procurement scenarios."
+    context: "A buyer is negotiating a fixed-price incentive fee (FPIF) contract: target cost PKR 800,000, target fee PKR 80,000, ceiling price PKR 950,000, share ratio 80/20 (buyer/seller). Three other scenarios need a contract-type choice."
+    problem: "Compute the point of total assumption and seller fee/price at three actual-cost outcomes; then match contract types to the three scenarios."
+    constraints:
+      - "POTA = target cost + (ceiling price − target price) ÷ buyer share. With an 80/20 ratio the buyer's share is 0.8 — using the seller's share is the classic exam error."
+      - "Below POTA: fee = target fee + (target cost − actual cost) × seller share; price = actual cost + fee, capped at ceiling price."
+      - "Scenarios: (a) well-understood scope, fixed requirements; (b) research-heavy with unknowns; (c) long-term staff augmentation."
+    tasks:
+      - "Compute target price, POTA, and fee/price at actual costs of 900k, 1,000k, and 1,200k."
+      - "Match each scenario to contract type with a two-line justification."
+      - "State who carries cost risk above POTA and why sellers care."
+    deliverables:
+      - "FPIF mechanics table."
+      - "Contract-type selections with justifications."
+    discussion:
+      - "Why does the seller's incentive weaken beyond POTA?"
+      - "What behavior does an 80/20 share ratio induce near the target cost?"
+    objectives:
+      - "Compute FPIF incentive mechanics including POTA."
+      - "Match contract types to scope certainty and risk allocation."
+    rubric: "FPIF arithmetic correct including POTA (40%); scenario matches justified (40%); POTA risk-shift explanation (20%)."
+    solution:
+      model: "Incentive mechanics + type matching"
+      reasoning: "Target price = 880,000. POTA = 800,000 + (950,000 − 880,000)/0.8 = 887,500 — the buyer's share goes in the denominator, because POTA is the cost at which the buyer's ceiling absorbs everything beyond it. Below POTA: at 900k the ceiling is already crossed (900k > 887.5k), so price = ceiling 950,000, fee = 50,000. At 1,000k: price 950,000, fee = −50,000. At 1,200k: price 950,000, fee = −250,000 — beyond POTA the seller absorbs every rupee of overrun, funding the buyer's discount out of fee, and past a fee of zero the seller loses money outright. This is why sellers stop investing in cost control near POTA, why they price the tail into the target, and why buyers cap liability at the ceiling. Scenario matches: (a) fixed price — scope certainty lets the seller price risk; (b) cost-plus or T&M — unknowns make fixed price a gamble either party regrets; (c) T&M with rate caps — flexible duration, bounded rates."
+      alternatives:
+        - "(b) as FPIF with heavy contingency: defensible when the buyer has strong estimating data; without it, the ceiling punishes honest sellers."
+      calculations: "Worked mechanics in instructor key; machine-checked."
+      lesson_for_instructor: "Plot fee vs actual cost; the kink at POTA makes the risk shift visible instantly."
+    numeric:
+      type: contract_fpif
+      note: "Target price, POTA, and fee/price at three cost outcomes."
+      data:
+        target_cost_pkr: 800000
+        target_fee_pkr: 80000
+        ceiling_price_pkr: 950000
+        seller_share: 0.2
+        check_costs_pkr: [900000, 1000000, 1200000]
+      expected:
+        target_price_pkr: 880000
+        pota_pkr: 887500
+        fee_at_900000: 50000
+        price_at_900000: 950000
+        fee_at_1000000: -50000
+        price_at_1000000: 950000
+        price_at_1200000: 950000
+        fee_at_1200000: -250000
+
+  - id: CS-25
+    title: "SLA acceptance criteria for an ML API vendor"
+    domain: D7
+    level: L3
+    use: [in-class]
+    lecture: 18
+    seed: TELCOCARE
+    difficulty: intermediate
+    numerical: true
+    tags: [SLA, acceptance-criteria, vendor-management, penalties, ML-ops]
+    concepts: [SLA design, service credits]
+    summary: "Convert a vendor's vague 'highly available' promise into measurable SLA criteria with service credits."
+    context: "TelcoCare's churn-scoring API vendor promises 'highly available, fast responses' with a 99.5% monthly availability target in fine print. Penalty: 10% of the monthly fee per full 0.1% below target. Monthly fee PKR 400,000. Last month: 99.2% availability."
+    problem: "Compute the entitlement from last month's numbers, then draft acceptance criteria that would have prevented the ambiguity."
+    constraints:
+      - "Month = 30 days = 43,200 minutes."
+      - "Availability is measured on scoring endpoints only, excluding announced maintenance."
+      - "Latency promises need percentiles, not averages."
+    tasks:
+      - "Compute allowed downtime, actual downtime, shortfall, and penalty due."
+      - "Draft five acceptance criteria (availability, p95/p99 latency, error rate, freshness, support response)."
+      - "Define the measurement method for each criterion — who measures, from what logs."
+    deliverables:
+      - "Penalty computation."
+      - "Acceptance-criteria table with measurement methods."
+    discussion:
+      - "Why do averages hide SLA violations that percentiles reveal?"
+      - "Who should own SLA monitoring — buyer or vendor?"
+    objectives:
+      - "Quantify SLA entitlements from contractual formulas."
+      - "Write measurable acceptance criteria with neutral measurement."
+    rubric: "Penalty arithmetic correct (30%); criteria are measurable with owners (50%); measurement method is neutral (20%)."
+    solution:
+      model: "Formula-first SLA + neutral measurement"
+      reasoning: "Allowed downtime = 43,200 × 0.005 = 216 min. Actual = 43,200 × 0.008 = 345.6 min. Shortfall = 0.3% → three full 0.1% bands → 30% × 400,000 = PKR 120,000 credit. The ambiguity that caused the dispute: 'fast responses' and unclear maintenance windows. Acceptance criteria: availability ≥ 99.5% (vendor dashboard + buyer synthetic probes, disagreement → buyer's data wins); p95 ≤ 300 ms, p99 ≤ 800 ms; error rate ≤ 0.5%; feature freshness ≤ 24 h; P1 support response ≤ 30 min. Percentiles because averages bury the tail."
+      alternatives:
+        - "Buyer-side-only measurement: simplest, but vendors dispute synthetic probes; dual-source with buyer-priority arbitration is the workable middle."
+      calculations: "Worked penalty computation in instructor key; machine-checked."
+      lesson_for_instructor: "Have students find the third 0.1% band explicitly — rounding errors in service credits are a classic dispute."
+    numeric:
+      type: arith
+      note: "SLA downtime, shortfall bands, and service-credit computation."
+      data:
+        month_minutes: 43200
+        target_availability: 0.995
+        actual_availability: 0.992
+        monthly_fee_pkr: 400000
+        credit_per_band: 0.10
+      steps:
+        - {name: allowed_downtime_min,  expr: "month_minutes * (1 - target_availability)", expect: 216.0, tol: 0.01}
+        - {name: actual_downtime_min,   expr: "month_minutes * (1 - actual_availability)",   expect: 345.6, tol: 0.01}
+        - {name: shortfall_pct,         expr: "target_availability - actual_availability",   expect: 0.003, tol: 0.0001}
+        - {name: bands,                 expr: "round(shortfall_pct / 0.001)",                expect: 3,     tol: 0.001}
+        - {name: penalty_pkr,           expr: "bands * credit_per_band * monthly_fee_pkr",   expect: 120000, tol: 0.5}
+
+  - id: CS-26
+    title: "EVM diagnosis of a troubled project"
+    domain: D4
+    level: L3
+    use: [in-class, exam]
+    lecture: 19
+    seed: CAMPUSHUB
+    difficulty: intermediate
+    numerical: true
+    tags: [EVM, CV, SV, CPI, SPI, EAC, TCPI]
+    concepts: [earned value management, forecasting]
+    summary: "Diagnose a troubled project from PV/EV/AC at month 6; compute the full indicator set and recommend."
+    context: "The CampusHub migration reports at month 6 of a 12-month, PKR 4.0M project: PV 2,000,000; EV 1,700,000; AC 1,900,000. The sponsor asks: how bad is it, where does it land, and can we still hit BAC?"
+    problem: "Compute the indicator set, forecast EAC under two models, and give a recovery judgment."
+    constraints:
+      - "CPI/SPI from EV/AC and EV/PV; EAC₁ = BAC/CPI (current efficiency persists); EAC₂ = AC + (BAC − EV) (remaining work at budget)."
+      - "TCPI computed against BAC."
+      - "The recommendation must commit to one model with justification."
+    tasks:
+      - "Compute CV, SV, CPI, SPI."
+      - "Compute EAC₁, EAC₂, VAC, and TCPI."
+      - "Diagnose: schedule vs cost problem — which dominates and what evidence says so."
+      - "Recommend: re-baseline, recovery plan, or accept; with one justification sentence."
+    deliverables:
+      - "Indicator table."
+      - "Diagnosis paragraph and recommendation."
+    discussion:
+      - "When is EAC₂ the honest forecast even though EAC₁ is 'the standard'?"
+      - "What would make TCPI credible or incredible here?"
+    objectives:
+      - "Compute and interpret the full EVM indicator set."
+      - "Choose a forecasting model deliberately and defend it."
+    rubric: "Indicator arithmetic (40%); model choice justified (30%); diagnosis separates schedule from cost signal (30%)."
+    solution:
+      model: "Indicator set + deliberate model choice"
+      reasoning: "CV = −200k, SV = −300k, CPI = 0.895, SPI = 0.85: behind on both axes, schedule worse in relative terms. EAC₁ = 4,000,000/0.895 ≈ 4,470,588 (VAC −470,588); EAC₂ = 1,900,000 + 2,300,000 = 4,200,000. The cost variance is partly pricing (AC > EV consistently) — if the overrun cause is now-fixed (e.g., a one-off data cleansing spike), EAC₂ is honest; if inefficiency persists, EAC₁. TCPI = 2,300,000/2,100,000 = 1.095 — the team must earn 1.10 per rupee for the remainder; below 1.10 is demanding but not absurd, so recovery is plausible with re-planning, not re-baselining."
+      alternatives:
+        - "Re-baseline now: defensible if scope has grown untracked; the data given shows variance, not scope change — ask for the change log first."
+      calculations: "Full worked set in instructor key; machine-checked."
+      lesson_for_instructor: "Force the EAC₁-vs-EAC₂ debate; the right answer depends on cause analysis, which is the actual learning."
+    numeric:
+      type: evm
+      note: "Full indicator set with two EAC models and TCPI."
+      data:
+        bac_pkr: 4000000
+        pv_pkr: 2000000
+        ev_pkr: 1700000
+        ac_pkr: 1900000
+      expected:
+        cv_pkr: -200000
+        sv_pkr: -300000
+        cpi: 0.8947
+        spi: 0.85
+        eac1_typical_pkr: 4470588
+        eac2_atypical_pkr: 4200000
+        vac_pkr: -470588
+        tcpi: 1.0952
+
+  - id: CS-27
+    title: "Sponsor dashboard and mock CCB"
+    domain: D4
+    level: L4
+    use: [in-class]
+    lecture: 20
+    seed: TELCOCARE
+    difficulty: intermediate
+    numerical: false
+    tags: [dashboard, change-control, governance, communication]
+    concepts: [status reporting, change control board]
+    summary: "Design a one-page sponsor dashboard, then run a mock CCB deciding three change requests."
+    context: "TelcoCare's churn platform reports to a quarterly-targeted sponsor. Three CRs arrive simultaneously: a regulator-mandated report change (mandatory), a competitor-driven feature (strategic), and an engineering refactoring wish (internal quality). Budget and schedule are both tight."
+    problem: "Design the dashboard that frames these decisions, then role-play the CCB decision on each CR."
+    constraints:
+      - "Dashboard: one page, five visual zones maximum."
+      - "Each CR decision: approve, defer, reject, or split — with recorded rationale."
+      - "The regulator CR may not be rejected."
+    tasks:
+      - "Sketch the dashboard with the five zones and the data each shows."
+      - "CCB role-play: assign roles (chair, PM, sponsor, tech lead, finance), decide each CR."
+      - "Write the decision log entries (three rows) a real CCB would produce."
+    deliverables:
+      - "Dashboard sketch with zone explanations."
+      - "Decision log with rationale per CR."
+    discussion:
+      - "What does a dashboard hide that a CCB pack must show?"
+      - "Who breaks a CCB deadlock, and what does that reveal about governance?"
+    objectives:
+      - "Design reporting that enables decisions rather than decorating them."
+      - "Run a change-control process with recorded, defensible decisions."
+    rubric: "Dashboard zones serve real decisions (40%); CCB decisions are reasoned and logged (40%); mandatory-CR handling is correct (20%)."
+    solution:
+      model: "Decision-framing dashboard + disciplined CCB"
+      reasoning: "Zones: milestone strip (where we are), EVM strip (CPI/SPI trend), risk top-5 with movement, CR queue with age and impact, decisions-needed-this-week. The regulator CR: approve and re-plan around it (scope-for-scope swap if needed). The competitor feature: defer with a dated decision point — strategic value is real but unquantified. The refactor: split — approve the portion touching code the regulator change will modify anyway (piggyback economics), defer the rest. Deadlock: chair decides, sponsor informed — governance fails when deadlocks are silent."
+      alternatives:
+        - "Approve all three (overcommit): the common failure; dashboard's CR-age zone exists to make queue cost visible and resist it."
+      lesson_for_instructor: "Score the decision log, not the role-play theater — auditability is the CCB's product."
+
+  - id: CS-28
+    title: "Sprint planning for the capstone"
+    domain: D8
+    level: L1
+    use: [in-class]
+    lecture: 21
+    seed: null
+    difficulty: intermediate
+    numerical: true
+    tags: [sprint-planning, capacity, velocity, focus-factor]
+    concepts: [sprint capacity, velocity]
+    summary: "Compute realistic sprint capacity from focus factor and support load, then commit a defensible sprint scope."
+    context: "A five-developer capstone team runs two-week sprints (10 working days, 8 h/day). Historical focus factor 0.7; one developer carries a 20-hour support duty per sprint. Historical velocity: 18 points; one point ≈ 14 hours. Eight candidate stories carry point estimates."
+    problem: "Compute capacity in hours and points, then select a sprint commitment that fits."
+    constraints:
+      - "Capacity = nominal hours × focus factor − support load."
+      - "Points capacity = effective hours ÷ hours-per-point."
+      - "Commitment may not exceed points capacity; partial stories not allowed."
+    tasks:
+      - "Compute nominal, focus-adjusted, and effective hours."
+      - "Convert to points capacity and compare with historical velocity."
+      - "Select a story set that fits, totaling as close to capacity as possible."
+      - "Name the story you deliberately deferred and why."
+    deliverables:
+      - "Capacity computation table."
+      - "Sprint commitment with point total."
+    discussion:
+      - "Why does commitment ≠ capacity exactly, even in a good plan?"
+      - "What does it mean if velocity is stable but capacity computation disagrees?"
+    objectives:
+      - "Ground sprint commitments in computed capacity."
+      - "Reconcile bottom-up hours with top-down velocity."
+    rubric: "Capacity arithmetic (40%); commitment fits and is near-maximal (30%); velocity-vs-capacity reconciliation discussed (30%)."
+    solution:
+      model: "Capacity-grounded commitment"
+      reasoning: "Nominal = 5 × 80 = 400 h. Focus-adjusted = 400 × 0.7 = 280 h. Effective = 280 − 20 = 260 h. Points capacity = 260/14 ≈ 18.6 → commit ≤ 18 points; historical velocity 18 agrees, which validates both methods. Best fit from {5,8,3,13,5,8,2,5}: 5+8+3+2 = 18 exactly. The 13-pointer defers: it can't fit with any pair under 18, and splitting it mid-sprint would violate the team's own slicing discipline."
+      alternatives:
+        - "Commit 20 points to 'stretch': the classic overcommit; with focus factor already at 0.7, stretch means the support duty or quality pays."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Compare each team's pick against capacity — most first drafts exceed it, which is the lesson."
+    numeric:
+      type: arith
+      note: "Sprint capacity chain and commitment fit."
+      data:
+        devs: 5
+        days: 10
+        hours_per_day: 8
+        focus_factor: 0.7
+        support_hours: 20
+        hours_per_point: 14
+        stories: {S1: 5, S2: 8, S3: 3, S4: 13, S5: 5, S6: 8, S7: 2, S8: 5}
+      steps:
+        - {name: nominal_hours,      expr: "devs * days * hours_per_day",             expect: 400,   tol: 0.01}
+        - {name: focus_hours,        expr: "nominal_hours * focus_factor",            expect: 280,   tol: 0.01}
+        - {name: effective_hours,    expr: "focus_hours - support_hours",             expect: 260,   tol: 0.01}
+        - {name: points_capacity,    expr: "effective_hours / hours_per_point",       expect: 18.57, tol: 0.05}
+        - {name: committed_points,   expr: "stories.S1 + stories.S2 + stories.S3 + stories.S7", expect: 18,    tol: 0.01}
+
+  - id: CS-29
+    title: "Definition-of-Done workshop"
+    domain: D8
+    level: L2
+    use: [in-class]
+    lecture: 21
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [definition-of-done, quality-gates, team-norms, agile]
+    concepts: [DoD, done-ness]
+    summary: "Facilitate a DoD workshop producing a checklist that survives contact with real work."
+    context: "A capstone team's 'done' means 'code on my laptop'. Half-finished features accumulate; the demo fails biweekly. The team agrees to write a real DoD but fears a checklist so heavy it slows them down."
+    problem: "Facilitate the workshop: produce a DoD with entry/exit criteria that is short enough to follow and strict enough to matter."
+    constraints:
+      - "DoD: 5–8 items maximum."
+      - "Each item testable by someone other than the author."
+      - "Must cover code, tests, docs, and integration — not just code."
+    tasks:
+      - "Draft the DoD with one test per item."
+      - "Define what happens when an item fails at sprint end (the honesty rule)."
+      - "Separate DoD from acceptance criteria for one sample story."
+    deliverables:
+      - "Team DoD card."
+      - "Honesty rule."
+      - "DoD-vs-AC sample."
+    discussion:
+      - "Why does 'done' inflation happen — and who benefits from it?"
+      - "Should DoD ever change mid-project?"
+    objectives:
+      - "Write an enforceable DoD with external testability."
+      - "Institutionalize honest reporting of incomplete work."
+    rubric: "DoD items testable externally (50%); honesty rule concrete (30%); DoD-vs-AC distinction correct (20%)."
+    solution:
+      model: "Minimal enforceable DoD"
+      reasoning: "Seven items: code reviewed; unit tests pass; integration test green in CI; documentation updated; feature flag or rollback path defined; demo-ready on the shared environment; no known critical defects. External testability: each item names who verifies (reviewer, CI, PO). The honesty rule: unfinished items return to backlog — the story does not count toward velocity. DoD vs AC: DoD is the same for every story (quality floor); AC is per-story (what it must do). Mid-project DoD changes are allowed via retrospective, never mid-sprint."
+      alternatives:
+        - "Adding security-review to DoD: right instinct; if no security capability exists, it becomes a checklist lie — add it as a separate gate until real."
+      lesson_for_instructor: "Run the 'is it done?' drill on three fake submissions; watch the team's own checklist catch or miss each."
+
+  - id: CS-30
+    title: "WIP limits as throttles"
+    domain: D8
+    level: L2
+    use: [in-class]
+    lecture: 22
+    seed: null
+    difficulty: intermediate
+    numerical: true
+    tags: [kanban, WIP-limits, Little's-Law, flow-efficiency]
+    concepts: [Little's Law, WIP limits]
+    summary: "Apply Little's Law to a team's flow data; set WIP limits that hit a cycle-time target."
+    context: "A support-tooling team runs an average WIP of 18 items with a stable arrival rate of 6 items/week. Management demands two-week cycle time. The team resists adding people."
+    problem: "Compute current cycle time, then the WIP and throughput paths to the two-week target; recommend one."
+    constraints:
+      - "Little's Law: cycle time = WIP ÷ throughput (stable system)."
+      - "Headcount is fixed; through-put gains must come from flow, not overtime."
+    tasks:
+      - "Compute current cycle time."
+      - "Compute the WIP required for a 2-week cycle at current throughput."
+      - "Compute the throughput required for a 2-week cycle at current WIP."
+      - "Recommend one path and name its cost."
+    deliverables:
+      - "Little's Law computations."
+      - "Recommendation with trade-off."
+    discussion:
+      - "Why does lowering WIP often raise quality without anyone trying?"
+      - "What breaks Little's Law in real teams?"
+    objectives:
+      - "Use Little's Law quantitatively for flow decisions."
+      - "Choose between WIP reduction and throughput improvement deliberately."
+    rubric: "Computations correct (40%); recommendation with named cost (40%); Little's-Law assumptions acknowledged (20%)."
+    solution:
+      model: "Little's Law paths"
+      reasoning: "Current cycle time = 18/6 = 3 weeks. Path A: WIP = 2 × 6 = 12 items — cut 6 items of WIP (finishing before starting; the cost is saying 'no' mid-flight, plus stakeholder impatience). Path B: throughput = 18/2 = 9/week — a 50% gain with fixed headcount; unrealistic without removing blockers. Recommend A: it is within the team's control, and lower WIP typically improves quality (less context switching, fresher feedback). Little's Law assumes stability; a team with wildly varying arrival rates needs smoothing before the arithmetic means anything."
+      alternatives:
+        - "Path B via automation investment: defensible if a bottleneck analysis shows mechanical waste; otherwise it's a hope, not a plan."
+      calculations: "Worked computations in instructor key; machine-checked."
+      lesson_for_instructor: "Ask what the team's board would look like at WIP 12 — make the abstraction physical."
+    numeric:
+      type: arith
+      note: "Little's Law current state and both paths."
+      data:
+        wip_items: 18
+        throughput_per_week: 6
+        target_ct_weeks: 2
+      steps:
+        - {name: current_ct_weeks,     expr: "wip_items / throughput_per_week",    expect: 3.0, tol: 0.01}
+        - {name: wip_for_target,       expr: "target_ct_weeks * throughput_per_week", expect: 12, tol: 0.01}
+        - {name: throughput_for_target, expr: "wip_items / target_ct_weeks",       expect: 9.0, tol: 0.01}
+
+  - id: CS-31
+    title: "Feature-first to hypothesis-first backlog rewrite"
+    domain: D8
+    level: L3
+    use: [in-class]
+    lecture: 23
+    seed: TELCOCARE
+    difficulty: intermediate
+    numerical: false
+    tags: [backlog, hypothesis, ML-projects, discovery, value]
+    concepts: [hypothesis-driven backlog, ML value framing]
+    summary: "Rewrite a feature backlog as testable hypotheses with kill criteria for a churn-ML product."
+    context: "TelcoCare's backlog lists features: 'add WhatsApp channel', 'premium segment dashboard', 'real-time scoring'. None states what assumption it tests or what evidence would kill it. The team builds; adoption flatlines."
+    problem: "Rewrite five backlog items as hypotheses with measurable success signals and kill criteria."
+    constraints:
+      - "Each hypothesis: assumption, test, signal, threshold, kill criterion."
+      - "Signals must be observable within one sprint or explicitly marked as longer."
+      - "No hypothesis may be unfalsifiable."
+    tasks:
+      - "Rewrite the five items."
+      - "Order the rewritten backlog by information value per unit cost."
+      - "Identify the item that should be killed outright rather than tested."
+    deliverables:
+      - "Hypothesis table (five rows)."
+      - "Reordered backlog with rationale."
+    discussion:
+      - "What does a backlog item with no kill criterion actually commit the team to?"
+      - "How do you sell hypothesis-first ordering to a feature-demanding sponsor?"
+    objectives:
+      - "Convert feature requests into falsifiable hypotheses."
+      - "Prioritize learning value alongside delivery value."
+    rubric: "Hypotheses are falsifiable with thresholds (50%); ordering rationale uses information value (30%); kill-outright call argued (20%)."
+    solution:
+      model: "Falsifiable backlog"
+      reasoning: "Example rewrite: 'WhatsApp channel' → 'Assumption: churned-risk customers respond on WhatsApp better than email; test: 200-customer pilot; signal: response rate; threshold: ≥25% vs email 12%; kill: <15% after two batches.' The real-time scoring item is the kill candidate: its cost (streaming infra) dwarfs any tested signal at current batch latency — the honest move is to test value of faster scores on a daily batch first. Ordering by information value per cost front-loads cheap, decisive tests."
+      alternatives:
+        - "Building WhatsApp regardless (sponsor mandate): name it as an override, log the untested assumption, and design the cheapest measurement around it."
+      lesson_for_instructor: "Grade the kill criterion hardest; unfalsifiable hypotheses are the tell of feature-thinking."
+
+  - id: CS-32
+    title: "Model definition-of-done"
+    domain: D6
+    level: L4
+    use: [in-class]
+    lecture: 23
+    seed: TELCOCARE
+    difficulty: intermediate
+    numerical: false
+    tags: [model-DoD, fairness, ML-governance, evaluation, responsible-AI]
+    concepts: [model DoD, slice evaluation]
+    summary: "Write a model DoD that includes slice performance and fairness thresholds, not just aggregate accuracy."
+    context: "The churn model hits 0.84 aggregate AUC in staging. The deployment freeze request comes anyway: senior-customer segment AUC is 0.61, and the model flags prepaid (low-revenue) customers at 2.3× the rate of postpaid — a business-biased pattern nobody reviewed."
+    problem: "Define a model DoD that would have caught both issues before freeze request."
+    constraints:
+      - "DoD must include aggregate and slice metrics with thresholds."
+      - "Fairness thresholds must be stated as reviewable criteria, not vibes."
+      - "Include the data-shift check (training vs serving distribution)."
+    tasks:
+      - "Draft the model DoD (6–8 items)."
+      - "Set the slice list and minimum per-slice AUC gap."
+      - "Define the disposition when a slice fails: fix, carve-out, or document-and-ship."
+    deliverables:
+      - "Model DoD card."
+      - "Slice policy with disposition rules."
+    discussion:
+      - "Is a segment carve-out (excluding prepaid customers) a fix or a dodge?"
+      - "Who signs off a model DoD in a real organization?"
+    objectives:
+      - "Extend DoD thinking to model artifacts."
+      - "Make fairness a threshold decision, not a discussion topic."
+    rubric: "DoD covers slices, fairness, shift (50%); thresholds explicit (30%); disposition rules decide, not defer (20%)."
+    solution:
+      model: "Slice-aware model DoD"
+      reasoning: "Items: aggregate AUC ≥ target; per-slice AUC within 0.05 of aggregate for named slices (tenure bands, contract type, revenue tier); flag-rate ratio between segments within [0.8, 1.25] absent a documented business justification; PSI data-shift check < 0.2; confusion-matrix review at the operating threshold; model card complete; reproducibility (seeded run reproduces metrics). Disposition: fix in-model; carve-out only with sponsor sign-off and a named alternative process for the excluded segment (otherwise it is a dodge); document-and-ship with monitoring for the two flagged patterns here."
+      alternatives:
+        - "Ship at aggregate target with monitoring: defensible only with the prepaid bias documented and owned — the given 2.3× ratio makes silent shipping indefensible."
+      lesson_for_instructor: "Ask who the 2.3× flag ratio hurts commercially — bias in ML is often a business error before it is an ethical one."
+
+  - id: CS-33
+    title: "Mapping a 40-person program onto Scrum-of-Scrums"
+    domain: D8
+    level: L3
+    use: [in-class]
+    lecture: 24
+    seed: GRIDSENSE
+    difficulty: intermediate
+    numerical: false
+    tags: [scaling, scrum-of-scrums, dependencies, integration]
+    concepts: [scaling frameworks, cross-team dependencies]
+    summary: "Design the scaling structure for 40 people, five teams, one shared data platform — without framework theater."
+    context: "GridSense's program has five teams: three feature teams, one platform team, one data-quality team. Current pain: the platform team is a bottleneck; integration testing happens monthly and fails for days; nobody owns cross-team priorities."
+    problem: "Design the coordination structure: cadences, dependency management, and integration strategy."
+    constraints:
+      - "No adding headcount; structure only."
+      - "The platform team must remain a team, not become a ticket queue."
+      - "Integration feedback must reach weekly or better."
+    tasks:
+      - "Propose the cadence map (team, SoS, program sync) with attendees and duration."
+      - "Design the dependency board: what goes on it, who owns it, review cadence."
+      - "Solve the integration-testing failure mode with a concrete mechanism."
+    deliverables:
+      - "Cadence map."
+      - "Dependency board design."
+      - "Integration mechanism."
+    discussion:
+      - "When is a framework (SAFe, LeSS) better than a hand-rolled structure here?"
+      - "What is the minimum viable coordination for five teams?"
+    objectives:
+      - "Design scaling around bottlenecks, not framework checklists."
+      - "Make cross-team dependencies visible and owned."
+    rubric: "Cadence map is lean and attended-by-right-people (40%); dependency board has an owner (30%); integration mechanism fixes the failure mode (30%)."
+    solution:
+      model: "Bottleneck-first scaling"
+      reasoning: "Cadences: team standups (existing); SoS twice weekly, 20 minutes, tech leads + platform lead, output = unblocked dependencies; program sync weekly, 45 minutes, cross-team planning adjustments. The platform bottleneck: capacity allocation made explicit — 60% planned roadmap, 30% team requests via a ranked queue reviewed at SoS, 10% incident reserve; a team-as-ticket-queue dies when allocation is implicit. Dependency board: one board, dependencies as first-class cards with requester, provider, need-by date, owner = the provider team's lead. Integration: trunk-based with nightly cross-team integration run and a weekly integration checkpoint — monthly big-bang fails for days because feedback latency compounds errors."
+      alternatives:
+        - "Adopting SAFe wholesale: defensible for org-alignment politics; the given failure modes are all solvable with the lean structure above."
+      lesson_for_instructor: "Ask what falls off the dependency board first under deadline pressure — that's the design's weak point."
+
+  - id: CS-34
+    title: "Team working agreement"
+    domain: D9
+    level: L1
+    use: [in-class]
+    lecture: 25
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [working-agreement, team-norms, psychological-safety]
+    concepts: [team chartering, norms]
+    summary: "Draft a team working agreement that prevents the three dysfunctions this team actually exhibits."
+    context: "A capstone team's retros keep surfacing the same three issues: silent disagreement in meetings followed by Monday-morning objections; one member carrying integration work every sprint; meetings running 20 minutes over with no decisions."
+    problem: "Write a working agreement whose items directly counter those three dysfunctions."
+    constraints:
+      - "6–8 items; each item must map to one of the three dysfunctions."
+      - "Each item: behavior, not aspiration ('we trust each other' is banned)."
+      - "Include the enforcement mechanism for one violated item."
+    tasks:
+      - "Draft the agreement with dysfunction mapping."
+      - "Write the enforcement protocol for one item."
+      - "Define the review cadence for the agreement itself."
+    deliverables:
+      - "Working agreement card with mapping."
+      - "Enforcement protocol."
+    discussion:
+      - "Why do working agreements decay, and what slows the decay?"
+      - "Is an agreement signed with the instructor present more or less durable?"
+    objectives:
+      - "Convert recurring dysfunctions into behavioral norms."
+      - "Design light-touch enforcement that survives disagreement."
+    rubric: "Items are behavioral and mapped (50%); enforcement is concrete and proportionate (30%); review cadence defined (20%)."
+    solution:
+      model: "Dysfunction-mapped norms"
+      reasoning: "Silent disagreement → 'disagree in the room: each decision point gets one explicit round of objections before moving on; objections after the meeting reopen the decision, not the decision-maker.' Carry member → 'integration is a named rotating role each sprint, selected at planning; the name is on the board.' Overrun → 'timeboxes end with a decision, a defer, or an owner for the follow-up — no fourth option.' Enforcement: the retro reviews violations by pattern, not by name; two repeats of one item in a month triggers a 15-minute agenda slot to fix the system, not the person. Review: every second retro, one item is retired or rewritten."
+      alternatives: []
+      lesson_for_instructor: "Ban the word 'respect' from drafts; norms that can't be violated can't be enforced."
+
+  - id: CS-35
+    title: "Conflict-mode case with role cards"
+    domain: D9
+    level: L4
+    use: [in-class]
+    lecture: 25
+    seed: CAMPUSHUB
+    difficulty: intermediate
+    numerical: false
+    tags: [conflict, TKI, role-play, negotiation, team]
+    concepts: [conflict modes, positional vs interest-based]
+    summary: "Role-play a three-way conflict (PM, tech lead, QA lead) over a release decision; map modes used."
+    context: "The release decision: ship Friday with two known medium defects, or slip a week. PM faces a sponsor commitment; tech lead argues technical debt accumulation; QA lead argues test coverage gaps on the new module. Each role card includes private interests not stated aloud."
+    problem: "Negotiate the decision live, then map which conflict modes (competing, collaborating, compromising, avoiding, accommodating) each player used."
+    constraints:
+      - "Private interests may be revealed strategically, not all at once."
+      - "The debrief separates the decision quality from the process quality."
+    tasks:
+      - "Run the negotiation to a decision."
+      - "Map the modes each player used, with moments as evidence."
+      - "Identify the moment where interest-based questions could have changed the outcome."
+    deliverables:
+      - "Decision with rationale."
+      - "Mode map with evidence."
+      - "One rewritten exchange (interest-based)."
+    discussion:
+      - "When is competing the right mode for a PM?"
+      - "What did avoiding cost this team?"
+    objectives:
+      - "Recognize conflict modes in live behavior."
+      - "Practice converting positional stands into interests."
+    rubric: "Mode identification is evidence-based (40%); rewritten exchange genuinely shifts to interests (40%); decision rationale sound (20%)."
+    solution:
+      model: "Interest-based release negotiation"
+      reasoning: "The positional fight (ship vs slip) hides interests: PM needs credibility with the sponsor (not Friday per se); tech lead needs the debt logged and time-boxed (not a veto); QA needs the untested module either tested or ring-fenced (not perfection). The collaborating move: ship Friday with the two defects documented and ring-fenced module flagged in release notes, debt items scheduled into next sprint with the tech lead owning the log — every interest substantially met. Competing (PM forcing Friday) wins the date and loses the next three commitments. Avoiding (deferring the meeting) converts a one-week decision into a month of rot."
+      alternatives:
+        - "Slip a week: right call if the ring-fenced module touches billing; the role cards make that discoverable only through questions — the point of the exercise."
+      lesson_for_instructor: "Rotate roles across sections; students who play the PM defend competing, then discover its cost in debrief."
+
+  - id: CS-36
+    title: "Negotiating a scope cut with the sponsor"
+    domain: D9
+    level: L2
+    use: [in-class]
+    lecture: 26
+    seed: MEDSYNC
+    difficulty: intermediate
+    numerical: false
+    tags: [negotiation, scope-cut, sponsor, trade-offs, options]
+    concepts: [negotiation, option framing]
+    summary: "Prepare and run a sponsor conversation that turns 'we need everything' into a chosen trade-off."
+    context: "MedSync's phase-2 must cut four weeks. The sponsor has said 'nothing can go — go-live is fixed'. Three cut options exist: drop the reporting module to phase 3, reduce UAT depth with risk acceptance, or extend two developers (budget impact)."
+    problem: "Prepare the negotiation: option framing, each option's consequence chain, and the opening move."
+    constraints:
+      - "Present three options plus your recommended one; never a single-option ultimatum."
+      - "Each option states what the sponsor loses, visibly."
+      - "The conversation plan includes the likely objection and your response."
+    tasks:
+      - "Write the three-option framing with consequence chains."
+      - "Script the opening two minutes."
+      - "Anticipate the 'everything is mandatory' objection and script the response."
+    deliverables:
+      - "Options brief."
+      - "Opening script."
+      - "Objection response."
+    discussion:
+      - "Why does presenting three options change the power dynamics of the conversation?"
+      - "What does the sponsor's 'fixed go-live' actually protect?"
+    objectives:
+      - "Convert a refusal posture into a selection posture."
+      - "Make consequences visible so the sponsor owns the trade-off."
+    rubric: "Options are real and consequence-chained (40%); opening script sets a collaborative frame (30%); objection response concedes substance, not ground (30%)."
+    solution:
+      model: "Option-framed negotiation"
+      reasoning: "The 'nothing can go' stance survives because nobody has shown what each option costs in the sponsor's own currency. Option framing: (1) reporting module to phase 3 — lose: exec dashboards at go-live; protect: all clinical workflow. (2) UAT depth cut — lose: defect safety net; the risk must be named (finding P1s in production at a hospital). (3) Budget add — lose: money, the sponsor's scarcest visible resource. Opening: 'To protect the go-live date, here are three ways to find four weeks — I recommend the first; let me show you why.' The objection response concedes the principle ('all three matter') and relocates the choice to which loss the sponsor prefers."
+      alternatives:
+        - "Lead with the recommendation and ask for objections: faster, works with a decisive sponsor; the three-option brief stays as the backup pack."
+      lesson_for_instructor: "Have pairs run the opening; most students open with the problem, not the options — the reframe is the skill."
+
+  - id: CS-37
+    title: "Delivering bad news early"
+    domain: D9
+    level: L3
+    use: [in-class]
+    lecture: 26
+    seed: GRIDSENSE
+    difficulty: intermediate
+    numerical: false
+    tags: [communication, bad-news, escalation, trust, stakeholders]
+    concepts: [bad-news protocol, message design]
+    summary: "Design the message, channel, and follow-up for telling the sponsor the integration will slip three weeks."
+    context: "GridSense discovered Tuesday that the legacy ETL adapter needs a rebuild: three weeks, certain. The sponsor presentation is Friday. The team has already missed one self-imposed checkpoint this quarter."
+    problem: "Design the disclosure: what is said, to whom, in what order, and what accompanies the bad news."
+    constraints:
+      - "The message must lead with the decision the sponsor must make, not the history."
+      - "One page maximum; no blame language."
+      - "Include the recovery option set, not just the problem."
+    tasks:
+      - "Draft the one-page message."
+      - "Sequence the disclosures (team, PM's manager, sponsor) with timing."
+      - "Define the follow-up cadence that rebuilds trust."
+    deliverables:
+      - "Message draft."
+      - "Disclosure sequence."
+      - "Trust-rebuild cadence."
+    discussion:
+      - "What does 'early' mean when the news is certain but not yet quantified?"
+      - "How much recovery detail belongs in the first message?"
+    objectives:
+      - "Deliver bad news that preserves decision authority and trust."
+      - "Sequence disclosures to avoid surprise cascade."
+    rubric: "Message leads with decision need (40%); sequence is defensible (30%); cadence is concrete (30%)."
+    solution:
+      model: "Decision-first disclosure"
+      reasoning: "Message: one paragraph of fact (what was found, why it's certain), the decision needed (choose recovery option), the option set with costs, the ask (15 minutes Thursday, before Friday's deck is rebuilt). Sequence: team same-day (they own the facts); manager Tuesday PM (no surprise cascade); sponsor Wednesday with the page — 'early' means as soon as the shape of the decision is clear, not after every number is polished. Follow-up: weekly one-slide status against the chosen option for four weeks, then normal cadence; the first on-time report after bad news does more for trust than ten clean weeks before it."
+      alternatives:
+        - "Waiting for Friday's meeting to disclose formally: protects no one, converts a three-week problem into a trust problem; indefensible here."
+      lesson_for_instructor: "Compare two drafts: one opening with history, one with the ask; ask sponsors-in-the-room which they'd rather receive."
+
+  - id: CS-38
+    title: "Master-plan assembly and red-team review"
+    domain: D1
+    level: L4
+    use: [in-class]
+    lecture: 27
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [integration, master-plan, red-team, capstone-prep]
+    concepts: [plan integration, adversarial review]
+    summary: "Assemble a master plan from component plans, then red-team it as reviewers hunting inconsistencies."
+    context: "Teams receive four component plans (scope/schedule, budget, risk, staffing) written by different 'vendors' with subtle inconsistencies: the schedule assumes a resource the staffing plan doesn't provide; the risk plan's top risk contradicts the budget's contingency sizing."
+    problem: "Assemble the master plan, then switch documents with a rival team for adversarial review."
+    constraints:
+      - "Red-team brief: find at least five defects; severity-rank them."
+      - "Every finding: location, defect, consequence, severity."
+      - "Authors respond to findings without editing history."
+    tasks:
+      - "Assemble the master plan with an integration note listing assumptions bridged."
+      - "Red-team the rival plan (five findings, ranked)."
+      - "Respond to findings received and classify each: accept, contest, defer."
+    deliverables:
+      - "Master plan with integration note."
+      - "Findings list (five, ranked)."
+      - "Response classification."
+    discussion:
+      - "Why do component plans produced by specialists drift apart?"
+      - "What makes a red-team review useful rather than hostile?"
+    objectives:
+      - "Integrate component plans into a coherent master plan."
+      - "Give and receive adversarial review professionally."
+    rubric: "Integration note shows real reconciliation (40%); findings are defects, not style (40%); responses classified honestly (20%)."
+    solution:
+      model: "Assumption-bridged integration"
+      reasoning: "Integration fails at seams: the schedule's phantom resource and the risk-vs-contingency contradiction are both assumption mismatches, so the master plan needs an explicit assumption register with an owner per assumption. Red-team discipline: findings target the artifact, ranked by consequence (the unfunded resource is a severity-1 because it invalidates the critical path). Response classification without editing history preserves the audit trail — contesting a valid finding is acceptable, silently fixing it is not."
+      alternatives: []
+      lesson_for_instructor: "Grade the integration note as heavily as the plan; the note is where students prove they reconciled rather than stapled."
+
+  - id: CS-39
+    title: "Four ethics dilemmas in writing"
+    domain: D10
+    level: L2
+    use: [in-class]
+    lecture: 28
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [ethics, dilemmas, PMI-code, responsible-reporting]
+    concepts: [professional ethics, PMI Code of Ethics]
+    summary: "Analyze four written dilemmas against the PMI Code of Ethics; recommend action with rationale."
+    context: "Four vignettes: (1) your manager asks you to report 60% progress when you know it is 45%; (2) a vendor gifts you conference tickets during a bid evaluation; (3) you discover a colleague padded estimates by 30% 'to be safe'; (4) a data-science teammate wants to use a customer dataset for a side experiment without consent review."
+    problem: "For each: name the violated value (responsibility, respect, fairness, honesty), the stakeholders harmed, and your action."
+    constraints:
+      - "Anchor each analysis in the PMI Code of Ethics values."
+      - "Actions must be proportionate and practical — whistleblowing is not the default answer."
+      - "Vignette 4 must address data governance, not just consent."
+    tasks:
+      - "Four-part analysis with value, harm, action."
+      - "Mark the dilemma where inaction is itself a violation."
+      - "Draft the one sentence you would actually say in the hardest vignette."
+    deliverables:
+      - "Four-part analysis table."
+      - "Inaction-violation call."
+      - "One scripted sentence."
+    discussion:
+      - "Why is 'be honest' insufficient guidance in vignette 1?"
+      - "Where is the line between loyalty to your team and honesty to stakeholders?"
+    objectives:
+      - "Apply an ethics code to concrete dilemmas."
+      - "Act proportionately — escalate, don't grandstand."
+    rubric: "Value identification correct (40%); actions proportionate and practical (40%); scripted sentence usable in real life (20%)."
+    solution:
+      model: "Code-anchored proportionate action"
+      reasoning: "(1) Honesty violated; harm: sponsor decisions on false signal; action: report true number with a recovery plan attached — honesty without a path reads as failure. (2) Fairness; harm: bid integrity; action: decline, disclose to the evaluation lead, log it. (3) Honesty again, but the pad is a symptom of estimate distrust — action: raise estimating process, not the person; if the pad hides in a submitted baseline, it must be corrected. (4) Responsibility + respect; harm: data subjects and the organization; action: block the experiment pending consent/data-governance review — this is the inaction-is-violation case. The scripted sentence for (1): 'We're at 45, not 60 — here's what gets us back and what I need from you to do it.'"
+      alternatives:
+        - "Vignette 3 as reportable misconduct: defensible if the pad is deliberate concealment in a governed baseline; the distinction is intent plus visibility."
+      lesson_for_instructor: "Collect the scripted sentences anonymously and read three aloud; students remember sentences, not frameworks."
+
+  - id: CS-40
+    title: "Benefits map and compute footprint"
+    domain: D10
+    level: L4
+    use: [in-class]
+    lecture: 29
+    seed: TELCOCARE
+    difficulty: intermediate
+    numerical: true
+    tags: [benefits-realization, green-compute, sustainability, trade-off]
+    concepts: [benefits mapping, sustainable computing]
+    summary: "Map promised benefits to owners, then quantify the energy/cost trade-off between two training strategies."
+    context: "TelcoCare promised churn-reduction benefits of PKR 4.2M/year. Two model-training strategies: A (4 GPUs × 72 h, accuracy 87.2%) and B (8 GPUs × 20 h, accuracy 86.9%). GPUs draw 400 W; grid factor 0.6 kg CO₂e/kWh; electricity PKR 35/kWh."
+    problem: "Build the benefits map, then compute the footprint of both strategies and make a recommendation."
+    constraints:
+      - "Every benefit needs an owner and a measurement method."
+      - "Energy = GPU-hours × 0.4 kWh; CO₂ = energy × grid factor; cost = energy × 35."
+      - "The recommendation must weigh accuracy, cost, and footprint explicitly."
+    tasks:
+      - "Benefits map: benefit → contributing output → owner → measure."
+      - "Compute energy, CO₂, and electricity cost for both strategies."
+      - "Recommend a strategy with the trade-off stated in one sentence."
+    deliverables:
+      - "Benefits map table."
+      - "Footprint computation."
+      - "Recommendation."
+    discussion:
+      - "Who should own the carbon number — the PM, the data-science lead, or finance?"
+      - "When does a 0.3-point accuracy gap justify a 44% energy increase?"
+    objectives:
+      - "Anchor benefits to owners and measures."
+      - "Quantify environmental cost as a decision input."
+    rubric: "Benefits map complete with owners (40%); footprint arithmetic correct (30%); recommendation weighs all three axes (30%)."
+    solution:
+      model: "Owned benefits + quantified footprint"
+      reasoning: "Benefits map: churn reduction (owner: marketing lead; measure: quarterly retention delta), analyst time saved (owner: analytics manager; measure: report hours), campaign precision (owner: campaign lead; measure: conversion uplift). Footprint: A = 288 GPU-h → 115.2 kWh → 69.12 kg CO₂e → PKR 4,032; B = 160 GPU-h → 64 kWh → 38.4 kg CO₂e → PKR 2,240. The electricity cost is trivial next to the PKR 4.2M benefit — the honest analysis says the 0.3-point accuracy gap is worth PKR 1,792 and 30.7 kg CO₂e, which is a strategy-A call on accuracy grounds; the sustainability case for B needs a scale argument (retraining cadence), not this single run."
+      alternatives:
+        - "Choosing B on footprint grounds: defensible under a retraining-cadence argument (52 runs/year multiplies the gap); must be stated as such, not from single-run numbers."
+      calculations: "Worked footprint table in instructor key; machine-checked."
+      lesson_for_instructor: "The trap: students recommend B 'because green' without the multiplication argument — make them state the scale assumption."
+    numeric:
+      type: arith
+      note: "Energy, CO₂, and cost for both training strategies."
+      data:
+        gpu_watts: 400
+        grid_factor_kg_per_kwh: 0.6
+        electricity_pkr_per_kwh: 35
+        strategy_a: {gpu_hours: 288, accuracy: 87.2}
+        strategy_b: {gpu_hours: 160, accuracy: 86.9}
+      steps:
+        - {name: energy_a_kwh,  expr: "strategy_a.gpu_hours * gpu_watts / 1000", expect: 115.2, tol: 0.05}
+        - {name: energy_b_kwh,  expr: "strategy_b.gpu_hours * gpu_watts / 1000", expect: 64.0,  tol: 0.05}
+        - {name: co2_a_kg,      expr: "energy_a_kwh * grid_factor_kg_per_kwh", expect: 69.12, tol: 0.05}
+        - {name: co2_b_kg,      expr: "energy_b_kwh * grid_factor_kg_per_kwh", expect: 38.4,  tol: 0.05}
+        - {name: cost_a_pkr,    expr: "energy_a_kwh * electricity_pkr_per_kwh", expect: 4032,  tol: 1}
+        - {name: cost_b_pkr,    expr: "energy_b_kwh * electricity_pkr_per_kwh", expect: 2240,  tol: 1}
+        - {name: energy_saving_pct, expr: "(1 - energy_b_kwh / energy_a_kwh) * 100", expect: 44.4, tol: 0.2}
+
+  - id: CS-41
+    title: "Course retrospective as a closure drill"
+    domain: D10
+    level: L1
+    use: [in-class]
+    lecture: 30
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [retrospective, closure, lessons-learned, team]
+    concepts: [retrospective formats, lessons learned]
+    summary: "Run the course itself through a closure retrospective; produce lessons in reusable form."
+    context: "The course is the project: 16 weeks, 32 sessions, 105 cases. Students are the delivery team, the instructor is the sponsor. The retrospective uses a four-quadrant format (keep, drop, add, question)."
+    problem: "Run the retrospective and convert output into lessons stated as reusable changes, not feelings."
+    constraints:
+      - "Every 'lesson' must name: what changes, where it applies next, who would apply it."
+      - "At least two lessons must be about process, not content."
+      - "The question quadrant must contain questions someone in the room could actually answer."
+    tasks:
+      - "Populate the four quadrants."
+      - "Convert three items into reusable lessons."
+      - "Assign each lesson a 'next application' target."
+    deliverables:
+      - "Four-quadrant output."
+      - "Three reusable lessons."
+    discussion:
+      - "Why do most retrospectives produce complaints instead of changes?"
+      - "What would make you actually reuse one of these lessons next semester?"
+    objectives:
+      - "Practice a structured retrospective on familiar material."
+      - "Convert reflection into reusable, addressed artifacts."
+    rubric: "Lessons are reusable and addressed (60%); process lessons included (25%); quadrant discipline held (15%)."
+    solution:
+      model: "Change-shaped lessons"
+      reasoning: "A lesson like 'case discussions ran long' is a complaint; 'cap case discussion at 25 minutes with a visible timer, apply in any discussion-led session, owner: session facilitator' is a lesson — it names the change, the context, and the carrier. Process lessons here: the estimate-calibration loop (CS-14's correction factor) is a reusable estimating habit; the working agreement (CS-34) is a reusable team-forming artifact. The question quadrant works when questions have answerable owners — 'would a 10-week version of this course drop Unit 5 or Unit 7?' is answerable by the instructor; 'why is scope always hard?' is not."
+      alternatives: []
+      lesson_for_instructor: "Model the behavior: accept two lessons into next semester's plan publicly, visibly, immediately."
+
+  - id: CS-42
+    title: "AI-drafted risk register critique"
+    domain: D10
+    level: L4
+    use: [in-class]
+    lecture: 31
+    seed: GRIDSENSE
+    difficulty: intermediate
+    numerical: false
+    tags: [AI-assisted, critique, risk-register, responsible-AI, verification]
+    concepts: [AI output verification, risk register quality]
+    summary: "Critique an AI-drafted risk register: find the hallucinated, generic, and missing risks; fix the process."
+    context: "A team prompted an LLM for a risk register for GridSense's upgrade and received 15 risks: fluent, confident, mostly plausible. Three reference a discontinued vendor product; five are generic boilerplate ('scope creep may occur'); two real risks from the team's retros are absent; one opportunity is framed as a threat."
+    problem: "Critique the register line by line, then define a process rule for AI-assisted risk drafting."
+    constraints:
+      - "Classify each of the 15: valid, needs-specifics, hallucinated, misframed."
+      - "The process rule must keep the speed benefit while adding a verification gate."
+      - "Critique must address confidence language ('will certainly cause') as a defect."
+    tasks:
+      - "Classify all 15 AI risks."
+      - "Add the two missing retrospective risks in register form."
+      - "Write the process rule (three sentences maximum) for AI-assisted drafting."
+    deliverables:
+      - "Classification table."
+      - "Two added risks."
+      - "Process rule."
+    discussion:
+      - "Why is hallucination easier to spot in risk registers than in essays?"
+      - "Does the process rule generalize to AI-drafted status reports?"
+    objectives:
+      - "Verify AI-generated project artifacts against ground truth."
+      - "Design human-in-the-loop processes for AI assistance."
+    rubric: "Classification accurate (40%); added risks meet register standards (30%); process rule preserves speed with real verification (30%)."
+    solution:
+      model: "Classify-then-gate"
+      reasoning: "Hallucinated entries fail one test: no verifiable referent in the project (the discontinued vendor product). Generic entries ('scope creep may occur') fail specificity: no cause-effect pair this project would recognize. The misframed opportunity inverts sign — a register that hides an opportunity distorts response planning as much as a phantom threat. The process rule: 'AI-drafted risks enter the register only with a named human owner who can state the evidence trail; every entry gets a verification tag (verified / assumption / unverified) and unverified entries are reviewed at the next risk meeting or dropped; confidence language is rewritten as conditional.' This keeps drafting speed while making the human owner accountable for referents."
+      alternatives:
+        - "Banning AI for risk drafting: defensible for regulated contexts; the faster failure is unverified registers, which humans also produce."
+      lesson_for_instructor: "Have students run their own last retrospective risk through the rule — verification discipline gets personal fast."
+
+  - id: CS-43
+    title: "Capstone defense simulation"
+    domain: D1
+    level: L5
+    use: [in-class, capstone]
+    lecture: 32
+    seed: null
+    difficulty: intermediate
+    numerical: false
+    tags: [capstone, defense, synthesis, presentation]
+    concepts: [synthesis, defense]
+    summary: "Full dress rehearsal of the capstone defense with panel questions drawn from every unit."
+    context: "Teams present their capstone plan in 12 minutes; a panel (instructor + two peers per team) asks three prepared questions and two live ones drawn from a question bank spanning all seven units."
+    problem: "Deliver the defense and survive the panel; then exchange scored feedback using the defense rubric."
+    constraints:
+      - "12-minute limit, enforced."
+      - "Panel questions must target the plan's weakest seam, not its strongest section."
+      - "Feedback uses the published defense rubric dimensions."
+    tasks:
+      - "Deliver the 12-minute defense."
+      - "Panel: prepare and ask three seam-targeting questions."
+      - "Score against the rubric with one improvement action per dimension."
+    deliverables:
+      - "Defense delivery."
+      - "Panel question set."
+      - "Scored rubric feedback."
+    discussion:
+      - "What makes a defense answer credible versus defensive?"
+      - "Which unit's material most often collapsed under panel questions?"
+    objectives:
+      - "Synthesize the full course into a defensible plan."
+      - "Perform under time constraint and adversarial questioning."
+    rubric: "Per the capstone defense rubric; rehearsal feedback recorded for the final defense."
+    solution:
+      model: "Seam-targeted rehearsal"
+      reasoning: "Defenses fail at seams: the resource the schedule assumes but staffing doesn't provide; the risk whose mitigation isn't budgeted; the estimate whose basis is one expert's guess. Panel questions should probe exactly these — 'walk me from your top risk to the budget line that funds its response' is the single most diagnostic question in the bank. Credible answers name the limitation before the panel does: 'our schedule assumes one DBA and we have not confirmed that allocation' outperforms a polished slide covering the same hole."
+      alternatives: []
+      lesson_for_instructor: "Keep the question bank across semesters; the same seams fail every year, which is itself a teaching asset."
+
+  - id: CS-44
+    title: "Regulatory-driven predictive migration"
+    domain: D2
+    level: L2
+    use: [homework]
+    lecture: null
+    seed: MEDSYNC
+    difficulty: intermediate
+    numerical: false
+    tags: [regulatory, predictive-migration, hybrid, compliance, healthcare]
+    concepts: [regulatory planning, migration]
+    summary: "Plan a compliance-forced migration of a legacy module to a predictive service without disturbing live clinical use."
+    context: "A regulator mandates that MedSync's medication-interaction logic move from a rules module to an auditable predictive service within 9 months. Live hospitals cannot tolerate downtime; the rules module must run in parallel until validation completes."
+    problem: "Produce the migration plan: phases, parallel-run strategy, validation evidence, and rollback posture."
+    constraints:
+      - "Nine-month regulatory deadline is fixed."
+      - "Zero-downtime requirement for the top three hospital accounts."
+      - "Validation evidence must satisfy an external audit."
+    tasks:
+      - "Phase the migration with entry/exit criteria per phase."
+      - "Design the parallel-run period: duration, comparison method, exit threshold."
+      - "Define rollback triggers and who can invoke them."
+    deliverables:
+      - "Phased migration plan."
+      - "Parallel-run design."
+      - "Rollback trigger table."
+    discussion:
+      - "Why is parallel running not always safer than direct cutover?"
+      - "Who signs the validation evidence — and what does that signature cost?"
+    objectives:
+      - "Plan a compliance-driven migration with auditable evidence."
+      - "Design parallel-run validation with quantitative exit criteria."
+    rubric: "Phases have real entry/exit criteria (40%); parallel-run design is measurable (40%); rollback triggers are invocable (20%)."
+    solution:
+      model: "Phase-gated parallel migration"
+      reasoning: "Phases: (1) shadow deployment — predictive service runs alongside rules, no clinical exposure, comparison logged; (2) parallel decision — both produce recommendations, clinicians see rules with predictive annotations; (3) supervised cutover — predictive primary for the three zero-downtime accounts last, with instant rule fallback. Parallel-run exit threshold: agreement rate within tolerance over 60 consecutive days with discrepancy review complete. Rollback triggers: agreement drop, audit finding, or incident severity P1 — invocable by the on-call clinical safety officer without committee approval; speed is the point of a rollback trigger."
+      alternatives:
+        - "Direct cutover with heavy pre-validation: faster, acceptable where parallel running is impractical; here the zero-downtime accounts and audit evidence make parallel the honest choice."
+      lesson_for_instructor: "Ask who owns discrepancy triage during parallel run — unowned discrepancy queues are where migrations stall."
+
+  - id: CS-45
+    title: "Startup MVP under runway pressure"
+    domain: D1
+    level: L3
+    use: [homework, exam]
+    lecture: null
+    seed: VOLTPAY
+    difficulty: intermediate
+    numerical: true
+    tags: [MVP, runway, burn-rate, scope-cut, startup]
+    concepts: [burn rate, MVP scoping]
+    summary: "Compute runway under two cost postures and recommend the scope posture that reaches revenue."
+    context: "VoltPay (early-stage payments MVP) holds PKR 6.0M cash. Monthly burn: salaries 900k, cloud 150k, contractors 200k, other 100k. First revenue arrives at month 7 (post-launch onboarding lag): PKR 400k in month 7, growing 100k/month thereafter."
+    problem: "Compute runway for the base plan and for a contractor-cut plan; decide the scope posture."
+    constraints:
+      - "Runway = cash ÷ monthly burn."
+      - "Contractor cut saves 200k/month but delays feature X by one month."
+      - "Recommendation must cover the month-7 revenue gap explicitly."
+    tasks:
+      - "Compute base burn, runway, and the shortfall against month-7 revenue."
+      - "Recompute with contractors cut."
+      - "Recommend and defend: cut contractors, keep them, or find a third path."
+    deliverables:
+      - "Runway computations (both postures)."
+      - "Recommendation with the gap analysis."
+    discussion:
+      - "Why is 'extend runway' not automatically the right answer?"
+      - "What non-cash runway does the contractor cut spend?"
+    objectives:
+      - "Compute runway and shortfall against a revenue horizon."
+      - "Weigh cash runway against capability runway."
+    rubric: "Runway arithmetic correct (40%); gap analysis explicit (30%); recommendation weighs both runways (30%)."
+    solution:
+      model: "Dual-runway analysis"
+      reasoning: "Base burn = 1,350k/month → runway = 6,000,000/1,350,000 = 4.44 months. Month-7 revenue means 6 months of burn must be covered: shortfall = 6 × 1,350,000 − 6,000,000 = PKR 2.1M. Contractor cut: burn 1,150k → runway 5.22 months; still short (6 × 1,150,000 − 6,000,000 = 900k gap). Neither posture reaches revenue on cash alone — the honest recommendation combines the cut with a bridge: smaller raise, revenue advance, or scope cut that pulls revenue earlier. The non-cash cost of the cut: feature X slips a month, which may be the revenue-driving feature — the analysis must name which runway the cut actually extends."
+      alternatives:
+        - "Keep contractors and raise a bridge now: preserves capability runway; costs dilution and time — defensible if feature X drives month-7 revenue."
+      calculations: "Worked runway table in instructor key; machine-checked."
+      lesson_for_instructor: "Push past 'cut costs': the interesting answer is which runway (cash vs capability) each option extends."
+    numeric:
+      type: arith
+      note: "Burn, runway, and month-7 shortfall under both postures."
+      data:
+        cash_pkr: 6000000
+        burn_base_pkr: 1350000
+        burn_cut_pkr: 1150000
+        months_to_revenue: 6
+      steps:
+        - {name: runway_base_months,  expr: "cash_pkr / burn_base_pkr", expect: 4.444, tol: 0.01}
+        - {name: runway_cut_months,   expr: "cash_pkr / burn_cut_pkr",  expect: 5.217, tol: 0.01}
+        - {name: base_shortfall_pkr,  expr: "months_to_revenue * burn_base_pkr - cash_pkr", expect: 2100000, tol: 1}
+        - {name: cut_shortfall_pkr,   expr: "months_to_revenue * burn_cut_pkr - cash_pkr",  expect: 900000,  tol: 1}

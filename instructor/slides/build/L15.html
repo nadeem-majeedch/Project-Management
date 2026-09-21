@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L15 · Risk Management Foundations (ISO 31000 Alignment) (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L15 · Risk Management Foundations (ISO 31000 Alignment)</h1>
+<h2>Identify early, quantify honestly, respond deliberately</h2>
+<p>Week 8 · Unit U4 · CLO4 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Run</strong> the risk process: identify → analyze → respond → monitor, as a loop</li><li><strong>Write</strong> risk statements with cause, event, and effect (no vibes, no villains)</li><li><strong>Score</strong> risks on a probability–impact matrix with declared thresholds</li><li><strong>Compute</strong> expected monetary value and defend its limits</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Unit U4 opens; the P×I matrix slide carries CS-21's machine-verified scores — keep them exact. Risk register structure feeds Lab 9. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The risk process is a loop</h2>
+<div class="mermaid">
+flowchart LR
+  ID["Identify&lt;br&gt;(statements)"] --&gt; AN["Analyze&lt;br&gt;(P × I, EMV)"]
+  AN --&gt; RE["Respond&lt;br&gt;(strategies)"]
+  RE --&gt; MO["Monitor&lt;br&gt;(triggers, owners)"]
+  MO -.-&gt;|new risks| ID
+</div>
+<li>ISO 31000 framing: risk = <strong>effect of uncertainty on objectives</strong> — threats <em>and</em> opportunities</li><li>A risk register row: ID · statement · P · I · score · response · owner · trigger</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The opportunities half of ISO's definition is new to most students — one example each. The loop arrow matters: monitoring generates new identifications. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Risk statement anatomy</h2>
+<li>Bad: "The API might be a problem"</li><li>Good: "<strong>Because</strong> the vendor releases schema changes monthly **<strong>(cause)</strong>, the <strong>ingestion pipeline may break on release day (event)</strong>, <strong>causing up to 3 days of stale analytics (effect)</strong>"</li></ul>
+<li>Cause → event → effect: each part is attackable, so each part is improvable</li><li>Owner ≠ volunteer: the owner has the authority to act (L04's RACI returns)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Rewrite one student risk live using the template. The authority point ties to L04 — owners without authority are spectators. 4 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>The P×I matrix — with real thresholds</h2>
+<table><tr><th>Risk</th><th>P</th><th>I</th><th>Score</th><th>Band</th></tr><tr><td>R1 Vendor schema change</td><td>0.4</td><td>30</td><td><strong>12</strong></td><td>medium</td></tr><tr><td>R2 Data-access denial</td><td>0.2</td><td>80</td><td><strong>16</strong></td><td>high</td></tr><tr><td>R3 Key-person loss</td><td>0.5</td><td>20</td><td><strong>10</strong></td><td>medium</td></tr><tr><td>R5 GPU price spike</td><td>0.1</td><td>50</td><td><strong>5</strong></td><td>low</td></tr></table>
+<p>Bands (declared): low &lt; 6 ≤ medium &lt; 15 ≤ high · <strong>EMV = P × I</strong> (PKR): R2 = 1,000,000 — the top exposure; <strong>total EMV = 2,365,000</strong></p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Scores are CS-21's, checker-verified. The teaching point: R2 is LOW probability but tops EMV — heat maps alone would have buried it. That is CS-21's whole argument. 6 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a streaming-platform launch — twenty risks named in CS-20, from CDN contract to launch-day support staffing</li><li><strong>DS:</strong> data-access denial (R2) is the recurring DS exposure — legal/consent, not technical; it outranks every technical risk on EMV</li><li>If your risk register has no <em>non-technical</em> top row, you have not looked hard enough</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The last line is the assessment sentence. Lab 9 starts from this register. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-20</strong> — <em>Twenty risks for a streaming platform</em>: identification sprint — breadth first, no filtering yet <strong>CS-21</strong> — <em>Heat-map thresholds on trial</em>: the same scores, two threshold schemes — watch the top risk change bands</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-20 as a timed hunt (15 min), CS-21 as the threshold debate. Key insight (verified): thresholds are policy, not physics — the key grades the defense. Keys: instructor/answer-keys/cases/CS-20.md, CS-21.md.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Who should <em>declare</em> the P×I thresholds — the PM, the sponsor, or the PMO? Why does it change behavior?</li><li>EMV assumes the impact estimate is honest. How would you audit an EMV?</li><li>When is it rational to accept a high-band risk?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2 previews L18 (procurement data) and Lab 10; Q3's expected answer: when response cost exceeds EMV — and that's a documented decision, not silence. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Risk = effect of uncertainty on objectives — threats <strong>and</strong> opportunities</li><li>Statements have cause → event → effect; owners have authority</li><li>P×I with declared thresholds; <strong>EMV = P × I</strong> ranks what heat maps hide</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write your capstone's riskiest data-related risk as cause–event–effect, and estimate its EMV with a stated P.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M2's risk register. Preview L16: when P and I themselves are uncertain — distributions, trees, simulation.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>ISO 31000:2018 — <em>Risk management: Guidelines</em></li><li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — uncertainty domain</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/risk-register-template.md</code></a> · Lab 9: <a href="../../docs/labs/index.md"><code>docs/labs/lab-09-risk-register.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U4-risk-uncertainty-control/L15-15-risk-foundations.md</code></li><li><strong>Next:</strong> L16 — Quantitative Risk: PERT, Trees &amp; Simulation</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>ISO 31000 is the syllabus-aligned frame for this lecture (course-data lists ISO 31000 for L15). Preview L16 with 'what if P is itself a distribution?'.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

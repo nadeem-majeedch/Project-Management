@@ -1,0 +1,16 @@
+# CAMPUS-MEND sprint answer key (Lab 14) — verified by check_answers.py gate F
+# Capacity chain: 80 gross - 6 absence = 74; x0.7 focus = 51.8; -5.7 ceremonies = 46.1 build h
+# Point capacity: floor(46.1 / 1.4) = 32 pts (team's measured rate ~1.4 h/pt)
+metric,value
+gross_hours,80
+absence_hours,6
+hours_after_absence,74
+focus_factor,0.7
+hours_after_focus,51.8
+ceremony_hours,5.7
+build_capacity_hours,46.1
+hours_per_point,1.4
+point_capacity,32
+committed_points,31
+committed_items,"B1, B6, B9"
+stretch_item,B3 (8 pts; not committed)

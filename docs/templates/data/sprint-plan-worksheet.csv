@@ -1,0 +1,16 @@
+# Sprint selection worksheet (Lab 14) — mark IN/OUT per item after capacity math
+# Team: 4 people (3 devs + 1 QA), 10 productive h/person/week, 2-week sprint
+# Capacity chain (fill every step in your sprint-plan.md):
+#   gross 80 h - absence 6 h = 74 h; focus x0.7 = 51.8 h; ceremonies 5.7 h
+#   build = 46.1 h; at ~1.4 h/pt => point capacity = floor(46.1 / 1.4)
+item_id,points,value_1_10,goal_fit_1_5,in_sprint
+B1,13,10,,
+B2,3,4,,
+B3,8,9,,
+B4,5,7,,
+B5,8,6,,
+B6,13,9,,
+B7,5,5,,
+B8,3,3,,
+B9,5,8,,
+B10,3,2,,

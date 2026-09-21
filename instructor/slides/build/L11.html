@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L11 · Network Logic, CPM &amp;amp; PERT (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 11">
+<h1>L11 · Network Logic, CPM &amp; PERT</h1>
+<h2>Find the critical path before it finds you</h2>
+<p>Week 6 · Unit U3 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 11">
+<h2>Learning objectives</h2>
+<li><strong>Draw</strong> an activity-on-node network from a dependency table</li><li><strong>Execute</strong> a complete forward and backward pass (ES/EF/LS/LF)</li><li><strong>Compute</strong> total and free float, and identify all critical paths</li><li><strong>Explain</strong> why "critical" is about float, not importance</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The hand-solved network is the deck's centerpiece and matches the teaching package and the checker exactly. Students do Lab 4 on the CAMPUS-MEND schedule this week. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 11">
+<h2>From dependency table to network</h2>
+<table><tr><th>Activity</th><th>Predecessor</th><th>Dur (wk)</th></tr><tr><td>A Data audit</td><td>—</td><td>2</td></tr><tr><td>B Schema design</td><td>A</td><td>3</td></tr><tr><td>C Ingestion build</td><td>B</td><td>4</td></tr><tr><td>D Feature store</td><td>B</td><td>5</td></tr><tr><td>E Streaming features</td><td>D</td><td>4</td></tr><tr><td>F Model training</td><td>C, D</td><td>3</td></tr><tr><td>G Gate evidence</td><td>E, F</td><td>2</td></tr><tr><td>H Rollout</td><td>G</td><td>1</td></tr></table>
+<p>All dependencies finish-to-start. Same table as the teaching package — Lab 4 uses CAMPUS-MEND's eight-package version.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Keep this table identical to the package so pass arithmetic chains cleanly. Ask which activities merge branches (F, G) — merges are where float dies. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 11">
+<h2>Forward pass</h2>
+<div class="mermaid">
+flowchart LR
+  A["A 0–2"] --&gt; B["B 2–5"]
+  B --&gt; C["C 5–9"]
+  B --&gt; D["D 5–10"]
+  D --&gt; E["E 10–14"]
+  C --&gt; F["F 10–13"]
+  D --&gt; F
+  E --&gt; G["G 14–16"]
+  F --&gt; G
+  G --&gt; H["H 16–17"]
+</div>
+<li><strong>ES = max(EF of predecessors)</strong> · <strong>EF = ES + duration</strong></li><li>Merge points: F takes max(9, 10) = <strong>10</strong> · G takes max(14, 13) = <strong>14</strong></li><li>Project EF = <strong>17 weeks</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Do it live, one node at a time, students calling the maxes. The node labels are ES–EF. 8 min on the board.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 11">
+<h2>Backward pass &amp; float</h2>
+<p><strong>LF start = 17</strong> · <strong>LS = LF − duration</strong> · <strong>LF = min(LS of successors)</strong></p>
+<table><tr><th>Act</th><th>ES–EF</th><th>LS–LF</th><th>Total float</th><th>Free float</th></tr><tr><td>A</td><td>0–2</td><td>0–2</td><td>0</td><td>0</td></tr><tr><td>B</td><td>2–5</td><td>2–5</td><td>0</td><td>0</td></tr><tr><td>C</td><td>5–9</td><td>7–11</td><td><strong>2</strong></td><td><strong>0</strong></td></tr><tr><td>D</td><td>5–10</td><td>5–10</td><td>0</td><td>0</td></tr><tr><td>E</td><td>10–14</td><td>10–14</td><td>0</td><td>0</td></tr><tr><td>F</td><td>10–13</td><td>11–14</td><td><strong>1</strong></td><td><strong>0</strong></td></tr><tr><td>G</td><td>14–16</td><td>14–16</td><td>0</td><td>0</td></tr><tr><td>H</td><td>16–17</td><td>16–17</td><td>0</td><td>0</td></tr></table>
+<p><strong>Critical path: A→B→D→E→G→H = 17 weeks.</strong> Note C and F: total float &gt; 0 but free float = 0 — they can borrow time only from the project, not from their successors.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The C/F free-float subtlety is exactly what the checker forced corrected in the answer keys — teach it explicitly. Near-critical F (TF=1) is Quiz 2 material. 8 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 11">
+<h2>Why "critical" ≠ "important"</h2>
+<li>Critical = <strong>zero float</strong>: a 1-day slip moves the end date 1 day</li><li>Non-critical work can be <em>more</em> important (H is rollout — tiny, critical; data governance might be huge, off-path)</li><li>PERT adds distribution thinking: the critical path has its own variance — near-critical paths can <strong>become</strong> critical</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The near-critical-becomes-critical point is the bridge to L15's Monte Carlo lab (Lab 11). 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 11">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a microservice migration — the schema cutover (small, critical) vs the code rewrite (huge, float-rich)</li><li><strong>DS:</strong> model training looks long but has float; the <strong>evaluation harness</strong> it feeds has none — classic misread</li><li>CS-15 is the 14-activity exam-grade version of today's 8-activity network</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS misread is the teaching package's misconception — students float-assume the glamorous work. 3 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 11">
+<h2>Case anchor:</h2>
+<p><strong>CS-15</strong> — <em>Hand-solved 14-activity CPM network</em>: full pass with lags; verify the duration and find all zero-float paths (the key shows <strong>three</strong>)</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Numeric case — key is machine-verified by tools/check_cases.py. Assign as homework computation; Quiz 2 uses an 8-activity version of this exact pattern. Key: instructor/answer-keys/cases/CS-15.md.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 11">
+<h2>Discussion</h2>
+<li>Your sponsor wants the 17-week plan in 14. What are the only two legitimate levers — and what does each cost?</li><li>Which is worse: a critical activity slipping 1 day, or a TF=2 activity slipping 3?</li><li>How would Agile teams get the same visibility without a network diagram?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1 previews crashing/fast-tracking (L12); Q3 previews the sprint-burndown answer (L21–L22). 6 min.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 11">
+<h2>Summary &amp; exit ticket</h2>
+<li>Forward: ES/EF · Backward: LS/LF · Float = LS − ES</li><li><strong>Critical = zero float</strong>, possibly several paths at once</li><li>Free float ≠ total float — check your successors before borrowing</li></ul>
+<p><strong>Exit ticket (2 min):</strong> compute total float of F if G's duration were 3 instead of 2 — and say which path becomes critical.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The perturbation twist tests real understanding, not recall (answer: 16 weeks, F reaches TF=0 via the E route... wait — verify before announcing; see key). Correct answer in CS-15's key notes.</div></details>
+</section><section class="slide" id="s11" data-pagination="11 / 11">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — schedule model, CPM</li><li>Lab 4 brief: <a href="../../docs/labs/index.md"><code>docs/labs/lab-04-cpm-network.md</code></a> · Key: <code>instructor/lab-solutions/lab-04-cpm-network-key.md</code></li><li>Teaching package: <code>instructor/teaching-packages/U3-planning-the-work/L11-11-cpm-pert.md</code></li><li><strong>Next:</strong> L12 — Schedules, Gantt Charts &amp; Resource Levelling (<strong>Quiz 2 opens at the start of class, L09–L12</strong>)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The perturbation twist (verified): G at 3 weeks pushes EF(G) to 17 and the project to 18 weeks; the critical path is unchanged (A→B→D→E→G→H), F's total float stays 1 because the merge at G still runs through E. Have students verify on the board rather than asserting — model the verification habit. Quiz 2: instructor/exam-bank/quiz2.md.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

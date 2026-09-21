@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · PM-401 · Project Management (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>PM-401 · Project Management</h1>
+<h2>L01 · Why Projects Fail: The Case for Project Management</h2>
+<p>Dr. Muhammad Nadeem Majeed · BS CS &amp; BS Data Science · Semester 7</p>
+<p>16 weeks · 32 lectures · 64 contact hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<p>By the end of this session you can:</p>
+<li><strong>Distinguish</strong> a project from operations — and say which is which in your own world</li><li><strong>Explain</strong> the iron triangle and why it is a model, not a law</li><li><strong>Interpret</strong> why two teams with the same budget reach different outcomes</li><li><strong>Locate</strong> where this course is going: CLOs, capstone, and the 16-week arc</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Open with the failure-story hook from the teaching package (CS-01's iron-triangle autopsy). Ask: "who has been on something that slipped?" — normalize failure before defining it. State that CLO1 is assessed first in Quiz 1 (L04). Timing: ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>What is a project?</h2>
+<li><strong>Temporary</strong> — it has a start and an end</li><li><strong>Unique</strong> — it produces something that did not exist before</li><li><strong>Progressive elaboration</strong> — details emerge; you don't know everything on day 1</li></ul>
+<p>Everything else — payroll, support desks, model retraining — is <strong>operations</strong>.</p>
+<p>&lt;https://github.com/nadeem-majeedch/Project-Management&gt; · <code>docs/lectures/L01</code></p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Anchor with the teaching-package definitions. Quick poll: "predictive or agile — which fits a final-year FYP better?" Flag progressive elaboration as the bridge to L08 tailoring.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The iron triangle</h2>
+<div class="mermaid">
+flowchart LR
+  S["Scope"] --- T["Time"]
+  T --- C["Cost"]
+  C --- S
+  Q["Quality"]:::crit
+  Q -.constrained by.-&gt; S
+  Q -.constrained by.-&gt; T
+  Q -.constrained by.-&gt; C
+  classDef crit fill:#9a3412,stroke:#9a3412,color:#ffffff;
+  style S fill:#eef2f7,stroke:#c8d0da,color:#1f2733
+  style T fill:#eef2f7,stroke:#c8d0da,color:#1f2733
+  style C fill:#eef2f7,stroke:#c8d0da,color:#1f2733
+</div>
+<li>Fix any two, the third <strong>moves</strong></li><li>Quality sits <strong>inside</strong> the triangle — or gets silently squeezed</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-01 autopsy: the project that fixed scope, time, and cost — so quality took the hit. Ask students to name a real case where quality was the invisible fourth variable. 2 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Same budget, different outcomes</h2>
+<li><strong>CS-02:</strong> two teams, equal funding — one ships, one stalls</li><ul><li>Difference was <strong>not</strong> money: it was scope control, stakeholder contact, early risk naming</li></ul><li>Success ≠ on-time only: it is <strong>value delivered + stakeholders satisfied</strong></li><li>Failure is usually a <strong>process</strong> failure, not a coding failure</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Emphasize process over heroics — this is the course thesis. Students will meet CS-02's twins again in the capstone kickoff (L30). 2 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a three-person mobile-app FYP that misses its demo deadline — classic triangle squeeze</li><li><strong>DS:</strong> a churn-model project whose <em>data readiness</em> was never scheduled — failure without a single line of bad code</li><li>Same triangle, different failure surface</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>DS example is the important one for this cohort: data projects fail on preparation, not modelling. Sets up L09 (scope/WBS) and L15 (risk).</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-01</strong> — <em>Iron-triangle autopsy</em>: reconstruct which corner was fixed, which moved, and what paid the price</p>
+<p><strong>CS-02</strong> — <em>Success/failure twins</em>: same budget, opposite outcomes; identify the three process differences</p>
+<p>Case slides and full briefs: <a href="../../docs/cases/index.md"><code>docs/cases/</code></a></p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Both are Beginner-band; CS-01 is the in-class worked discussion today, CS-02 is homework reading. Keys are instructor-only (instructor/answer-keys/cases/).</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Is your FYP a project or an operation — and does the answer change how you plan it?</li><li>Which triangle corner is <em>usually</em> fixed in university projects? Who fixed it?</li><li>Can a project be "on time, on budget" and still fail?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 is the load-bearing question — it separates output metrics from outcome metrics, the L20 monitoring signal distinction. Take 2–3 answers, don't resolve yet.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Project = temporary + unique; operations = repeatable</li><li>The iron triangle is a <strong>constraint model</strong>, not a law</li><li>Process quality, not funding, separates the twins</li></ul>
+<p><strong>Exit ticket (2 min, anonymous):</strong> write <strong>one</strong> project you are inside of, and label each triangle corner <em>fixed / flexible / ignored</em>.</p>
+<p>Bring it next lecture — we will use it in L02's portfolio exercise.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Exit tickets are formative only — not graded, but the aggregate pattern informs Lecture 2's opening.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMBOK® Guide 7th ed. — <em>The Standard for Project Management</em> (principles &amp; performance domains)</li><li>ISO 21502:2020 — <em>Project, programme and portfolio management</em></li><li>Teaching package: <code>instructor/teaching-packages/U1-foundations-strategy/L01-01-why-projects-fail.md</code></li><li><strong>Next:</strong> L02 — Strategy, Portfolios, Programs &amp; Projects (bring your exit ticket)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>All references cite standards actually in the syllabus. Preview: the exit ticket feeds the portfolio cut-line exercise in CS-03.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

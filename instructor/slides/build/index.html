@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · Slide deck index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<div class="index-card">
+<h1>PM-401 Lecture Slide Decks</h1>
+<p>One HTML deck per lecture, built from <code>instructor/slides/L&lt;n&gt;-slides.md</code>
+by <code>tools/build_slides.py</code> (standard library only).</p>
+<ul>
+<li><strong>Navigation:</strong> scroll; each slide is a &lt;section&gt; with a page number.</li>
+<li><strong>Speaker notes:</strong> collapsed per slide — click to open; they print automatically (File → Print → PDF).</li>
+<li><strong>Diagrams:</strong> rendered by the Mermaid CDN; offline, the diagram source text remains visible in a styled panel.</li>
+<li><strong>Marp CLI:</strong> the same Markdown sources build to PPTX/PDF with <code>assets/pm401.css</code> as the theme.</li>
+</ul>
+<table>
+<tr><th>Deck</th><th>Title</th><th>Slides</th><th>Diagrams</th><th>Notes</th></tr>
+<tr><td><a href='L01.html'>L01</a></td><td>PM-401 · Project Management</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L02.html'>L02</a></td><td>L02 · Strategy, Portfolios, Programs &amp;amp; Projects</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L03.html'>L03</a></td><td>L03 · PMBOK Guide 7: Principles &amp;amp; Performance Domains</td><td style='text-align:center'>10</td><td style='text-align:center'>2</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L04.html'>L04</a></td><td>L04 · Roles, Competencies &amp;amp; the PM Profession</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L05.html'>L05</a></td><td>L05 · Life Cycles: Predictive, Adaptive, Hybrid</td><td style='text-align:center'>10</td><td style='text-align:center'>2</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L06.html'>L06</a></td><td>L06 · Project Charter &amp;amp; Business Case</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L07.html'>L07</a></td><td>L07 · Stakeholder Identification &amp;amp; Analysis</td><td style='text-align:center'>10</td><td style='text-align:center'>2</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L08.html'>L08</a></td><td>L08 · Tailoring for Software &amp;amp; Data Projects</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L09.html'>L09</a></td><td>L09 · Scope &amp;amp; Work Breakdown Structure</td><td style='text-align:center'>9</td><td style='text-align:center'>2</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L10.html'>L10</a></td><td>L10 · Estimation: Size, Effort, Duration</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L11.html'>L11</a></td><td>L11 · Network Logic, CPM &amp;amp; PERT</td><td style='text-align:center'>11</td><td style='text-align:center'>1</td><td style='text-align:center'>10/11</td></tr><tr><td><a href='L12.html'>L12</a></td><td>L12 · Schedules, Gantt Charts &amp;amp; Resource Levelling</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L13.html'>L13</a></td><td>L13 · Cost Estimating &amp;amp; Budgeting</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L14.html'>L14</a></td><td>L14 · Quality &amp;amp; Data-Quality Planning</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L15.html'>L15</a></td><td>L15 · Risk Management Foundations (ISO 31000 Alignment)</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L16.html'>L16</a></td><td>L16 · Quantitative Risk: PERT, Trees &amp;amp; Simulation</td><td style='text-align:center'>10</td><td style='text-align:center'>2</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L17.html'>L17</a></td><td>L17 · Risk Responses, Issues &amp;amp; Reserves</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L18.html'>L18</a></td><td>L18 · Procurement &amp;amp; Vendor Management</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L19.html'>L19</a></td><td>L19 · Earned Value Management</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L20.html'>L20</a></td><td>L20 · Monitoring, Dashboards &amp;amp; Change Control</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L21.html'>L21</a></td><td>L21 · Scrum in Practice</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L22.html'>L22</a></td><td>L22 · Kanban, Flow &amp;amp; Throughput</td><td style='text-align:center'>10</td><td style='text-align:center'>2</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L23.html'>L23</a></td><td>L23 · Agile for Data Science &amp;amp; ML Projects</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L24.html'>L24</a></td><td>L24 · Scaling Frameworks &amp;amp; Hybrid Delivery</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L25.html'>L25</a></td><td>L25 · Team Performance &amp;amp; Leadership</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L26.html'>L26</a></td><td>L26 · Stakeholder Communication &amp;amp; Negotiation</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L27.html'>L27</a></td><td>L27 · The Master Project Plan: Integrating Everything</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L28.html'>L28</a></td><td>L28 · Ethics, Governance &amp;amp; Professional Responsibility</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L29.html'>L29</a></td><td>L29 · Sustainability &amp;amp; Benefits Realization</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L30.html'>L30</a></td><td>L30 · Closing Projects &amp;amp; Lessons Learned</td><td style='text-align:center'>9</td><td style='text-align:center'>1</td><td style='text-align:center'>8/9</td></tr><tr><td><a href='L31.html'>L31</a></td><td>L31 · AI-Assisted Project Management</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr><tr><td><a href='L32.html'>L32</a></td><td>L32 · Capstone Defense &amp;amp; Course Synthesis</td><td style='text-align:center'>10</td><td style='text-align:center'>1</td><td style='text-align:center'>9/10</td></tr>
+</table>
+</div></main>
+</body>
+</html>

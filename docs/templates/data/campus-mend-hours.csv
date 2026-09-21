@@ -1,0 +1,11 @@
+# CAMPUS-MEND hours by role (docs/labs/data-pack.md §B) — educational data
+package_id,dev_hours,qa_hours,de_hours,pm_hours
+A,40,20,0,8
+B,80,20,40,8
+C,320,80,0,24
+D,120,20,200,12
+E,120,20,120,12
+F,120,40,0,16
+G,40,240,0,8
+H,24,40,8,8
+TOTAL,864,480,368,96

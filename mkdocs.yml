@@ -1,0 +1,156 @@
+# Project Management — PM-401 · BS CS & BS Data Science · Semester 7
+# Instructor: Dr. Muhammad Nadeem Majeed
+# Architecture reference: planning/09-website-information-architecture.md
+
+site_name: Project Management — PM-401
+site_description: >-
+  Complete 16-week university course: project management for 7th-semester
+  BS Computer Science and BS Data Science students. 32 lectures, 105
+  progressive cases, capstone defense.
+site_author: Dr. Muhammad Nadeem Majeed
+site_url: https://nadeem-majeedch.github.io/Project-Management/
+repo_url: https://github.com/nadeem-majeedch/Project-Management
+repo_name: nadeem-majeedch/Project-Management
+edit_uri: edit/main/docs/
+
+copyright: >
+  Copyright &copy; 2026 Dr. Muhammad Nadeem Majeed — course materials for
+  enrolled students.
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - content.code.copy
+    - search.highlight
+    - search.share
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - offline
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.mark
+  - pymdownx.tilde
+
+extra_css:
+  - stylesheets/custom.css
+
+nav:
+  - Home: index.md
+  - Syllabus:
+      - syllabus/index.md
+      - Course Description: syllabus/course-description.md
+      - Learning Outcomes (CLOs): syllabus/clos.md
+      - Detailed Syllabus: syllabus/detailed-syllabus.md
+      - Weekly Schedule: syllabus/weekly-schedule.md
+      - Textbooks & References: syllabus/textbooks.md
+      - Course Policies & Expectations: syllabus/course-policies.md
+      - Delivery Methodology: syllabus/delivery-methodology.md
+  - Calendar:
+      - calendar/index.md
+      - Printable Version: calendar/printable.md
+  - Lectures:
+      - lectures/index.md
+  - Cases:
+      - cases/index.md
+  - Assessments:
+      - assessments/index.md
+      - Grading & Components: assessments/grading.md
+      - Assessment Strategy: assessments/assessment-strategy.md
+      - Quiz Guide: assessments/quiz-guide.md
+      - Exam Guide: assessments/exam-guide.md
+      - Course Policies: assessments/policies.md
+      - Academic Integrity & Responsible AI: assessments/academic-integrity.md
+  - Labs:
+      - labs/index.md
+      - Scenario Data Pack: labs/data-pack.md
+  - Templates:
+      - templates/index.md
+      - Charter: templates/charter-template.md
+      - Stakeholder Register: templates/stakeholder-register-template.md
+      - Scope Statement: templates/scope-statement-template.md
+      - WBS: templates/wbs-template.md
+      - WBS Dictionary: templates/wbs-dictionary-template.md
+      - Activity Network: templates/activity-dependency-template.md
+      - CPM Worksheet: templates/cpm-worksheet-template.md
+      - Gantt & Resources: templates/gantt-resource-template.md
+      - Cost Baseline: templates/cost-baseline-template.md
+      - Quality Plan: templates/quality-plan-template.md
+      - Risk Register: templates/risk-register-template.md
+      - P×I Matrix: templates/probability-impact-template.md
+      - Communication Plan: templates/communication-plan-template.md
+      - Monitoring & Recovery: templates/monitoring-dashboard-template.md
+      - Sprint Planning: templates/sprint-planning-template.md
+  - Assignments:
+      - assignments/index.md
+      - A1 Scope & Schedule: assignments/a1-scope-schedule.md
+      - A2 Risk Register: assignments/a2-risk-register.md
+      - A3 EVM Analysis: assignments/a3-evm-analysis.md
+  - Capstone:
+      - capstone/index.md
+      - Specification: capstone/specification.md
+      - Milestones: capstone/milestones.md
+      - Charter & Scope: capstone/capstone-charter.md
+      - Rubric: capstone/capstone-rubric.md
+      - Presentation Rubric: capstone/presentation-rubric.md
+      - Peer Review: capstone/peer-review.md
+      - Defense Format: capstone/defense-format.md
+  - Resources:
+      - resources/index.md
+      - Glossary: resources/glossary.md
+      - Templates: resources/templates.md
+      - Standards Library: resources/standards-library.md
+      - Downloads: downloads.md
+  - Help:
+      - FAQ: faq.md
+      - About the Course: about.md
+
+not_in_nav: |
+  lectures/L*.md
+  cases/CS-*.md
+  lectures/lesson-footer.md
+
+strict: true
+
+# MkDocs >=1.6 hard-codes "/templates/" as a default exclusion (mkdocs/structure/files.py
+# _default_exclude); a later negation pattern re-includes our student template library.
+exclude_docs: |
+  !templates/

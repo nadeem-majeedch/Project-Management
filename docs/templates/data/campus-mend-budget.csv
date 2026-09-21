@@ -1,0 +1,8 @@
+# CAMPUS-MEND baseline budget (docs/labs/data-pack.md §C) — educational data
+line,amount_pkr
+Labor,3225600
+Indirects (25% of labor),806400
+Direct costs (licenses + GPU),88000
+Subtotal,4120000
+Contingency (10% of subtotal),412000
+Cost baseline,4532000

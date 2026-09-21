@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L26 · Stakeholder Communication &amp;amp; Negotiation (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L26 · Stakeholder Communication &amp; Negotiation</h1>
+<h2>Getting the right message to the right stakeholder — and closing the deal</h2>
+<p>Week 13 · Unit U5 · CLO5 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Design</strong> a communication plan from stakeholder needs, not from habit</li><li><strong>Prepare</strong> a negotiation with BATNA, reservation point, and trades</li><li><strong>Deliver</strong> bad news early with options, ownership, and a recovery ask</li><li><strong>Choose</strong> the right channel for the message's stakes and audience</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Quiz 3 (L21–L26, 15 min) runs FIRST — instructor/exam-bank/quiz3.md. Both cases are role-plays; the negotiation case (CS-36) uses BATNA prep from the key. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The communication plan is a design artifact</h2>
+<table><tr><th>Stakeholder</th><th>What they need</th><th>Channel</th><th>Cadence</th><th>Owner</th></tr><tr><td>Sponsor</td><td>variance + decisions needed</td><td>1-page brief</td><td>biweekly</td><td>PM</td></tr><tr><td>Data owner</td><td>access impact, consent scope</td><td>working session</td><td>per change</td><td>analyst</td></tr><tr><td>Team</td><td>context for their decisions</td><td>standup + board</td><td>daily</td><td>leads</td></tr><tr><td>End users</td><td>what changes for them</td><td>release note</td><td>per release</td><td>PO</td></tr></table>
+<li>Rule: every row answers "<em>what decision does this reader make with it?</em>"</li><li>Channel follows <strong>stakes</strong>: bad news by meeting, routine by dashboard — never the reverse</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The decision-per-row rule is the package's comms discipline. The channel-stakes rule sets up CS-37. Lab 12 builds this plan. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Negotiation: prepare the floor before the room</h2>
+<div class="mermaid">
+flowchart LR
+  INT["Interests&lt;br&gt;(mine &amp; theirs)"] --&gt; OPT["Options&lt;br&gt;(≥ 3 trades)"]
+  OPT --&gt; BAT["BATNA&lt;br&gt;(best alternative)"]
+  BAT --&gt; RP["Reservation point&lt;br&gt;(walk-away)"]
+</div>
+<li>BATNA is power: the side that can walk, negotiates</li><li>Trade <em>variables</em>, not concessions: scope ↔ schedule ↔ payment ↔ risk buffer</li><li>CS-36's scope cut: your BATNA is the re-baselined plan — arrive with it <strong>costed</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The four-box prep chain is the package's negotiation skeleton. The costed-BATNA point converts negotiation from bluffing to engineering. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Delivering bad news early</h2>
+<li><strong>The fact</strong> — one sentence, no adjectives: "CPI is 0.87; EAC breaches funding by 9,600"</li><li><strong>The cause</strong> — verified, not speculated</li><li><strong>Options</strong> — two to three, each costed (crash, de-scope, re-baseline)</li><li><strong>The ask</strong> — the decision you need, by when</li><li><strong>Ownership</strong> — what <em>you</em> will do regardless of their choice</li></ul>
+<li>Late bad news is expensive bad news; early bad news is a <strong>project-management deliverable</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The five-part script is the package's instrument and CS-37's rubric. Connect back to L19: the numbers exist precisely to make this conversation possible. 5 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> negotiating test-phase compression with a sponsor who wants the date — trades surface fast when the BATNA is costed</li><li><strong>DS:</strong> telling a stakeholder the model <em>can't</em> meet the accuracy promise — the same five-part script, plus the model card's limits (L23)</li><li>'No' with options is a professional deliverable; 'yes' without analysis is a liability</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS accuracy-promise conversation is this cohort's most likely real-world rehearsal. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-36</strong> — <em>Negotiating a scope cut with the sponsor</em>: role-played with prep sheet; graded on trades created, not ground conceded <strong>CS-37</strong> — <em>Delivering bad news early</em>: the memo + the meeting; each part of the five-part script is scored</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Two role-plays, 20 min total; observers score with the key's rubric. Keys: instructor/answer-keys/cases/CS-36.md, CS-37.md. Non-numeric by design.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>When is email the <em>wrong</em> channel for good news — and why does that asymmetry exist?</li><li>Your BATNA is weak (you cannot walk). What legitimate alternatives to power do you have in the room?</li><li>Which stakeholder in your capstone gets the <em>most</em> communication — and is that the one who <em>needs</em> it?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2's expected directions: objective criteria, coalition, reframing interests — soft power done honestly. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Communication plans serve reader decisions, not sender convenience</li><li>Negotiation: interests → options → BATNA → reservation point — arrive costed</li><li>Bad news early = facts, cause, options, ask, ownership</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write your capstone's one-line "bad news" for a 1-week slip, then the two costed options you'd bring with it.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets rehearse the script format graded in CS-37. Preview L27: the master plan — everything integrated.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>Fisher &amp; Ury (1981) <em>Getting to Yes</em> — Penguin (principled negotiation; syllabus-listed)</li><li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — stakeholder &amp; project work domains</li><li>Teaching package: <code>instructor/teaching-packages/U6-integration-ethics-closing/L26-26-communication-negotiation.md</code></li><li><strong>Next:</strong> L27 — The Master Project Plan: integrating everything</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Fisher &amp; Ury verified against the L26 package's reading list. Preview L27 with the integration map — the capstone's skeleton.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

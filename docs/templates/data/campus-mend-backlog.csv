@@ -1,0 +1,14 @@
+# CAMPUS-MEND backlog (docs/labs/data-pack.md §F) — educational data
+# Sprint length: 2 weeks; team = 4 people (3 devs + 1 QA); 10 productive h/person/week
+item_id,item,points,value_1_10,type
+B1,Registration deadlocks during peak - fix + load test,13,10,feature
+B2,Provision test-data generation for peak replay,3,4,task
+B3,Attendance API caching layer,8,9,feature
+B4,Fee challan reconciliation report,5,7,feature
+B5,LMS roster sync - retry & dead-letter handling,8,6,feature
+B6,Result-publishing pipeline - staging rehearsal,13,9,feature
+B7,Student notification service (SMS/email),5,5,feature
+B8,Dashboard: portal latency + error budget,3,3,task
+B9,Schema migration rollback drill,5,8,task
+B10,Accessibility pass on portal forms,3,2,task
+# TOTAL,66 points

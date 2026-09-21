@@ -1,0 +1,96 @@
+name: pages
+
+# Publishes the MkDocs Material site to GitHub Pages using the current
+# artifact deployment (actions/configure-pages + upload-pages-artifact +
+# deploy-pages) — no gh-pages branch is created or needed.
+#
+# Triggers kept from the previous design: manual run, or a site-* tag.
+# To auto-deploy on every push to main instead, add:
+#   push:
+#     branches: [main]
+# (and remember Repo Settings → Pages → Source = "GitHub Actions").
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["site-*"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the
+# latest in-progress and the newest queued run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate content gates
+        run: python tools/validate.py
+
+      - name: Validate case arithmetic
+        run: python tools/check_cases.py
+
+      - name: Regenerate calendar from instructor config
+        run: python tools/calendar.py
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build site (strict)
+        # site_url is set in mkdocs.yml to the project-site subpath
+        # https://nadeem-majeedch.github.io/Project-Management/ — mkdocs
+        # emits relative asset links, so the build works both locally and
+        # under the subpath without extra config.
+        run: python -m mkdocs build --strict --site-dir site
+
+      - name: Assert template library survived the build
+        # MkDocs >=1.6 hard-excludes /templates/ by default; mkdocs.yml
+        # re-includes it via exclude_docs. Fail if that regresses.
+        run: |
+          if [ ! -f site/templates/index.html ]; then
+            echo "::error::site/templates/index.html missing — templates/ excluded from build"
+            exit 1
+          fi
+          echo "OK: template library present in site/"
+
+      - name: Assert instructor materials never leak into the build
+        run: |
+          if find site -iname '*instructor*' | grep -q .; then
+            echo "::error::instructor content leaked into site/"
+            find site -iname '*instructor*'
+            exit 1
+          fi
+          echo "OK: no instructor content in site/"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

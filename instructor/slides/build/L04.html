@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L04 · Roles, Competencies &amp;amp; the PM Profession (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 9">
+<h1>L04 · Roles, Competencies &amp; the PM Profession</h1>
+<h2>Who actually does what — and who is accountable</h2>
+<p>Week 2 · Unit U1 · CLO1 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 9">
+<h2>Learning objectives</h2>
+<li><strong>Distinguish</strong> sponsor, PM, team, and PMO by decision rights, not job titles</li><li><strong>Build</strong> a RACI chart for a real team and spot its failure modes</li><li><strong>Explain</strong> the PM's dual accountability: to the sponsor <em>and</em> to the team</li><li><strong>Evaluate</strong> an ethical conflict using a professional code as the standard</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>RACI is the operational heart; the accountability discussion is the assessment-relevant part (CLO1, Quiz 1 today covers L01–L04). Run Quiz 1 (15 min) BEFORE this deck — see instructor/exam-bank/quiz1.md.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 9">
+<h2>Who holds which decisions</h2>
+<div class="mermaid">
+flowchart TD
+  SP["Sponsor&lt;br&gt;(funds &amp; owns the outcome)"] --&gt; PM["Project Manager&lt;br&gt;(plans, integrates, decides delivery)"]
+  PM --&gt; TE["Team&lt;br&gt;(builds; owns estimates &amp; technical choices)"]
+  PMO["PMO&lt;br&gt;(standards, methods, portfolio reporting)"] -.guides.-&gt; PM
+</div>
+<li><strong>Sponsor</strong> says <em>whether</em>; <strong>PM</strong> says <em>how</em>; <strong>team</strong> says <em>how long</em></li><li>PMO advises and audits — it does <strong>not</strong> run your project</li><li>In Agile teams, the ScrumMaster is a facilitator, <strong>not</strong> a PM replacement (L23)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The 'says-what' triplet is from the teaching package; it resolves most RACI disputes. Flag the sponsor/PM boundary as the recurring exam trap: sponsors approve baselines, PMs propose them. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 9">
+<h2>RACI: responsibility without ambiguity</h2>
+<table><tr><th>Activity</th><th>Sponsor</th><th>PM</th><th>Lead Dev</th><th>QA</th></tr><tr><td>Approve charter</td><td><strong>A</strong></td><td>R</td><td>C</td><td>I</td></tr><tr><td>Estimate effort</td><td>I</td><td>A</td><td><strong>R</strong></td><td>C</td></tr><tr><td>Sign off release</td><td><strong>A</strong></td><td>R</td><td>C</td><td>C</td></tr><tr><td>Triage defects</td><td>I</td><td>A</td><td>C</td><td><strong>R</strong></td></tr></table>
+<li><strong>R</strong> does the work · <strong>A</strong> owns the outcome (<strong>one per row</strong>) · <strong>C</strong> consulted · <strong>I</strong> informed</li><li>Failure modes: two A's (standoff) · zero A's (orphan task) · all C's (nobody builds)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-05 is exactly this exercise on a campus portal team. The QA row is deliberately controversial: who A's defect triage? Let them argue. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 9">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a startup where the founder sponsors three projects and also 'helps' with code — RACI exposes why reviews stall</li><li><strong>DS:</strong> an ML project where the <em>data owner</em> is neither R nor A for feature work — the silent stall pattern in analytics teams</li><li>Decision rights ≠ org-chart seniority</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS pattern is the teaching package's key example: analytics projects fail quietly when data ownership is unassigned. 2 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 9">
+<h2>Case anchor:</h2>
+<p><strong>CS-05</strong> — <em>RACI for a campus portal team</em>: build the chart, find the double-A row, fix the orphan task</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Pair exercise (10 min), defend on the board. Keys: instructor/answer-keys/cases/CS-05.md. Bridge: a RACI is only as good as the charter behind it — next lecture starts that chain.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 9">
+<h2>Discussion</h2>
+<li>Can a sponsor also be a customer — and what breaks when they are?</li><li>Your PM asks you (a student on a team) to hide a slip from the sponsor. Which code or principle applies — and what do you actually do?</li><li>What does a PM <em>owe</em> the team, not just the sponsor?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2 is the ethics seed for L29 and CLO6 — cite the PMI Code of Ethics (responsibility, respect, fairness, honesty). Do not resolve it; assign reflection. 6 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 9">
+<h2>Summary &amp; exit ticket</h2>
+<li>Decision rights, not titles, define the roles</li><li>RACI's three failure modes: two A's, zero A's, all C's</li><li>PM accountability runs <strong>both ways</strong> — and ethics codes bind it</li></ul>
+<p><strong>Exit ticket (2 min):</strong> draw the RACI row for <em>your capstone's</em> "approve scope change" — name who is A, and say why only one A may exist.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Feeds the L08 tailoring lecture (who approves changes on a small project?). Quiz 1 results inform pacing for U2.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 9">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed., team performance domain</li><li>PMI <em>Code of Ethics and Professional Conduct</em> (responsibility · respect · fairness · honesty)</li><li>Teaching package: <code>instructor/teaching-packages/U1-foundations-strategy/L04-04-roles-profession.md</code></li><li><strong>Next:</strong> L05 — Life Cycles: predictive, agile, and the hybrids between (Unit U2 opens)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview U2 with the life-cycle choice as a spectrum, not a switch. Quiz 1 marking guide: instructor/exam-bank/quiz1.md.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

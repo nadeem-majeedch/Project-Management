@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L16 · Quantitative Risk: PERT, Trees &amp;amp; Simulation (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L16 · Quantitative Risk: PERT, Trees &amp; Simulation</h1>
+<h2>Monte Carlo for schedules and budgets — without fear</h2>
+<p>Week 8 · Unit U4 · CLO4 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Build</strong> a decision tree with EMV at each node and explain the fold-back</li><li><strong>Explain</strong> what a Monte Carlo run actually does — samples, not magic</li><li><strong>Read</strong> a schedule histogram: median, P70, and the tail that hurts</li><li><strong>Justify</strong> contingency from simulation output, not from folklore</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Lab 11 runs the deterministic seeded simulation — today's deck gives it the theory. All histogram numbers on the slide are CS-22's checker-verified values. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Decision trees: fold back the EMV</h2>
+<div class="mermaid">
+flowchart LR
+  D{"Build in-house?&lt;br&gt;or Buy?"} --&gt;|Build, P=0.6 good| G["+2.0M"]
+  D --&gt;|Build, P=0.4 bad| B["-0.8M"]
+  D --&gt;|Buy| BU["0.4M certain"]
+</div>
+<li>In-house EMV = 0.6 × 2.0 + 0.4 × (−0.8) = <strong>+0.88M</strong> vs buy = <strong>0.4M</strong> → build <em>wins on average</em></li><li>Fold-back answers "<em>if we are risk-neutral</em>" — the debate is whether you are</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The risk-neutrality caveat is the teaching package's key discussion — a cash-poor sponsor may rationally buy. The tree is the deck's one non-Mermaid visual spot... actually keep it Mermaid for consistency. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Monte Carlo: what the machine actually does</h2>
+<li>Sample every activity duration from its <strong>distribution</strong> (L10's O/M/P)</li><li>Run the network → one simulated finish date</li><li>Repeat 10,000× → a <strong>distribution</strong> of finish dates</li></ul>
+<div class="mermaid">
+flowchart LR
+  S["Sample&lt;br&gt;durations"] --&gt; N["Run network&lt;br&gt;once"]
+  N --&gt; R["Record&lt;br&gt;finish date"]
+  R --&gt;|x10,000| H["Histogram"]
+</div>
+<li>The critical path can <strong>change between runs</strong> — L11's near-critical path (TF=1) becomes critical in many trials</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This connects directly to L11's F-activity subtlety — students now see why float ranks can flip. Lab 11's script does exactly this with a fixed seed. 5 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Reading the histogram (CS-22, verified)</h2>
+<table><tr><th>Statistic</th><th>Value</th><th>Meaning</th></tr><tr><td>Trials finished on time</td><td>6,400 / 10,000</td><td><strong>P(on time) = 0.64</strong></td></tr><tr><td>Median finish</td><td>week <strong>16</strong></td><td>half the runs land here or earlier</td></tr><tr><td>Mean overrun <em>when late</em></td><td><strong>1.583 wk</strong></td><td>lateness averages ~1.6 weeks</td></tr><tr><td>Mean overrun <em>all trials</em></td><td><strong>0.57 wk</strong></td><td>the honest expectation</td></tr><tr><td>P70 bracket</td><td>week <strong>17</strong></td><td>target for a 70% confidence date</td></tr></table>
+<li><strong>0.57 ≠ 1.583</strong> — quoting the conditional mean when you mean the unconditional one is the classic statistical lie</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Every number is checker-verified. The conditional-vs-unconditional distinction is the statistics teaching point of the year for this cohort — CS-22's whole argument. 6 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a launch-date promise built on the median instead of P70 — the 30% who miss are your support team's nightmare</li><li><strong>DS:</strong> the same tool prices <em>data-readiness</em> contingency: sample the cleaning-effort distribution, watch the tail</li><li>Simulation is estimation about estimates — it inherits every O/M/P bias you fed it</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The garbage-in caveat is the assessment-level understanding: simulation does not rescue bad elicitation. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-22</strong> — <em>Monte Carlo on a class schedule</em>: the histogram above is your input; derive P(on time), the P70 date, and defend a contingency week count</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Numeric case, checker-verified. Lab 11 (docs/labs/lab-11-monte-carlo.md) re-runs it with the seeded script (tools/campus_mend_sim.py). Key: instructor/answer-keys/cases/CS-22.md.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Your sponsor asks for "the date, not a distribution." What do you say — and what do you put in writing?</li><li>When would a decision tree's EMV ranking be <em>wrong</em> to follow?</li><li>Why does 10,000 trials beat 10? What exactly improves?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1's expected answer: give the P70 date with the P(on-time) attached — professional confidence communication (L18 comms links). Q2: risk-aversion, unmodeled costs, one-shot projects. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Decision trees fold back EMVs — under an explicit risk-neutrality assumption</li><li>Monte Carlo = sample → run → repeat; distributions, not dates</li><li>Report P70, not the median; conditional ≠ unconditional means</li></ul>
+<p><strong>Exit ticket (2 min):</strong> your P(on time) is 0.64. Name the date you would <em>commit</em> to, and the sentence you would say to the sponsor.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The professional sentence should reference the confidence level — that phrasing is the formative target. U4 continues with responses next lecture.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>ISO 31000:2018 — risk assessment (analysis &amp; evaluation steps)</li><li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — uncertainty domain, quantitative analysis</li><li>Lab 11 brief: <a href="../../docs/labs/index.md"><code>docs/labs/lab-11-monte-carlo.md</code></a> · Simulator: <code>tools/campus_mend_sim.py</code></li><li>Teaching package: <code>instructor/teaching-packages/U4-risk-uncertainty-control/L16-16-quant-risk-simulation.md</code></li><li><strong>Next:</strong> L17 — Risk Responses, Issues &amp; Reserves: who owns what, and who pays</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L17 with the response-strategy table and the reserve question from L13 returning in full.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

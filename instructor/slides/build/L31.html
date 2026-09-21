@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L31 · AI-Assisted Project Management (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L31 · AI-Assisted Project Management</h1>
+<h2>Using the tools professionally — with verification as the default</h2>
+<p>Week 16 · Unit U7 · CLO6 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Map</strong> where AI assistance genuinely helps PM work — and where it manufactures confidence</li><li><strong>Apply</strong> a verification discipline to AI-drafted artifacts</li><li><strong>Draft</strong> a personal/team AI-use policy consistent with course integrity rules</li><li><strong>Critique</strong> an AI-drafted risk register like a professional reviewer</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The course's own integrity policy (docs/syllabus, AI rules) is the reference point — students have lived under it all term; this lecture turns it into professional practice. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Where AI helps, where it doesn't</h2>
+<table><tr><th>Task</th><th>AI assistance</th><th>Why</th></tr><tr><td>First-draft risk lists</td><td><strong>strong</strong></td><td>breadth; misses become review items</td></tr><tr><td>Estimate generation</td><td><strong>dangerous</strong></td><td>confident numbers, no provenance (L10!)</td></tr><tr><td>Stakeholder drafting</td><td><strong>strong with review</strong></td><td>names and roles need verification</td></tr><tr><td>EVM computation</td><td><strong>verify every digit</strong></td><td>arithmetic needs provenance and checking (L19)</td></tr><tr><td>Meeting summaries</td><td><strong>strong</strong></td><td>low stakes, high save</td></tr><tr><td>Ethical decisions</td><td><strong>no</strong></td><td>accountability cannot be delegated (L28)</td></tr></table>
+<li>The pattern: AI is a <strong>drafting engine with no memory of your project</strong> — provenance is the professional's job</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The table is the package's use-map. The estimate row is the trap: confident numbers with no O/M/P provenance are a number wearing a costume (L10 callback). 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The verification discipline</h2>
+<div class="mermaid">
+flowchart LR
+  D["AI draft"] --&gt; C["Check claims&lt;br&gt;against project facts"]
+  C --&gt; V["Verify numbers&lt;br&gt;(recompute: L19's machine)"]
+  V --&gt; A["Assign owners&lt;br&gt;&amp; provenance"]
+  A --&gt; S["Sign it —&lt;n&gt;your name, your artifact"]
+</div>
+<li>If you cannot verify it, you cannot ship it — the artifact's signature is <strong>yours</strong></li><li>AI-drafted ≠ AI-owned: registers, plans, and decisions have human owners (L04's accountability)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The sign-it step is the professional line this course draws — consistent with the syllabus AI policy's attribution requirement. 4 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Critiquing an AI-drafted risk register (CS-42's method)</h2>
+<li><strong>Specificity:</strong> statements without cause–event–effect structure (L15) are only skeletons</li><li><strong>Coverage:</strong> what would a <em>human</em> hunt have found that the draft didn't? (silent stakeholders, data access)</li><li><strong>Arithmetic:</strong> recompute every P×I and EMV — drafts hallucinate products</li><li><strong>Ownership:</strong> names that don't match your org are a <em>gift</em> — they reveal the draft's fiction</li><li><strong>Threshold integrity:</strong> bands that don't match your declared policy (CS-21's lesson)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The five-check critique is the package's review instrument and CS-42's rubric. It turns the whole term's tools into a review checklist. 5 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> AI-scaffolded status reports — strong save, zero risk if the metrics beneath them are verified (L20)</li><li><strong>DS:</strong> AI-generated EDA notebooks — the verification discipline is <em>literally</em> reproducibility: seed, provenance, check</li><li>The DS irony: the people best trained to validate models are the best trained to validate AI drafts</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The reproducibility parallel is the DS cohort's bridge — same skill, new target. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-42</strong> — <em>AI-drafted risk register critique</em>: apply the five checks to a provided draft; count what a professional reviewer catches</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The draft is in the case; the key's answer list shows what full verification catches (invented owners, arithmetic slips, missing data-access risks). Key: instructor/answer-keys/cases/CS-42.md.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Where is the <em>honest</em> line between 'AI-assisted' and 'AI-written' for a capstone artifact?</li><li>Your team's AI tool cites a policy your organization never wrote. What does that do to trust — and to your verification duty?</li><li>Should PM tools disclose AI participation to sponsors? Draft the disclosure sentence.</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1 rehearses the course policy's own boundary; Q3's sentence is the professional norm moving toward disclosure. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>AI drafts breadth; professionals supply provenance, verification, and ownership</li><li>Verify every digit that enters a baseline or a decision</li><li>The signature on the artifact is yours — that is the whole policy</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write your capstone team's one-sentence AI-use rule — where it helps, where it's banned, who verifies.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M4's AI-use statement (required in the capstone spec). Preview L32: the defense.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — stewardship principle (responsible use of resources)</li><li>Course AI policy: <a href="../../docs/syllabus/index.md"><code>docs/syllabus/policies.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U7-synthesis-capstone/L31-31-ai-assisted-pm.md</code></li><li><strong>Next:</strong> L32 — Capstone Defense &amp; Course Synthesis</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The AI policy reference is the syllabus's own integrity section — students have operated under it all term. Preview L32 with the defense format and rubric.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

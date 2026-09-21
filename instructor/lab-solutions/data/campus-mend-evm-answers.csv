@@ -1,0 +1,15 @@
+# CAMPUS-MEND EVM answer key (Lab 13) — verified by check_answers.py gate E
+# Source: data pack sections C (baseline) and D (status at end of week 9)
+metric,formula,value
+PV,given,2026000
+EV,audit-verified,1762000
+AC,given,2041000
+BAC,given,4532000
+CV,EV-AC,-279000
+SV,EV-PV,-264000
+CPI,EV/AC,0.8633
+SPI,EV/PV,0.8697
+EAC1,BAC/CPI,5249611
+EAC2,AC+(BAC-EV),4811000
+ETC1,EAC1-AC,3208611
+TCPI_to_BAC,(BAC-EV)/(BAC-AC),1.1118

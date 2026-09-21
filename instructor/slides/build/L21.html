@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L21 · Scrum in Practice (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L21 · Scrum in Practice</h1>
+<h2>Roles, events, artifacts — and how they fail in real teams</h2>
+<p>Week 11 · Unit U5 · CLO5 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Map</strong> Scrum's three roles, five events, three artifacts — and their failure modes</li><li><strong>Compute</strong> sprint capacity from availability, focus factor, and ceremony load</li><li><strong>Commit</strong> to a sprint goal with points that fit measured capacity</li><li><strong>Explain</strong> why the Definition of Done is the team's quality contract</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The capacity slide runs the teaching package's verified chain (fits CS-28's 32-pt / 1.4 h-per-point data and CS-14's backlog). Quiz 3 covers L21–L26 — this arithmetic is fair game. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The Scrum machine</h2>
+<div class="mermaid">
+flowchart TD
+  PB["Product Backlog&lt;br&gt;(ordered by value)"] --&gt; SP["Sprint Planning"]
+  SP --&gt; GOAL["Sprint Goal&lt;br&gt;(one sentence)"]
+  GOAL --&gt; SPR["Sprint (1–4 wks)"]
+  SPR --&gt; DA["Daily Scrum&lt;br&gt;(plan, not report)"]
+  SPR --&gt; REV["Sprint Review&lt;br&gt;(inspect product)"]
+  SPR --&gt; RE["Retrospective&lt;br&gt;(inspect process)"]
+  REV --&gt; PB
+  RE -.-&gt;|process improvements| SP
+</div>
+<li>Roles: <strong>Product Owner</strong> (what &amp; order) · <strong>ScrumMaster</strong> (process, not PM) · <strong>Developers</strong> (how)</li><li>The goal is written <strong>before</strong> items are picked — a backlog slice is not a goal</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The ScrumMaster-is-not-a-PM point calls back L04's roles discussion — different accountability structure, not a renamed PM. The goal-before-items rule is CS-28's first checkpoint. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Sprint capacity, fully worked (verified chain)</h2>
+<table><tr><th>Step</th><th>Computation</th><th>Result</th></tr><tr><td>Available hours</td><td>4 devs × 2 wk × 10 h/wk</td><td>80 h</td></tr><tr><td>Absence (exam week)</td><td>−6 h</td><td>74 h</td></tr><tr><td>Focus factor 0.7</td><td>74 × 0.7</td><td>≈ 52 h</td></tr><tr><td>Ceremonies (planning 2 + review 1 + retro 1 + dailies 1.25)</td><td>−5.25 h</td><td></td></tr><tr><td><strong>Build capacity</strong></td><td></td><td><strong>≈ 46–47 h</strong></td></tr><tr><td>Backlog items (CS-14's points)</td><td>5+8+3+5+8+3 = 32 pts</td><td></td></tr><tr><td>Conversion (team's own rate)</td><td>~1.4 h/pt</td><td>32 × 1.4 ≈ <strong>45 h ✓ fits</strong></td></tr></table>
+<li>The h/pt rate is <strong>the team's measured history</strong> — industry folklore (8–12 h/pt) defeats the point of points</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Every figure is the teaching package's chain, consistent with CS-28's checker-verified capacity (≈18.6 pts at the same focus factor — different backlog, same machine). 7 min, board.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>DoD: the team's quality contract</h2>
+<li>Definition of Done: code reviewed · tests pass · docs updated · demo-able — <strong>per item, checkable by anyone</strong></li><li>Done ≠ "it works on my machine"; a spike's DoD includes its <strong>exit criterion</strong> ("auth latency measured on 1k sessions — go/no-go")</li><li>CS-29's workshop: teams negotiate their own DoD — then live by it for the sprint</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The spike-exit-criterion point is CS-14's 8-pointer carried forward — spikes are bought knowledge with a stated question. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a capstone team running two-week sprints — CS-28 is exactly this planning session</li><li><strong>DS:</strong> a modelling sprint where the DoD must include <strong>evaluation evidence</strong> (baseline beaten, on held-out data) — not 'model improved'</li><li>Velocity is a <em>planning</em> signal, never a performance score — the moment it's a KPI, teams inflate points</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The velocity-goodhart warning is the package's key misconception and a Quiz 3 candidate. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-28</strong> — <em>Sprint planning for the capstone</em>: run the capacity chain, commit points that fit, write the goal first <strong>CS-29</strong> — <em>Definition-of-Done workshop</em>: negotiate a DoD your team can actually hold for a sprint</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CS-28 numeric (verified: commit 18 pts on the case's 260 effective hours), CS-29 workshop. Keys: instructor/answer-keys/cases/CS-28.md, CS-29.md. Lab 14 (agile sprint) is the CAMPUS-MEND version.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Your PO wants 24 points committed; capacity says 18. What exactly happens next — and who decides?</li><li>Can a Scrum team have a PM? What would that person do all day?</li><li>Why does velocity fail as a cross-team comparison metric?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1 is a negotiation rehearsal (L26's skills land next-next lecture); expected: scope options, not capacity fudging. Q3: different rulers — points are team-local. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Goal before items; capacity before commitment; DoD before 'done'</li><li>Capacity = availability × focus − ceremonies; convert with <strong>your own</strong> h/pt rate</li><li>Roles split what/how/order — the ScrumMaster is not a PM</li></ul>
+<p><strong>Exit ticket (2 min):</strong> compute your capstone team's sprint capacity with the chain (real hours, focus 0.7), and the point commitment you'd defend.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed Lab 14 and the M3 capstone iteration. Preview L22: Kanban — same goal, different machinery (no sprints).</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>Schwaber &amp; Sutherland (2020) <em>The Scrum Guide</em> (scrumguides.org)</li><li>Teaching package: <code>instructor/teaching-packages/U5-adaptive-delivery-teams/L21-21-scrum.md</code></li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/sprint-planning-template.md</code></a> · Lab 14: <a href="../../docs/labs/index.md"><code>docs/labs/lab-14-agile-sprint.md</code></a></li><li><strong>Next:</strong> L22 — Kanban, Flow &amp; Throughput: visualize, limit WIP, measure flow</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The Scrum Guide is freely available and syllabus-listed. Preview L22 with the WIP-limit arithmetic CS-30 carries.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

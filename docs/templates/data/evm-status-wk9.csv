@@ -1,0 +1,16 @@
+# EVM computation worksheet (Lab 13) — status date: end of week 9
+# Fill every blank from PV/EV/AC/BAC; carry 4 decimals on ratios.
+metric,formula,value
+PV,given,2026000
+EV,audit-verified,1762000
+AC,given,2041000
+BAC,given,4532000
+CV,EV-AC,
+SV,EV-PV,
+CPI,EV/AC,
+SPI,EV/PV,
+EAC1,BAC/CPI,
+EAC2,AC+(BAC-EV),
+ETC1,EAC1-AC,
+TCPI_to_BAC,(BAC-EV)/(BAC-AC),
+# Then state which EAC variant you defend and why (Lab 13 task 3)

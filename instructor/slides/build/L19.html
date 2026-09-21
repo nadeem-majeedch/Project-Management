@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L19 · Earned Value Management (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L19 · Earned Value Management</h1>
+<h2>One number set that tells you cost AND schedule health</h2>
+<p>Week 10 · Unit U4 · CLO4 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Compute</strong> PV, EV, AC, CV, SV, CPI, SPI from a status snapshot</li><li><strong>Choose</strong> the right EAC formula for the story the variances tell</li><li><strong>Interpret</strong> TCPI as the discipline required from here</li><li><strong>Diagnose</strong> a troubled project from four numbers — then verify with evidence</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Every number below is the CampusHub month-4 chain, checker-verified in check_answers.py (BAC 64,424 from L13). The midterm's EVM section uses this exact pattern. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The EVM machine: three inputs</h2>
+<div class="mermaid">
+flowchart LR
+  PV["PV&lt;br&gt;(planned value,&lt;br&gt;S-curve from L13)"] --&gt; M["Measurement&lt;br&gt;point"]
+  EV["EV&lt;br&gt;(earned value,&lt;br&gt;% done × BAC)"] --&gt; M
+  AC["AC&lt;br&gt;(actual cost)"] --&gt; M
+  M --&gt; V["Variances &amp;&lt;br&gt;indices"]
+</div>
+<li><strong>EV is the trick</strong>: it values work by <em>what you planned to pay for it</em>, not what it cost</li><li>Month 4 (CampusHub): PV = 38,400 · EV = 31,900 · AC = 36,700</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The EV-not-AC point is the conceptual gate — students who miss it compute nothing else right. 4 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The full computation (CampusHub, month 4)</h2>
+<table><tr><th>Metric</th><th>Computation</th><th>Value</th><th>Reading</th></tr><tr><td>CV</td><td>31,900 − 36,700</td><td><strong>−4,800</strong></td><td>over cost</td></tr><tr><td>SV</td><td>31,900 − 38,400</td><td><strong>−6,500</strong></td><td>behind schedule</td></tr><tr><td>CPI</td><td>31,900 / 36,700</td><td><strong>0.87</strong></td><td>$0.87 value per $1 spent</td></tr><tr><td>SPI</td><td>31,900 / 38,400</td><td><strong>0.83</strong></td><td>moving at 83% of plan</td></tr><tr><td>EAC₁ (typical)</td><td>64,424 / 0.87</td><td><strong>≈ 74,050</strong></td><td>inefficiency persists</td></tr><tr><td>EAC₂ (atypical)</td><td>36,700 + 32,524</td><td><strong>69,224</strong></td><td>one-off pain</td></tr><tr><td>EAC₃ (both persist)</td><td>36,700 + 32,524/(0.87×0.83)</td><td><strong>≈ 81,780</strong></td><td>compounding trouble</td></tr><tr><td>TCPI (to BAC)</td><td>32,524 / 27,724</td><td><strong>1.17</strong></td><td>must run CPI 1.17 from now</td></tr></table>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Walk the table row by row on the board — this is the exam's centerpiece and the check_answers.py chain. Emphasize EAC choice as a NARRATIVE decision: which story do the variances support? 9 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Diagnosis: the story the numbers tell</h2>
+<li>CPI 0.87 + SPI 0.83 = <strong>both</strong> engines underperforming → EAC₂'s optimism must be <strong>evidenced</strong>, not assumed</li><li>TCPI 1.17: to still finish at BAC, the remaining $1 spent must earn $1.17 — possible, but say <em>how</em> (recovery plan, L20's change control)</li><li>VAC = BAC − EAC₁ = 64,424 − 74,050 = <strong>−9,626</strong>: the honest shortfall at current efficiency</li></ul>
+<li><strong>CS-26's version:</strong> BAC 4.5M, EV 3.8M, AC 4.0M → CPI 0.8947, EAC₁ 4,470,588, TCPI 1.0952 — same machine, different patient</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The last line gives CS-26's verified numbers so students can self-check their homework before the key. The recovery-plan link previews L20 and Lab 13. 5 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a web-platform rebuild where EV% comes from completed user stories, not invoices — Agile-EVM in miniature (L21 links)</li><li><strong>DS:</strong> EVM on a model project: 'earned' = milestones passed (data validated, baseline model beaten), because % of model code written is fiction</li><li>EV definitions are a <strong>project decision</strong> — write them in the measurement plan before month 1</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The DS-EV definition point is the teaching package's key DS adaptation — define 'done' in earnable units or EVM measures enthusiasm. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-26</strong> — <em>EVM diagnosis of a troubled project</em>: compute the full set, choose the EAC, and write the three-sentence sponsor brief</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Numeric case, checker-verified (CPI 0.8947, EAC₁ 4,470,588, VAC −470,588, TCPI 1.0952). Key: instructor/answer-keys/cases/CS-26.md. Lab 13 extends to the recovery plan.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>SPI says 0.83. What schedule facts could make that <em>optimistic</em>? (Hint: critical path.)</li><li>Your EAC₁ breaches the funding envelope. When do you tell the sponsor — at EAC₁, at VAC, or at the recovery plan?</li><li>Can CPI &gt; 1 coexist with a dying project? Construct the scenario.</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1 is the deepest one: SPI ignores criticality — earned float work inflates it (L11 links back). Q3: early cheap work, later expensive scope — CPI is a lagging composite. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>EV values work at <strong>planned</strong> cost; indices compare, variances size</li><li>EAC choice = narrative choice; TCPI = the discipline still required</li><li>Define 'earned' in verifiable units — for code, for data, for models</li></ul>
+<p><strong>Exit ticket (2 min):</strong> EV 50,000 · AC 62,500 · PV 60,000 · BAC 120,000 — compute CPI, SPI, and the EAC you would report.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Answer: CPI 0.80, SPI 0.83, EAC₁ 150,000. Formative; midterm pattern exactly.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — measurement domain, EVM</li><li>Lab 13: <a href="../../docs/labs/index.md"><code>docs/labs/lab-13-evm-recovery.md</code></a> · Template: <a href="../../docs/templates/index.md"><code>docs/templates/monitoring-dashboard-template.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U4-risk-uncertainty-control/L19-19-evm.md</code></li><li><strong>Next:</strong> L20 — Monitoring, Dashboards &amp; Change Control: keeping baselines honest (midterm window: L01–L20)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L20 with the dashboard design exercise (CS-27) and the mock CCB. Midterm: instructor/exam-bank/midterm.md, ≥40% pass rule.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

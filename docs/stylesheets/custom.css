@@ -1,0 +1,22 @@
+/* PM-401 course site — custom styles */
+
+/* Denser tables: course pages are table-heavy */
+.md-typeset .md-table table,
+.md-typeset table:not([class]) {
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: 0.45em 0.7em;
+}
+
+/* Keep long schedule rows readable */
+.md-typeset table:not([class]) td:first-child {
+  white-space: nowrap;
+}
+
+/* Case-card admonition accent (uses standard admonition types only) */
+.md-typeset .info > .admonition-title {
+  border-color: var(--md-primary-fg-color);
+}

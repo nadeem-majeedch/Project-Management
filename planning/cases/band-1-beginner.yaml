@@ -1,0 +1,891 @@
+# ==============================================================================
+# Band 1 — BEGINNER (CS-01..CS-20) · single concepts, guided scaffolding
+# Difficulty: beginner. ~4 machine-checkable numeric cases (CS-03, CS-12,
+# CS-15, CS-17). Anchored cases keep their lecture links from Prompt 0.
+# ==============================================================================
+
+cases:
+  - id: CS-01
+    title: "Iron-triangle autopsy of a failed ERP rollout"
+    domain: D1
+    level: L1
+    use: [in-class]
+    lecture: 1
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [iron-triangle, failure-analysis, ERP, constraints]
+    concepts: [iron triangle, failure modes]
+    summary: "Map a publicly known ERP failure onto scope, time, cost, and quality; identify the binding constraint."
+    context: "A mid-sized university signed a fixed-scope ERP replacement with a two-year window and a budget approved before requirements were baselined. Eighteen months in, the go-live has slipped twice, customizations have doubled, and the registrar refuses to retire the legacy system."
+    problem: "The steering committee asks you to explain, in constraint terms, why the project is failing and which constraint is actually binding."
+    constraints:
+      - "Use only the facts given; mark every inference as an assumption."
+      - "Treat the iron triangle (scope, time, cost) plus quality as the four constraints."
+      - "The budget was approved pre-requirements and has not been re-baselined."
+    tasks:
+      - "Draw the four-constraint diagram and place the observed symptoms on it."
+      - "Argue which single constraint is binding and what evidence supports that."
+      - "Name one trade-off decision the steering committee never explicitly made."
+    deliverables:
+      - "Constraint map (one page) with symptoms annotated."
+      - "One-paragraph root-cause hypothesis with stated assumptions."
+    discussion:
+      - "Can more than one constraint be binding at once? What does that imply?"
+      - "Who should have surfaced the constraint conflict, and when?"
+    objectives:
+      - "Represent project failure as a constraint conflict rather than a list of symptoms."
+      - "Distinguish observed facts from assumptions in a post-mortem."
+    rubric: "Constraint map complete and correctly placed (40%); binding-constraint argument uses evidence, not opinion (40%); assumptions explicitly separated (20%)."
+    solution:
+      model: "Constraint-conflict diagnosis"
+      reasoning: "The budget was frozen before requirements existed, so scope growth (customizations doubling) could not be absorbed by cost; time then absorbed it via slips. The binding constraint is scope-vs-cost: the university never re-baselined either after requirements stabilized, so every customization became an unfunded change. Quality degraded last (registrar distrust) as the residual constraint absorbed pressure."
+      alternatives:
+        - "Time-as-binding argument: defensible if you weight the two missed go-lives as the primary damage; weaker because slips are a symptom, not the lever."
+        - "Quality-as-binding: defensible if you treat registrar refusal as the real blocker; weaker because trust loss followed schedule slips."
+      lesson_for_instructor: "Push students to see that 'everything failed' is a symptom list; diagnosis requires choosing the lever that, if moved, would have changed the outcome."
+
+  - id: CS-02
+    title: "Success vs failure twin projects"
+    domain: D1
+    level: L2
+    use: [in-class]
+    lecture: 1
+    seed: TELCOCARE
+    difficulty: beginner
+    numerical: false
+    tags: [success-factors, comparison, BI, decision-points]
+    concepts: [critical success factors]
+    summary: "Two similar telecom BI projects; one succeeded, one failed. Contrast their early decisions."
+    context: "Two regional teams at the same telco built near-identical churn-analysis dashboards the same year with the same tooling budget. Team A delivered in 7 months with 60% weekly active usage; Team B delivered in 14 months and was decommissioned after 3 months."
+    problem: "Reconstruct the early decision points at which the projects diverged."
+    constraints:
+      - "You get the five decision moments below; no other facts may be invented."
+      - "Decision moments: sponsor identification; first-user interviews; definition of 'done' for v1; data-quality handling; executive demo cadence."
+    tasks:
+      - "For each decision moment, state what Team A plausibly did versus Team B, given the outcomes."
+      - "Rank the five moments by causal weight and defend the ranking."
+      - "Convert the top two into checklist questions any new project could ask in week 1."
+    deliverables:
+      - "Five-row divergence table with causal-weight ranking."
+      - "Two checklist questions with rationale."
+    discussion:
+      - "Which divergence would you have caught earliest as PM, and how?"
+      - "Are these divergences process failures or people failures?"
+    objectives:
+      - "Infer process differences from outcome differences without fabricating detail."
+      - "Convert post-hoc analysis into prospective checklist items."
+    rubric: "Divergence table is internally consistent with the stated outcomes (50%); ranking is argued, not asserted (30%); checklist questions are actionable in week 1 (20%)."
+    solution:
+      model: "Critical-success-factor reconstruction"
+      reasoning: "Usage and longevity differences point upstream to the two decisions that shape demand: who the sponsor is (funding continuity) and what 'done' meant for v1 (scope fit to real analyst workflow). Data-quality handling explains the 14-month delay but not the decommission; hence ranking: sponsor > done-definition > user interviews > demo cadence > data-quality handling."
+      alternatives:
+        - "Data-quality-first ranking: defensible if you argue bad data killed trust, but decommission after only 3 months suggests demand, not data, was the fatal gap."
+      lesson_for_instructor: "Ask teams to defend opposite rankings for two minutes each; the point is that ranking requires an explicit causal theory."
+
+  - id: CS-03
+    title: "Portfolio cut-line exercise"
+    domain: D1
+    level: L2
+    use: [in-class, homework]
+    lecture: 2
+    seed: null
+    difficulty: beginner
+    numerical: true
+    tags: [portfolio, prioritization, scoring-model, trade-offs]
+    concepts: [portfolio management, weighted scoring]
+    summary: "Score six candidate projects against weighted strategy criteria; set and defend the funding cut line."
+    context: "A faculty of computing has a PKR 12.0M annual innovation fund and six candidate projects scored (1–5) against three weighted criteria: strategic alignment (0.5), student impact (0.3), feasibility (0.2). Estimated costs differ per project."
+    problem: "Set the funding cut line under the budget and defend it against two rival cut lines."
+    constraints:
+      - "Weights and scores are fixed; do not re-score."
+      - "You may not partially fund a project."
+      - "Budget: PKR 12.0M."
+    tasks:
+      - "Compute the weighted score and cost for each project."
+      - "Choose a cut line that maximizes total weighted value within budget."
+      - "Defend the choice against 'fund by rank order' and 'fund by cost-efficiency' rivals."
+    deliverables:
+      - "Scoring table with weighted totals."
+      - "Selected portfolio with total cost and a 150-word defense."
+    discussion:
+      - "When would rank-order funding beat value-maximization?"
+      - "What criterion is missing from the scoring model entirely?"
+    objectives:
+      - "Apply a weighted scoring model and a knapsack-style budget cut."
+      - "Argue trade-offs between rival selection rules."
+    rubric: "Weighted scores computed correctly (30%); portfolio is feasible and near-optimal (30%); rival defenses engage the actual trade-offs (40%)."
+    solution:
+      model: "Weighted scoring + budget knapsack"
+      reasoning: "Weighted score = 0.5·alignment + 0.3·impact + 0.2·feasibility; then a budget knapsack, not a rank-order cut. The trap: the highest-scoring project (P1, 4.1) does NOT belong in the optimal bundle — it consumes 6.5M for 4.1 points, and every bundle containing P1 scores at most 11.3, while {P2, P3, P4, P6} scores 14.1 at 10.0M. Rank-order funding walks into exactly this trap. Value-per-million is the tiebreaker when two candidate bundles cost the same."
+      alternatives:
+        - "Rank-order funding: simpler and easier to defend politically, but it funds P1 first and strands the cheap-high-value projects — 11.3 points against the optimal 14.1."
+        - "Cost-efficiency funding: maximizes value per rupee but can fund only small projects and starve strategic bets."
+      calculations: "See machine-checked numeric block; worked table in instructor key."
+      lesson_for_instructor: "Have two groups defend rival cut lines; surface that the 'missing criterion' is usually risk or dependencies."
+    numeric:
+      type: portfolio_score
+      note: "Weighted scores, feasible budget-maximal bundle, and value-per-million tiebreakers."
+      data:
+        budget_m: 12.0
+        weights: {alignment: 0.5, impact: 0.3, feasibility: 0.2}
+        projects:
+          - {id: P1, name: "Exam-scheduling AI",        alignment: 5, impact: 4, feasibility: 2, cost_m: 6.5}
+          - {id: P2, name: "Library seat booking",       alignment: 3, impact: 5, feasibility: 5, cost_m: 2.0}
+          - {id: P3, name: "Research data catalog",      alignment: 4, impact: 3, feasibility: 4, cost_m: 4.0}
+          - {id: P4, name: "Alumni mentoring app",       alignment: 2, impact: 4, feasibility: 5, cost_m: 1.5}
+          - {id: P5, name: "Campus energy dashboard",    alignment: 4, impact: 2, feasibility: 3, cost_m: 3.0}
+          - {id: P6, name: "Lab equipment tracker",      alignment: 3, impact: 3, feasibility: 4, cost_m: 2.5}
+      expected:
+        scores:        {P1: 4.1, P2: 4.0, P3: 3.7, P4: 3.2, P5: 3.2, P6: 3.2}
+        optimal_bundle: [P2, P3, P4, P6]
+        optimal_total_score: 14.1
+        optimal_total_cost_m: 10.0
+        value_per_m:    {P2: 2.0, P4: 2.1333, P6: 1.28, P3: 0.925, P5: 1.0667, P1: 0.6308}
+
+  - id: CS-04
+    title: "Sorting 20 artifacts into PMBOK 7 domains"
+    domain: D1
+    level: L1
+    use: [in-class]
+    lecture: 3
+    seed: null
+    difficulty: beginner
+    numerical: false
+    tags: [pmbok7, artifacts, classification, principles]
+    concepts: [PMBOK domains, artifact taxonomy]
+    summary: "Classify real project artifacts (burndown, risk register, charter, CFD) into the eight domains."
+    context: "You are given 20 artifact names collected from real CS and data-science projects — from charters and burndown charts to model cards and rollback plans."
+    problem: "Assign each artifact to its primary PMBOK 7 performance domain and flag any artifact that legitimately belongs to two."
+    constraints:
+      - "One primary domain per artifact; secondary allowed with a one-line justification."
+      - "Domain names must match PMBOK 7's eight performance domains."
+    tasks:
+      - "Sort all 20 artifacts into the eight domains."
+      - "Identify the three artifacts most often mis-sorted and explain the confusion."
+      - "Name one artifact your team has never seen and what domain it would serve."
+    deliverables:
+      - "Artifact-to-domain table."
+      - "Short note on the three confusion pairs."
+    discussion:
+      - "Why does PMBOK 7 organize by domains rather than process groups?"
+      - "Which domain has the weakest artifact evidence in student projects, and why?"
+    objectives:
+      - "Map concrete artifacts to PMBOK 7's domain structure."
+      - "Recognize that artifact purpose, not format, determines domain."
+    rubric: "Sorting accuracy (60%); confusion-pair explanations show the underlying principle (30%); original artifact suggestion is coherent (10%)."
+    solution:
+      model: "Purpose-based classification"
+      reasoning: "Classify by the question the artifact answers, not its format: a burndown answers 'are we delivering?' (delivery performance), a model card answers 'is the system appropriate and harmless?' (measurement and stewardship), a rollback plan answers 'can we recover?' (uncertainty). The classic confusions are stakeholder vs team (a RACI serves both), planning vs delivery (a release plan bridges both), and measurement vs delivery (a CFD is a delivery instrument that measures flow)."
+      alternatives: []
+      lesson_for_instructor: "Run as a card-sort race, then debrief only the contested cards; contested cards teach more than clean ones."
+
+  - id: CS-05
+    title: "RACI for a campus portal team"
+    domain: D1
+    level: L1
+    use: [in-class]
+    lecture: 4
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [RACI, roles, governance, accountability]
+    concepts: [RACI, role clarity]
+    summary: "Build a RACI matrix for 12 activities across sponsor, PM, developers, and registrar."
+    context: "The CampusHub portal team has four role groups (sponsor, PM, developers, registrar) and 12 activities from charter sign-off to UAT sign-off. Two past incidents: developers deployed a registration change without registrar review, and nobody updated the risk register for six weeks."
+    problem: "Produce a RACI matrix that would have prevented both incidents."
+    constraints:
+      - "Exactly one A per activity."
+      - "R and A may be the same role only where the case justifies it."
+      - "Every activity needs at least one R."
+    tasks:
+      - "Draft the 12×4 RACI matrix."
+      - "Mark the two incident activities and show what the matrix changes for them."
+      - "Identify any activity where two roles will contest the A and propose the resolution."
+    deliverables:
+      - "RACI matrix with the two incident rows highlighted."
+      - "Three-line note on the contested-A resolution."
+    discussion:
+      - "What does it mean when everything is 'C'? What failure does that predict?"
+      - "Should the registrar be A for anything? Argue both sides."
+    objectives:
+      - "Construct a valid RACI matrix with single-point accountability."
+      - "Use RACI preventively, not decoratively."
+    rubric: "Matrix validity — one A per row, R coverage (50%); incident prevention logic explicit (30%); contested-A resolution is concrete (20%)."
+    solution:
+      model: "Single-accountability RACI"
+      reasoning: "Both incidents are accountability gaps: the deploy lacked a C gate (registrar review) and the register had no A (PM owns register upkeep). The fix assigns registrar C on deploy-gated activities and PM A on the register with a named update cadence. The contested A is UAT sign-off: registrar owns acceptance (A) because acceptance is a user-side judgment; developers stay R."
+      alternatives:
+        - "Sponsor as A for UAT: defensible when acceptance is political, but it removes the actual user voice from acceptance."
+      lesson_for_instructor: "Let students discover the 'too many Cs' pathology themselves by tallying their first-draft matrix."
+
+  - id: CS-06
+    title: "Life-cycle choice for five vignettes"
+    domain: D2
+    level: L2
+    use: [in-class, homework]
+    lecture: 5
+    seed: null
+    difficulty: beginner
+    numerical: false
+    tags: [life-cycle, predictive, adaptive, selection]
+    concepts: [life-cycle selection, requirement volatility]
+    summary: "Five project vignettes with different requirement volatility; choose and justify a life cycle."
+    context: "Five one-paragraph vignettes: (a) payroll tax-rule update with a statutory deadline; (b) a research data-mining exploration; (c) a student-facing mobile app with a competitor moving fast; (d) a safety-critical grid sensor firmware; (e) a portal upgrade where half the scope is fixed and half is exploratory."
+    problem: "Assign each vignette a life cycle (predictive, iterative, incremental, adaptive, or hybrid) and justify with volatility and cost-of-change reasoning."
+    constraints:
+      - "Justify with requirement volatility and cost of change, not preference."
+      - "Vignette (e) must not be answered 'agile' without addressing its fixed half."
+    tasks:
+      - "Assign a life cycle to each vignette with a two-line justification."
+      - "State the dominant risk each choice accepts."
+    deliverables:
+      - "Five-row table: vignette, life cycle, justification, accepted risk."
+    discussion:
+      - "Which vignette would you personally refuse to run adaptive, and why?"
+      - "What evidence would change your assignment post-kickoff?"
+    objectives:
+      - "Match life cycle to volatility and cost-of-change profiles."
+      - "Name the risk each life-cycle choice deliberately accepts."
+    rubric: "Assignments defensible from volatility/cost-of-change (60%); accepted-risk named per vignette (30%); vignette (e) handled as hybrid, not reflexively agile (10%)."
+    solution:
+      model: "Volatility/cost-of-change matching"
+      reasoning: "(a) predictive — requirements fixed by statute, late change is unaffordable; (b) iterative — the artifact is learning, requirements emerge from findings; (c) adaptive — volatility is high and cost of change is low; (d) predictive/iterative with heavy verification — high volatility would be intolerable where failure is safety-critical; (e) hybrid — fixed half predictive, exploratory half adaptive, with an integration gate. The accepted risk: predictive accepts rework if requirements were wrong; adaptive accepts scope ambiguity at the deadline."
+      alternatives:
+        - "(d) as adaptive with safety gates: some teams do run safety-critical adaptively; the justification must then carry the verification cost explicitly."
+      lesson_for_instructor: "Collect assignments in a 2×2 (volatility × cost of change) on the board; the map makes disagreements visible immediately."
+
+  - id: CS-07
+    title: "Hybrid decision for a regulated data product"
+    domain: D2
+    level: L3
+    use: [in-class]
+    lecture: 5
+    seed: MEDSYNC
+    difficulty: beginner
+    numerical: false
+    tags: [hybrid, regulated, compliance-gates, MedSync]
+    concepts: [hybrid life cycles, compliance gates]
+    summary: "Design a hybrid approach where compliance gates wrap adaptive sprints for a medication platform."
+    context: "MedSync's reconciliation engine must ship iteratively (clinical workflow keeps changing) but sits under hospital regulatory controls that demand documented validation before any release."
+    problem: "Design the hybrid: which decisions are gated, which iterate, and how the two cadences connect."
+    constraints:
+      - "Every release must pass a documented validation gate."
+      - "Sprint cadence may not exceed two weeks."
+      - "The gate review board meets fortnightly."
+    tasks:
+      - "Diagram the flow from sprint output to gate review to release."
+      - "Define what enters a gate package (artifacts, evidence, sign-offs)."
+      - "Identify the failure mode when the gate board becomes the bottleneck and one mitigation."
+    deliverables:
+      - "Hybrid flow diagram."
+      - "Gate package checklist."
+      - "Bottleneck mitigation (one paragraph)."
+    discussion:
+      - "Is a fortnightly gate compatible with two-week sprints? What happens at the boundary?"
+      - "Who owns the gate decision — PM, QA lead, or the board?"
+    objectives:
+      - "Combine adaptive delivery with hard external gates without stalling flow."
+      - "Design evidence packages that make gates fast and defensible."
+    rubric: "Flow diagram is coherent and complete (40%); gate checklist is specific and auditable (40%); mitigation addresses the real bottleneck (20%)."
+    solution:
+      model: "Gated-continuous hybrid"
+      reasoning: "Gate the release, not the iteration: sprints continue producing validated increments, and the gate board reviews a standing package (test evidence, change log, residual-risk note) rather than ad-hoc submissions. Bottleneck mitigation: pre-submission readiness check by QA lead so the board only sees complete packages; second mitigation is a delegated fast-track for low-risk changes with retrospective board review."
+      alternatives:
+        - "Sprint-aligned gates (gate every sprint boundary): maximally predictable but couples the board's calendar to delivery and stalls flow at every boundary."
+        - "Continuous release with post-hoc audit: fastest, acceptable only where the regulator permits retrospective evidence."
+      lesson_for_instructor: "Ask what happens to a hotfix; the hotfix path is where hybrid designs usually break."
+
+  - id: CS-08
+    title: "One-page charter under pressure"
+    domain: D2
+    level: L2
+    use: [in-class]
+    lecture: 6
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [charter, initiation, sponsor, timebox]
+    concepts: [project charter, SMART objectives]
+    summary: "Draft a charter for the student-services portal in 40 minutes from a messy sponsor briefing."
+    context: "The Dean gives a rambling 10-minute brief: students complain, the old portal is 'a disaster', there is some money left this fiscal year, and the alumni office wants in. You have 40 minutes of class time to produce a one-page charter."
+    problem: "Turn the messy brief into a charter with a testable objective, named sponsor, in/out scope, and explicit constraints."
+    constraints:
+      - "One page maximum."
+      - "Objective must be SMART and verifiable."
+      - "Anything the brief did not specify becomes an open question, not an invention."
+    tasks:
+      - "Draft the charter (objective, scope in/out, sponsor, constraints, success criteria, top risk)."
+      - "List the three questions you would put to the sponsor before sign-off."
+      - "Mark one item you deliberately left vague and why."
+    deliverables:
+      - "One-page charter."
+      - "Three sponsor questions."
+    discussion:
+      - "Which charter element is most often fake in student projects? Why?"
+      - "Is it better to ship a charter with unknowns marked, or wait for answers?"
+    objectives:
+      - "Draft a charter that separates knowns, unknowns, and inventions."
+      - "Write objectives that are testable rather than aspirational."
+    rubric: "Objective is genuinely testable (40%); scope in/out is explicit (30%); open questions separated from inventions (30%)."
+    solution:
+      model: "Known/unknown/invented triage"
+      reasoning: "A strong charter under pressure marks three states: known (complaints exist, funds exist), unknown (actual budget figure, sponsor identity, deadline), invented (anything the team supplies to look complete). The testable objective pattern: 'Reduce average service-request resolution time from X to Y by date Z' with X to be measured in week 1 — the honesty of the unmeasured baseline is the mark of a good charter, not a weakness."
+      alternatives:
+        - "Waiting for full answers before drafting: defensible in low-urgency contexts, but the exercise's point is disciplined honesty under time pressure."
+      lesson_for_instructor: "Grade the open-questions list more heavily than the charter prose; it reveals whether students invented facts."
+
+  - id: CS-09
+    title: "Stakeholder hunt on a hospital analytics project"
+    domain: D2
+    level: L2
+    use: [in-class]
+    lecture: 7
+    seed: MEDSYNC
+    difficulty: beginner
+    numerical: false
+    tags: [stakeholders, identification, healthcare, hidden-stakeholders]
+    concepts: [stakeholder identification]
+    summary: "Identify at least 15 stakeholders including hidden ones (data owners, auditors, nursing unions)."
+    context: "A hospital analytics project starts with an obvious list: sponsor CIO, clinicians, IT. The interesting stakeholders are the ones nobody names in week 1 — the data owner in medical records, the privacy auditor, the nursing union, the vendor of the incumbent system, the night-shift nurses who will actually use the reports."
+    problem: "Produce a stakeholder list of at least 15, including at least five that a naive list would miss."
+    constraints:
+      - "Each stakeholder needs a one-line 'what they exchange with the project'."
+      - "Hidden stakeholders must be justified by the exchange, not just listed."
+    tasks:
+      - "List 15+ stakeholders with exchanges."
+      - "Mark the five hidden ones and explain how each would have surfaced late and costly."
+      - "Name the stakeholder whose absence would be discovered only at go-live."
+    deliverables:
+      - "Stakeholder list with exchanges."
+      - "Hidden-five justification table."
+    discussion:
+      - "What systematic technique (not brainstorming) would find hidden stakeholders?"
+      - "Is a stakeholder who blocks the project still a stakeholder to engage?"
+    objectives:
+      - "Go beyond the obvious stakeholder list using exchange analysis."
+      - "Anticipate the cost of late-discovered stakeholders."
+    rubric: "List reaches 15 with real exchanges (40%); hidden-five are genuinely non-obvious and justified (40%); go-live discovery pick is argued (20%)."
+    solution:
+      model: "Exchange-based identification"
+      reasoning: "Every stakeholder gives and takes something: data owners give access and take control assurances; unions give cooperation and take workload guarantees; auditors give sign-off and take evidence. Hidden stakeholders surface by walking the data flow and the approval flow, not the org chart. The go-live surprise is usually the night-shift operational staff — the actual users of reports nobody interviewed."
+      alternatives: []
+      lesson_for_instructor: "Have teams count how many of their 15 are 'people who say yes'; a list of allies is a red flag."
+
+  - id: CS-10
+    title: "Power-interest grid and engagement plan"
+    domain: D2
+    level: L3
+    use: [in-class]
+    lecture: 7
+    seed: MEDSYNC
+    difficulty: beginner
+    numerical: false
+    tags: [power-interest, engagement, grid, strategy]
+    concepts: [power/interest grid, engagement planning]
+    summary: "Place 15 stakeholders on the grid; plan engagement for three hostile ones."
+    context: "Using CS-09's list, three stakeholders are actively hostile: the incumbent vendor's account manager, a physician who lost a pet project to this one, and the records department head who fears audit exposure."
+    problem: "Place all 15 on a power-interest grid and design engagement strategies for the three hostile ones."
+    constraints:
+      - "Engagement strategies must name the owner, the channel, and the cadence."
+      - "Hostile does not mean unimportant; two of the three are high-power."
+    tasks:
+      - "Draw the 2×2 grid with all 15 placed."
+      - "For each hostile stakeholder: interest, power, strategy, owner, cadence."
+      - "Identify which hostile stakeholder you would engage first and why."
+    deliverables:
+      - "Grid diagram."
+      - "Three engagement plans."
+    discussion:
+      - "When is containment the right strategy for a hostile stakeholder?"
+      - "Can engagement convert the physician, or only neutralize them?"
+    objectives:
+      - "Position stakeholders by power and interest, not by friendliness."
+      - "Design differentiated engagement for adversarial stakeholders."
+    rubric: "Grid placements are defensible (30%); each engagement plan has owner, channel, cadence (45%); first-engagement choice is argued (25%)."
+    solution:
+      model: "Power-interest engagement differentiation"
+      reasoning: "High-power hostile stakeholders (records head, physician) need face-to-face interest alignment — their hostility is positional, and the records head's real fear (audit exposure) can be converted into project support by making the project improve their audit posture. The vendor account manager is low-power, high-interest: contain with formal channels and clean exit criteria rather than engagement. Engage the records head first: conversion is plausible and their power is highest."
+      alternatives:
+        - "Engage the physician first via a respected peer: defensible if a credible intermediary exists; otherwise risks reinforcing the slight."
+      lesson_for_instructor: "Push on the ethics line between 'aligning interests' and 'buying off' a hostile stakeholder."
+
+  - id: CS-11
+    title: "Tailoring a heavyweight template to a 6-week project"
+    domain: D2
+    level: L3
+    use: [in-class]
+    lecture: 8
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [tailoring, proportionality, templates, governance]
+    concepts: [tailoring, method fit]
+    summary: "Cut a 40-document enterprise template down to a 6-document student project; defend every cut."
+    context: "The university PMO mandates a 40-document delivery kit. A 6-week student portal improvement has two developers, one part-time PM, and a faculty sponsor."
+    problem: "Select the six documents you keep and defend each cut against the PMO."
+    constraints:
+      - "Exactly six documents survive."
+      - "Every cut needs a risk named that the cut accepts."
+      - "The charter and a schedule of some form must survive."
+    tasks:
+      - "Choose the six survivor documents."
+      - "For each of the 34 cuts: what risk does dropping it accept, and who owns that risk?"
+      - "Write the two-sentence defense you would give the PMO."
+    deliverables:
+      - "Keep list with one-line purpose each."
+      - "Cut table: document, accepted risk, risk owner."
+      - "PMO defense paragraph."
+    discussion:
+      - "Is there any document you would keep at 40% effort rather than cut entirely?"
+      - "What does the PMO actually lose when projects tailor down?"
+    objectives:
+      - "Tailor process weight to project size without losing control points."
+      - "Name accepted risks explicitly rather than pretending cuts are free."
+    rubric: "Six survivors are the right control points (40%); cuts name real accepted risks with owners (40%); defense is PMO-persuasive (20%)."
+    solution:
+      model: "Control-point tailoring"
+      reasoning: "Keep what creates or protects a decision: charter (authorization), scope statement (boundaries), schedule (time control), risk register (foresight), change log (scope discipline), closure report (learning). Cut acceptance criteria: most cuts accept 'discovered late' risk owned by the PM; the biggest single risk is cutting the change log, which is how scope creep goes unnoticed. The PMO defense: six documents still cover initiate-plan-control-close; the 34 cuts remove redundancy, not control."
+      alternatives:
+        - "Keeping a one-page combined quality+test plan instead of the closure report: defensible for a 6-week build where quality risk exceeds learning value."
+      lesson_for_instructor: "Ask which cut students would reverse if the project ran 6 months instead of 6 weeks — proportionality is scale-dependent."
+
+  - id: CS-12
+    title: "Three-level WBS for the student portal"
+    domain: D3
+    level: L1
+    use: [in-class, homework]
+    lecture: 9
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: true
+    tags: [WBS, decomposition, 100-percent-rule, estimation]
+    concepts: [WBS, 100% rule]
+    summary: "Build a deliverable-oriented WBS to work-package level; check the 100% rule."
+    context: "The CampusHub portal upgrade decomposes into five second-level deliverables. You have the work-package hour estimates from three developers; two packages were estimated twice with different numbers."
+    problem: "Build the 3-level WBS, roll up the hours, enforce the 100% rule, and resolve the duplicate estimates."
+    constraints:
+      - "Deliverable-oriented: every second-level node is a noun (a deliverable), not a verb (a phase)."
+      - "The 100% rule must hold at every level."
+      - "Duplicate estimates must be resolved by a stated rule, not averaging."
+    tasks:
+      - "Draft the 3-level WBS for the five deliverables."
+      - "Roll up hours and verify the 100% rule at each level."
+      - "Resolve the duplicate estimates with an explicit rule and recompute."
+    deliverables:
+      - "WBS tree diagram."
+      - "Roll-up table proving the 100% rule."
+      - "Estimate-resolution note."
+    discussion:
+      - "Why is a phase-oriented WBS tempting for students, and what does it hide?"
+      - "When is averaging duplicate estimates actually the right rule?"
+    objectives:
+      - "Decompose scope into deliverable-oriented work packages."
+      - "Enforce the 100% rule as an audit, not a slogan."
+    rubric: "WBS is deliverable-oriented and complete (40%); roll-up arithmetic is correct (30%); duplicate-estimate rule is explicit and applied (30%)."
+    solution:
+      model: "Deliverable WBS + roll-up audit"
+      reasoning: "Roll up bottom-up: work packages → deliverables → project. The 100% rule means each parent equals the sum of its children — no 'miscellaneous' bucket, no unallocated hours. Duplicate estimates resolve by the newest estimate wins if a basis-of-estimate date exists; otherwise re-estimate once with the estimator who owns the work. Averaging hides disagreement instead of resolving it."
+      alternatives:
+        - "Averaging duplicates: defensible when both estimates have equal basis quality and the disagreement is symmetric; state it as a deliberate rule if used."
+      calculations: "Worked roll-up table in instructor key; machine-checked via numeric block."
+      lesson_for_instructor: "Plant one deliberately phase-oriented branch in the discussion and make students fix it."
+    numeric:
+      type: wbs_rollup
+      note: "Three-level roll-up with 100%-rule verification and duplicate-estimate resolution."
+      data:
+        duplicate_rule: "newest estimate wins"
+        deliverables:
+          - {name: "Portal UI refresh",        packages: {screens: 120, components: 80, accessibility: 40}}
+          - {name: "Service request engine",   packages: {workflow: 160, notifications: 60, admin-tools: 50}}
+          - {name: "Data migration",           packages: {extraction: 70, cleansing: 90, load: 40}}
+          - {name: "Integration adapters",     packages: {LMS-adapter: 90, payment-adapter: 60}}
+          - {name: "Testing & cutover",        packages: {test-cases: 60, UAT-support: 40, cutover-rehearsal: 30}}
+        duplicate_estimates:
+          - {package: "workflow", first: 140, newest: 160}
+          - {package: "cleansing", first: 110, newest: 90}
+      expected:
+        deliverable_hours: {"Portal UI refresh": 240, "Service request engine": 270, "Data migration": 200, "Integration adapters": 150, "Testing & cutover": 130}
+        project_total_hours: 990
+        duplicate_resolutions: {workflow: 160, cleansing: 90}
+
+  - id: CS-13
+    title: "Scope-creep spotting from a change log"
+    domain: D3
+    level: L2
+    use: [in-class]
+    lecture: 9
+    seed: TELCOCARE
+    difficulty: beginner
+    numerical: false
+    tags: [scope-creep, change-control, gold-plating]
+    concepts: [scope creep, change control]
+    summary: "Review a 14-entry change-request log; classify creep, gold plating, and legitimate change."
+    context: "Fourteen change requests from a churn-model project: a regulatory report format change, a dashboard color preference from an executive, an extra data source, a 'small' modeling improvement a data scientist did on their own, and so on."
+    problem: "Classify each CR as legitimate change, scope creep, or gold plating, and identify where the control process failed."
+    constraints:
+      - "Classification must use impact on baseline, not who asked."
+      - "The unrequested 'improvement' must be addressed head-on."
+    tasks:
+      - "Classify all 14 CRs with one-line reasons."
+      - "Identify the two process failures that let creep accumulate."
+      - "Draft the one-sentence scope-change rule you would institute."
+    deliverables:
+      - "Classification table."
+      - "Two process-failure findings."
+      - "One-sentence rule."
+    discussion:
+      - "Is a free improvement ever a problem? When?"
+      - "Who is responsible for creep: the requester, the approver, or the process?"
+    objectives:
+      - "Distinguish legitimate change from creep and gold plating by baseline impact."
+      - "Locate process failure rather than blaming individuals."
+    rubric: "Classifications consistent (50%); process failures are structural, not personal (30%); rule is enforceable (20%)."
+    solution:
+      model: "Baseline-impact classification"
+      reasoning: "Legitimate change alters the baseline through control (the regulatory format). Creep enters without control (the extra data source added 'while we were in there'). Gold plating adds unrequested value (the data scientist's improvement — rework risk, undocumented behavior, and a model-comparison burden). The two process failures: no impact-assessment gate, and no owner for unrequested work. The rule: 'No baseline change without a recorded impact note approved by the change owner.'"
+      alternatives: []
+      lesson_for_instructor: "The gold-plating debate is the richest; let students argue whether to keep the improvement."
+
+  - id: CS-14
+    title: "Planning-poker calibration for a capstone backlog"
+    domain: D3
+    level: L2
+    use: [in-class]
+    lecture: 10
+    seed: null
+    difficulty: beginner
+    numerical: true
+    tags: [estimation, planning-poker, three-point, calibration]
+    concepts: [three-point estimation, estimate calibration]
+    summary: "Calibrate team estimates using three-point estimates and compare against actuals."
+    context: "A capstone team ran planning poker on eight backlog items, then recorded actuals. Their three-point estimates (O/M/L in hours) and actuals are given for each item."
+    problem: "Compute PERT estimates, compare with actuals, and diagnose the team's systematic bias."
+    constraints:
+      - "PERT mean = (O + 4M + L) / 6; use the given numbers only."
+      - "Bias diagnosis must distinguish optimism, pessimism, and poor spread."
+    tasks:
+      - "Compute PERT means and compare each against the actual."
+      - "Quantify overall bias (mean signed error) and spread error."
+      - "Recommend the team's correction factor for the next sprint."
+    deliverables:
+      - "Estimate-vs-actual table with errors."
+      - "Bias diagnosis and correction recommendation."
+    discussion:
+      - "Should a team apply a correction factor, or fix the estimation conversation?"
+      - "Why does averaging individual estimates before discussion destroy poker's value?"
+    objectives:
+      - "Apply three-point estimation and measure calibration."
+      - "Distinguish systematic bias from variance."
+    rubric: "PERT arithmetic correct (40%); bias decomposition correct (30%); recommendation addresses the diagnosed problem (30%)."
+    solution:
+      model: "PERT mean + signed-error calibration"
+      reasoning: "PERT mean (O+4M+L)/6; signed error = actual − estimate. A consistent positive signed error means systematic optimism (apply a multiplicative correction); high variance with zero mean means poor spread (improve the O/L conversation, don't pad). The correction factor is the ratio of total actual to total estimate — apply it as a planning multiplier, not a per-item fudge."
+      alternatives:
+        - "No correction, better conversation instead: defensible long-term, but a running multiplier is the honest interim fix for a known-biased team."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Reveal actuals only after teams commit to their diagnosis; hindsight changes error narratives."
+    numeric:
+      type: pert_calibration
+      note: "PERT means, signed errors, team bias ratio, and recommended correction factor."
+      data:
+        items:
+          - {id: I1, O: 2, M: 4, L: 8,  actual: 6}
+          - {id: I2, O: 1, M: 2, L: 4,  actual: 2.5}
+          - {id: I3, O: 3, M: 5, L: 9,  actual: 7}
+          - {id: I4, O: 1, M: 3, L: 6,  actual: 4}
+          - {id: I5, O: 2, M: 3, L: 5,  actual: 3}
+          - {id: I6, O: 4, M: 6, L: 12, actual: 9}
+          - {id: I7, O: 2, M: 5, L: 8,  actual: 5.5}
+          - {id: I8, O: 1, M: 2, L: 3,  actual: 3}
+      expected:
+        pert_means: {I1: 4.33, I2: 2.17, I3: 5.33, I4: 3.17, I5: 3.17, I6: 6.67, I7: 5.0, I8: 2.0}
+        total_estimate: 31.84
+        total_actual: 40.0
+        bias_ratio: 1.256
+        recommended_correction: 1.25
+
+  - id: CS-15
+    title: "Hand-solved 14-activity CPM network"
+    domain: D3
+    level: L3
+    use: [in-class, exam]
+    lecture: 11
+    seed: null
+    difficulty: beginner
+    numerical: true
+    tags: [CPM, forward-pass, backward-pass, float, critical-path]
+    concepts: [CPM, float, critical path]
+    summary: "Execute a complete forward and backward pass on a 14-activity network; find the critical path and float."
+    context: "A 14-activity network with FS dependencies and given durations. Three routes through the network carry zero float; the L-branch finish sits one week away."
+    problem: "Compute ES/EF/LS/LF for every activity, identify the critical path, and report total and free float for each activity."
+    constraints:
+      - "All dependencies are finish-to-start with zero lag unless stated."
+      - "Show the forward pass and backward pass separately."
+      - "Ties in float must be resolved by activity ID order for grading."
+    tasks:
+      - "Forward pass: ES/EF for all 14 activities."
+      - "Backward pass: LS/LF for all 14 activities."
+      - "Total float and free float per activity; identify the critical path."
+      - "Name the near-critical path and its total float."
+    deliverables:
+      - "Completed CPM worksheet (14 rows)."
+      - "Critical path and near-critical path with float values."
+    discussion:
+      - "Why can an activity with total float 2 have free float 0?"
+      - "What does a second near-critical path imply for crash decisions?"
+    objectives:
+      - "Execute both CPM passes flawlessly by hand."
+      - "Interpret float as risk information, not just arithmetic."
+    rubric: "Forward/backward pass correctness (50%); critical path correct (20%); float interpretation in discussion (30%)."
+    solution:
+      model: "Two-pass CPM"
+      reasoning: "Forward pass: EF = ES + duration, ES = max(EF of predecessors). Backward pass: LF = min(LS of successors), LS = LF − duration. Total float = LS − ES; free float = ES(successor) − EF. Critical path = zero total float. Free float can be less than total float when successors start earlier than their late dates; free float 0 with total float 2 means the successor is on the critical path. A near-critical path one week away means crashing decisions must check both paths — compressing only the critical path can promote the other."
+      alternatives: []
+      calculations: "Full worked network in instructor key; machine-checked per activity."
+      lesson_for_instructor: "Grade the backward pass separately from the forward pass; most errors live in the backward pass."
+    numeric:
+      type: cpm
+      note: "Full forward/backward pass, total/free float, critical path, near-critical float."
+      data:
+        activities:
+          - {id: A,  dur: 3, preds: []}
+          - {id: B,  dur: 5, preds: [A]}
+          - {id: C,  dur: 2, preds: [A]}
+          - {id: D,  dur: 6, preds: [B]}
+          - {id: E,  dur: 4, preds: [B]}
+          - {id: F,  dur: 3, preds: [C]}
+          - {id: G,  dur: 4, preds: [D]}
+          - {id: H,  dur: 5, preds: [E, F]}
+          - {id: I,  dur: 2, preds: [G]}
+          - {id: J,  dur: 3, preds: [H]}
+          - {id: K,  dur: 4, preds: [I, J]}
+          - {id: L,  dur: 2, preds: [K]}
+          - {id: M,  dur: 3, preds: [K]}
+          - {id: N,  dur: 1, preds: [L, M]}
+      expected:
+        es: {A: 0, B: 3, C: 3, D: 8, E: 8, F: 5, G: 14, H: 12, I: 18, J: 17, K: 20, L: 24, M: 24, N: 27}
+        ef: {A: 3, B: 8, C: 5, D: 14, E: 12, F: 8, G: 18, H: 17, I: 20, J: 20, K: 24, L: 26, M: 27, N: 28}
+        ls: {A: 0, B: 3, C: 7, D: 8, E: 8, F: 9, G: 14, H: 12, I: 18, J: 17, K: 20, L: 25, M: 24, N: 27}
+        lf: {A: 3, B: 8, C: 9, D: 14, E: 12, F: 12, G: 18, H: 17, I: 20, J: 20, K: 24, L: 27, M: 27, N: 28}
+        total_float: {A: 0, B: 0, C: 4, D: 0, E: 0, F: 4, G: 0, H: 0, I: 0, J: 0, K: 0, L: 1, M: 0, N: 0}
+        free_float: {A: 0, B: 0, C: 0, D: 0, E: 0, F: 4, G: 0, H: 0, I: 0, J: 0, K: 0, L: 1, M: 0, N: 0}
+        critical_path: ["A", "B", "D", "G", "I", "K", "M", "N"]
+        critical_path_alt: ["A", "B", "E", "H", "J", "K", "M", "N"]
+        project_duration: 28
+
+  - id: CS-16
+    title: "Gantt baseline and resource levelling"
+    domain: D3
+    level: L2
+    use: [in-class]
+    lecture: 12
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [Gantt, baseline, resource-levelling, scheduling]
+    concepts: [Gantt chart, resource levelling]
+    summary: "Build a Gantt baseline and level a resource conflict without moving the critical path."
+    context: "Two activities need the same database specialist in the same fortnight. One has 4 days of float, the other is critical. A third task could shift into the gap but belongs to a different deliverable."
+    problem: "Produce a baseline Gantt, then level the conflict without extending the project end date."
+    constraints:
+      - "The critical path may not lengthen."
+      - "The specialist's total workload may not exceed capacity in any week."
+      - "Cross-deliverable moves need a one-line justification."
+    tasks:
+      - "Draw the baseline Gantt with the conflict visible."
+      - "Apply levelling within float and show the revised bars."
+      - "State what the levelling consumed (float) and the new risk exposure."
+    deliverables:
+      - "Before/after Gantt."
+      - "Float-consumption note."
+    discussion:
+      - "What does 'levelling within float' cost the project even when the end date holds?"
+      - "When is hiring/loaning a second specialist better than levelling?"
+    objectives:
+      - "Use float as the levelling budget."
+      - "Recognize that a stable end date can still hide risk transfer."
+    rubric: "Conflict resolved without critical-path extension (40%); float consumption quantified (30%); risk-transfer note is honest (30%)."
+    solution:
+      model: "Float-bounded levelling"
+      reasoning: "Move the floated activity into its 4-day float window; the specialist's conflict resolves without touching the critical path. The cost: the floated activity now has zero float — any further slip makes it critical, so the project's resilience decreased even though the end date is unchanged. The cross-deliverable move is justified only if the receiving deliverable's float can absorb it; otherwise it just relocates the conflict."
+      alternatives:
+        - "Splitting the specialist's time 50/50: defensible if context-switching cost is low; usually it is not for deep technical work."
+        - "Requesting a second specialist: costs money, preserves float — the right call when float is nearly exhausted elsewhere."
+      lesson_for_instructor: "Make students state the new float of the moved activity; 'it fit' is not an answer."
+
+  - id: CS-17
+    title: "Bottom-up budget for a data project"
+    domain: D4
+    level: L3
+    use: [in-class]
+    lecture: 13
+    seed: GRIDSENSE
+    difficulty: beginner
+    numerical: true
+    tags: [budget, bottom-up, contingency, management-reserve, cost-baseline]
+    concepts: [cost baseline, contingency, management reserve]
+    summary: "Build a bottom-up budget for a data project from labor, indirects, and direct costs."
+    context: "GridSense's ingestion-layer upgrade: three roles with rates, a cloud direct cost, a 25% indirect rate on labor, 10% contingency on the subtotal, and a 5% management reserve on top."
+    problem: "Assemble the cost baseline from the components and reconcile it against the funding cap."
+    constraints:
+      - "Contingency applies to the subtotal; management reserve applies on top of contingency."
+      - "The funding cap is fixed; the budget must fit under it."
+    tasks:
+      - "Compute labor by role (hours × rate), indirects, and direct costs."
+      - "Apply contingency and management reserve in the stated order."
+      - "Reconcile against the cap and state the headroom or overrun."
+    deliverables:
+      - "Budget build-up table."
+      - "Cap reconciliation with headroom/overrun."
+    discussion:
+      - "Who controls contingency versus management reserve, and why does the distinction matter?"
+      - "What does it mean if contingency is spent but the schedule is fine?"
+    objectives:
+      - "Assemble a cost baseline with correct reserve layering."
+      - "Reconcile budget against funding constraints."
+    rubric: "Build-up arithmetic correct (50%); reserve layering order correct (30%); reconciliation conclusion correct (20%)."
+    solution:
+      model: "Layered cost build-up"
+      reasoning: "Labor = Σ(hours × rate). Indirects = 25% × labor. Subtotal = labor + indirects + direct. Contingency = 10% × subtotal (PM-controlled, known-unknowns). Management reserve = 5% × (subtotal + contingency) (sponsor-controlled, unknown-unknowns). Baseline = subtotal + contingency; the reserve sits above the baseline and is released only through the sponsor. Headroom = cap − total including reserve."
+      alternatives: []
+      calculations: "Worked build-up in instructor key; machine-checked."
+      lesson_for_instructor: "Quiz the control boundary: who spends contingency vs reserve — it is a governance question wearing arithmetic clothes."
+    numeric:
+      type: budget
+      note: "Labor roll-up, indirects, contingency, management reserve, cap reconciliation."
+      data:
+        roles:
+          - {role: "Data engineer",      hours: 420, rate_pkr: 2600}
+          - {role: "Backend engineer",   hours: 300, rate_pkr: 2400}
+          - {role: "QA engineer",        hours: 160, rate_pkr: 1800}
+        indirect_rate: 0.25
+        direct_costs_pkr: 180000
+        contingency_rate: 0.10
+        mgmt_reserve_rate: 0.05
+        funding_cap_pkr: 3000000
+      expected:
+        labor_pkr: 2100000
+        indirects_pkr: 525000
+        subtotal_pkr: 2805000
+        contingency_pkr: 280500
+        baseline_pkr: 3085500
+        mgmt_reserve_pkr: 154275
+        total_with_reserve_pkr: 3239775
+        cap_headroom_pkr: -239775
+
+  - id: CS-18
+    title: "Quality metrics for a registration system"
+    domain: D6
+    level: L1
+    use: [in-class]
+    lecture: 14
+    seed: CAMPUSHUB
+    difficulty: beginner
+    numerical: false
+    tags: [quality, metrics, cost-of-quality, verification]
+    concepts: [quality metrics, cost of quality]
+    summary: "Choose four quality metrics for a registration system and defend the choice against vanity metrics."
+    context: "A registration system rebuild wants 'quality' metrics for its dashboard. Candidates offered: lines of code, test pass rate, defect count, escaped defects per release, code review coverage, user-reported issues per month."
+    problem: "Select four metrics that actually measure quality outcomes and reject the vanity ones with reasons."
+    constraints:
+      - "Each kept metric needs: what it measures, how collected, what decision it informs."
+      - "Each rejected metric needs the specific way it misleads."
+    tasks:
+      - "Select four metrics with the three-part justification."
+      - "Reject the others with named failure modes."
+      - "Set one target per kept metric and say where the target came from."
+    deliverables:
+      - "Keep/reject table with justifications."
+      - "Targets with provenance."
+    discussion:
+      - "Why is test pass rate almost meaningless without knowing what the tests cover?"
+      - "What's the cost of collecting a metric nobody uses?"
+    objectives:
+      - "Distinguish outcome metrics from activity metrics."
+      - "Tie every metric to a decision."
+    rubric: "Kept metrics are decision-linked (50%); rejections name real failure modes (30%); targets have provenance (20%)."
+    solution:
+      model: "Decision-linked metric selection"
+      reasoning: "Keep: escaped defects per release (outcomes users feel), defect count by severity trend (in-process signal), user-reported issues per month (post-release truth), code review coverage (process guardrail with a decision: what merge gate applies). Reject: lines of code (measures effort, not quality; rewards verbosity), test pass rate without coverage context (a green suite over 20% coverage says nothing). Targets come from the legacy system's baseline, not industry folklore."
+      alternatives: []
+      lesson_for_instructor: "Ask who would act differently on each kept metric — if nobody, it's decoration."
+
+  - id: CS-19
+    title: "Eight data-quality rules for a customer dataset"
+    domain: D6
+    level: L2
+    use: [in-class, homework]
+    lecture: 14
+    seed: TELCOCARE
+    difficulty: beginner
+    numerical: false
+    tags: [data-quality, validation-rules, profiling, DS-projects]
+    concepts: [data quality dimensions, validation rules]
+    summary: "Write eight executable data-quality rules for a customer dataset spanning six dimensions."
+    context: "A churn-model team receives a customer extract: 2.1M rows, 47 columns, five source systems merged. Known symptoms: duplicate customers with different IDs, 3% missing tenure, region codes from two eras, dates of birth in the future for 400 rows."
+    problem: "Specify eight validation rules covering completeness, uniqueness, validity, consistency, timeliness, and accuracy."
+    constraints:
+      - "At least six dimensions must appear among the eight rules."
+      - "Each rule must be specific enough to implement as code."
+      - "For each rule: the action when it fails (reject, repair, flag)."
+    tasks:
+      - "Write eight rules with dimension, logic, threshold, and failure action."
+      - "Order the rules as an execution pipeline and justify the order."
+      - "State which rule's failure would block the project, not just the batch."
+    deliverables:
+      - "Rule specification table."
+      - "Pipeline order with rationale."
+      - "Blocking-rule call with reasoning."
+    discussion:
+      - "Which dimension is hardest to automate, and why is accuracy different from validity?"
+      - "Who owns a rule that fails — the data team or the source system's owner?"
+    objectives:
+      - "Specify data-quality rules across all six dimensions."
+      - "Sequence validation as a pipeline with ownership."
+    rubric: "Rules are implementable and cover six dimensions (50%); pipeline order justified (30%); blocking call argued (20%)."
+    solution:
+      model: "Dimensioned rule pipeline"
+      reasoning: "Structural rules run first (schema, types), then uniqueness (dedupe before completeness, or you repair ghosts), then validity (format/domain checks), then consistency (cross-field), then timeliness (freshness), and accuracy last (needs reference comparison). The blocking rule: duplicate customers — every downstream metric is wrong if identity is wrong, so dedupe failure blocks the batch, while missing tenure (3%) can be flagged and imputed with disclosed assumptions."
+      alternatives:
+        - "Completeness before uniqueness: defensible when missing rows make dedupe cheaper; here duplicates with different IDs survive completeness checks, so uniqueness first."
+      lesson_for_instructor: "Have students find the rule that can't be automated (accuracy usually needs sampling against ground truth)."
+
+  - id: CS-20
+    title: "Twenty risks for a streaming platform"
+    domain: D5
+    level: L2
+    use: [in-class]
+    lecture: 15
+    seed: GRIDSENSE
+    difficulty: beginner
+    numerical: false
+    tags: [risk-identification, register, categories, streaming]
+    concepts: [risk identification, risk register]
+    summary: "Populate a risk register with 20 distinct risks for a streaming analytics platform across categories."
+    context: "GridSense's platform upgrade faces technical (pipeline latency), external (vendor API changes), organizational (key-engineer departure), and data risks (sensor drift). Students must produce 20 distinct risks — no near-duplicates."
+    problem: "Build a 20-risk register with category, cause, effect, and a detectability note per risk."
+    constraints:
+      - "No two risks may share the same cause-effect pair."
+      - "Each risk: category, cause, effect, detectability (early/late/undetectable)."
+      - "At least one risk must be an opportunity, not a threat."
+    tasks:
+      - "Draft 20 risks meeting the constraints."
+      - "Mark the three risks a naive team would miss."
+      - "Identify the risk with the worst detectability profile and why that matters."
+    deliverables:
+      - "20-row risk register."
+      - "Missed-three note."
+      - "Detectability call-out."
+    discussion:
+      - "Why is 'undetectable' the worst column to be in even for a low-impact risk?"
+      - "How does an opportunity end up in a risk register legitimately?"
+    objectives:
+      - "Generate a broad, non-redundant risk set."
+      - "Treat detectability as a first-class risk attribute."
+    rubric: "Twenty distinct risks with full attributes (50%); missed-three are genuinely non-obvious (30%); detectability reasoning sound (20%)."
+    solution:
+      model: "Category-driven identification with detectability"
+      reasoning: "Coverage strategy: force at least two risks per category (technical, external, organizational, data, operational, opportunity) to prevent clustering. The naive misses: sensor drift (slow, invisible until accuracy decays), key-person risk disguised as 'bus factor 1' on the pipeline DSL, and the opportunity — vendor API v2 offers cheaper ingestion but only if adopted mid-project. Worst detectability: sensor drift, because monitoring shows 'green' while accuracy silently decays; mitigation is reference-sensor comparison, not alerting."
+      alternatives: []
+      lesson_for_instructor: "Count category coverage live; the 20-risk constraint exists to force breadth, so enforce it."

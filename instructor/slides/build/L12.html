@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L12 · Schedules, Gantt Charts &amp;amp; Resource Levelling (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 9">
+<h1>L12 · Schedules, Gantt Charts &amp; Resource Levelling</h1>
+<h2>From network logic to a working, resource-feasible schedule</h2>
+<p>Week 6 · Unit U3 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 9">
+<h2>Learning objectives</h2>
+<li><strong>Translate</strong> a CPM network into a baselined Gantt chart</li><li><strong>Level</strong> resources by moving float, and compute the calendar impact</li><li><strong>Distinguish</strong> milestone discipline from milestone decoration</li><li><strong>Explain</strong> why an unresourced schedule is not a schedule</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Quiz 2 (L09–L12, 15 min) runs FIRST — see instructor/exam-bank/quiz2.md. Today's levelling arithmetic comes from Lab 6's CAMPUS-MEND capacity numbers (already checker-verified). Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 9">
+<h2>Network → Gantt: the baseline</h2>
+<div class="mermaid">
+gantt
+  title CAMPUS-MEND core schedule (weeks)
+  dateFormat X
+  axisFormat Week %s
+  section Build
+  A Legacy audit (2w)      :a1, 0, 2w
+  B Schema design (3w)     :a2, after a1, 3w
+  C Portal build (4w)      :a3, after a2, 4w
+  D Analytics repo (5w)    :a4, after a2, 5w
+  E Pipeline (4w)          :a5, after a4, 4w
+  F LMS adapter (3w)       :a6, after a3, 3w
+  section Close
+  G Testing (2w)           :a7, after a5, 2w
+  H Rollout (1w)           :a8, after a7, 1w
+</div>
+<li>The baseline is <strong>frozen</strong>: it is the ruler you measure slippage against (L19's PV comes from here)</li><li>Milestones = zero-duration decision points with owners — not Fridays</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The Gantt block mirrors the CAMPUS-MEND §A schedule (docs/labs/data-pack.md) — G after E here is the simplified teaching chain; Lab 6's full version includes the C,F predecessor. Say that difference out loud to avoid confusion. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 9">
+<h2>Resource levelling: the arithmetic</h2>
+<p><strong>CAMPUS-MEND pattern (Lab 6, verified):</strong> two testers, 40 h/wk each — during testing (2 wks) they need <strong>80 h/wk</strong> of work each?</p>
+<p>No — the correct read: testing needs <strong>160 h total</strong>; two testers × 40 h/wk × 2 wks = <strong>160 h ✓ fits exactly</strong></p>
+<p>But B needs <strong>two</strong> developers in parallel while only one is free after A:</p>
+<table><tr><th>Week</th><th>Demand</th><th>Capacity</th><th>Action</th></tr><tr><td>3–5</td><td>2 devs (B needs both)</td><td>1 dev</td><td>B slips — or split B</td></tr></table>
+<li>Levelling within float = free · beyond float = <strong>the end date moves</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The two-tester capacity correction is one the checker caught in the lab keys — teach the exact-fit vs over-fit distinction. The B-dev demand is the classic levelling crunch. 6 min, board arithmetic.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 9">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> one senior reviewer across three code streams — levelling the review float decides the release date</li><li><strong>DS:</strong> one GPU cluster for two training jobs — levelling = scheduling queue, and the crunch lands on the deadline</li><li>Shared-resource contention is the DS studio's normal state, not an exception</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The GPU queue example lands with the DS cohort — connect to CS-16's levelling decisions. 3 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 9">
+<h2>Case anchor:</h2>
+<p><strong>CS-16</strong> — <em>Gantt baseline and resource levelling</em>: baseline the CAMPUS-MEND schedule, find the over-allocation, and choose: split, slip, or add capacity?</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Qualitative decision case — three defensible answers; the key grades the trade-off analysis, not the choice. Key: instructor/answer-keys/cases/CS-16.md. Lab 6 (docs/labs/lab-06-gantt-resources.md) is the numeric version.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 9">
+<h2>Discussion</h2>
+<li>What is lost when a schedule is levelled purely by software? What must the human still decide?</li><li>Your critical resource is a person, not a machine. Which levelling options disappear?</li><li>Why does the baseline freeze feel bureaucratic <em>right up until</em> it saves the project?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q1's expected direction: tools optimize one metric; humans own trade-offs and politics. 6 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 9">
+<h2>Summary &amp; exit ticket</h2>
+<li>Gantt = network + calendar + resources; the baseline is the measurement ruler</li><li>Levelling inside float is free; beyond float, the <strong>end date moves</strong></li><li>Milestones are decisions with owners, not Fridays</li></ul>
+<p><strong>Exit ticket (2 min):</strong> in your capstone, name one over-allocated resource and whether you would split, slip, or add — with the week number you'd move.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M2's schedule artifact (due at L12 per the capstone milestone plan).</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 9">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — schedule &amp; resource domains</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/gantt-template.csv</code></a> · Lab 6: <a href="../../docs/labs/index.md"><code>docs/labs/lab-06-gantt-resources.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U3-planning-the-work/L12-12-schedule-tools.md</code></li><li><strong>Next:</strong> L13 — Cost Estimating &amp; Budgeting: from hours to a controllable money plan</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L13 with the labor→overhead→contingency build; its CampusHub numbers chain into L19's EVM lecture.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

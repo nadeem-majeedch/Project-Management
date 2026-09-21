@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L03 · PMBOK Guide 7: Principles &amp;amp; Performance Domains (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L03 · PMBOK Guide 7: Principles &amp; Performance Domains</h1>
+<h2>The course's structural spine</h2>
+<p>Week 1 · Unit U1 · CLO1 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Name</strong> the 12 PM principles and pair each with a CS/DS work situation</li><li><strong>Describe</strong> the 8 performance domains and what each produces</li><li><strong>Explain</strong> why PMBOK 7 replaced process prescriptions with principles</li><li><strong>Apply</strong> the domains as a checklist on any project you join</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Anchor with the teaching package; the 12 principles are listed on its definitions section — have it open. This is the most 'map-heavy' lecture of U1; keep each principle to one sentence + one example. Timing: ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Why principles, not processes?</h2>
+<li>PMBOK 6: <strong>49 processes</strong>, fixed inputs/outputs — worked for predictive builds</li><li>PMBOK 7: <strong>12 principles</strong> + <strong>8 performance domains</strong> — works for <em>any</em> delivery approach</li><li>Principle = a rule of <strong>conduct</strong>; domain = an area of <strong>focus</strong>, not a phase</li></ul>
+<div class="mermaid">
+flowchart LR
+  P["12 Principles&lt;br&gt;(how we behave)"] --&gt; D["8 Performance Domains&lt;br&gt;(where we pay attention)"]
+  D --&gt; T["Tailoring&lt;br&gt;(L08: which parts, how deeply)"]
+</div>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>This slide answers the inevitable 'why did the numbering change?' question. Tailoring preview primes L08. 3 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The 12 principles — the conduct layer</h2>
+<li>Stewardship · Team · Stakeholders · <strong>Value</strong> · Systems thinking · <strong>Leadership</strong></li><li>Tailoring · <strong>Quality</strong> · <strong>Complexity</strong> · <strong>Risk</strong> · Adaptability &amp; resilience · <strong>Change</strong></li></ul>
+<p>Pair each with CS/DS reality:</p>
+<li><em>Value</em> → a model that is 2% more accurate but ships late helps <strong>nobody</strong></li><li><em>Complexity</em> → a distributed pipeline is a system, not a task list</li><li><em>Adaptability</em> → your sprint plan survives contact with a hostile API</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Bolded ones are the CLO1 exam anchors per QB-U1. The three CS/DS pairings come from the teaching package's examples section — keep them verbatim for consistency. 6 min with student pairings.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>The 8 performance domains — the focus layer</h2>
+<div class="mermaid">
+flowchart TD
+  ST["Stakeholders"] --- T["Team"]
+  T --- DA["Development Approach&lt;br&gt;&amp; Life Cycle"]
+  DA --- PL["Planning"]
+  PL --- PW["Project Work"]
+  PW --- DE["Delivery"]
+  DE --- MS["Measurement"]
+  MS --- UN["Uncertainty"]
+  UN -.-&gt; ST
+</div>
+<li>Domains run <strong>concurrently</strong>, not in sequence</li><li>Each maps to specific lectures: Planning → L09–L14 · Uncertainty → L15–L20 · Measurement → L19–L20</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The cycle diagram is the slide to photograph — it recurs in the L30 capstone kickoff. Say the domain-to-lecture mapping out loud so students see the syllabus inside the framework. 5 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a microservice rebuild — domains fire simultaneously: stakeholders (audit team) need answers while planning (schema) is still fluid</li><li><strong>DS:</strong> a fraud-model project — <em>Uncertainty</em> domain dominates (data quality unknowns) before <em>Delivery</em> takes over</li><li>Same 8 domains, different center of gravity — that is <strong>tailoring</strong> (L08)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Center-of-gravity language comes straight from the teaching package. Ask students to predict which domain will dominate THEIR capstone — revisit at L30. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-04</strong> — <em>Sorting 20 artifacts into PMBOK 7 domains</em>: team-sorting exercise; argues the boundary cases, then defends against the model answer</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Single-anchor lecture (Beginner band). Run as a 10-minute pair-sort, then defend the two hardest placements. Quiz 1 (next lecture) covers this material at MCQ depth instead.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Which principle would have prevented your worst group-project experience?</li><li>Can a team 'do everything right' in every domain and still fail? What does that tell you about checklists?</li><li>Why did PMI move from 49 processes to 12 principles — what changed in the industry?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3 is the discussion anchor; expected direction: agile's rise made prescriptive processes brittle. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li><strong>12 principles</strong> = how professionals behave; <strong>8 domains</strong> = where attention goes</li><li>Domains overlap and fire concurrently — sequence is a <em>choice</em>, not a default</li><li>Tailoring (L08) decides how deeply each domain gets worked</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write the <strong>one domain</strong> you predict will dominate your capstone project — we will compare with L30.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Collect tickets; they will be read back in L30 as a prediction exercise. Formatative only.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>The Standard for Project Management and A Guide to the Project Management Body of Knowledge (PMBOK® Guide)</em> — 7th ed., sections 1–3</li><li>Teaching package: <code>instructor/teaching-packages/U1-foundations-strategy/L03-03-pmbok7-principles-domains.md</code></li><li><strong>Next:</strong> L04 — Roles &amp; the PM profession · <strong>Quiz 1 (L01–L04) opens at the start of class</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Reminder: Quiz 1 is 15 minutes at the start of L04, best-2-of-3 counting per the syllabus. QB-U1 items are drawn from these three lectures.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

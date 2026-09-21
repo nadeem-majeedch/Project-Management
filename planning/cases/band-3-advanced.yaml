@@ -1,0 +1,1378 @@
+# ==============================================================================
+# Band 3 — ADVANCED (CS-46..CS-75) · multi-concept analysis, quantitative
+# synthesis under constraints. 10 machine-checkable numeric cases
+# (CS-46, CS-47, CS-49, CS-57, CS-58, CS-61, CS-63, CS-65, CS-67, CS-74).
+# ==============================================================================
+
+cases:
+  - id: CS-46
+    title: "Crash economics on the streaming upgrade"
+    domain: D3
+    level: L4
+    use: [in-class, exam]
+    lecture: 11
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: true
+    tags: [crashing, cost-slope, compression, critical-path, trade-off]
+    concepts: [schedule compression, crash cost slope]
+    summary: "Compute crash-cost slopes, find the cheapest two-week compression, and defend it against a management directive to crash everything."
+    context: "GRIDSENSE's streaming upgrade has four compressible activities. Management wants 11 weeks instead of 13; the sponsor offers no more money but will accept quality-neutral compression. Indirect cost is PKR 8,000 per week."
+    problem: "Compute slopes, crash to 11 weeks at minimum cost, and show why the cheapest plan is not 'crash the biggest task'."
+    constraints:
+      - "Crash limits: each activity can compress only to its crash duration."
+      - "Only activities on the critical path shorten the project."
+      - "Slope = (crash cost − normal cost) ÷ (normal duration − crash duration)."
+    tasks:
+      - "Compute the cost slope for each activity."
+      - "Run the compression step by step: which path is critical after each crash?"
+      - "Deliver the minimum-cost plan to reach 11 weeks, with total direct increase."
+      - "Compare the plan's direct cost increase with the indirect saving."
+    deliverables:
+      - "Slope table."
+      - "Step-by-step crash sequence with critical path after each step."
+      - "Minimum-cost plan with cost comparison."
+    discussion:
+      - "When does crashing become irrational even with money available?"
+      - "Why does the critical path sometimes split into two after crashing?"
+    objectives:
+      - "Compute and use crash-cost slopes."
+      - "Sequence crashes to follow the shifting critical path."
+    rubric: "Slopes correct (25%); sequence follows shifting CP (35%); minimum-cost plan and comparison correct (40%)."
+    solution:
+      model: "Slope-ordered crashing with CP tracking"
+      reasoning: "Slopes: A = (55,000−40,000)/(4−3) = 15,000/wk; B = (105,000−90,000)/1 = 15,000/wk; C = (90,000−70,000)/1 = 20,000/wk; D = (50,000−30,000)/1 = 20,000/wk. Baseline paths: A–C = 9 wk; A–B–D = 13 wk (critical). Step 1: crash B (cheapest, on CP) → A–B–D = 12. Step 2: still A–B–D critical (A–C = 9); crash A (15,000) → A–B–D = 11, A–C = 8. Total direct increase = PKR 30,000 for two weeks. Indirect saving = 16,000, so net compression cost is 14,000 — and the deadline risk removed may be worth more than either. Crashing C or D (slope 20,000) first is the classic error: they are off the critical path and shorten nothing."
+      alternatives:
+        - "Fast-track instead of crash: free but adds rework risk (see CS-53); worth stating as the comparison the sponsor will ask for."
+      calculations: "Worked step-by-step in instructor key; machine-checked via numeric block."
+      lesson_for_instructor: "Force the step-2 decision: half the class crashes D by habit. The shifting-CP discipline is the entire lesson."
+    numeric:
+      type: crash
+      note: "Slopes, baseline CP, minimum-cost two-week crash plan."
+      data:
+        target_weeks: 11
+        indirect_per_week_pkr: 8000
+        A: {dur: 4, cost: 40000, crash_dur: 3, crash_cost: 55000}
+        B: {dur: 6, cost: 90000, crash_dur: 5, crash_cost: 105000}
+        C: {dur: 5, cost: 70000, crash_dur: 4, crash_cost: 90000}
+        D: {dur: 3, cost: 30000, crash_dur: 2, crash_cost: 50000}
+      steps:
+        - {name: slope_A_pkr, expr: "(A.crash_cost - A.cost) / (A.dur - A.crash_dur)", expect: 15000, tol: 1}
+        - {name: slope_B_pkr, expr: "(B.crash_cost - B.cost) / (B.dur - B.crash_dur)", expect: 15000, tol: 1}
+        - {name: slope_C_pkr, expr: "(C.crash_cost - C.cost) / (C.dur - C.crash_dur)", expect: 20000, tol: 1}
+        - {name: slope_D_pkr, expr: "(D.crash_cost - D.cost) / (D.dur - D.crash_dur)", expect: 20000, tol: 1}
+        - {name: cp_before_weeks, expr: "A.dur + B.dur + D.dur", expect: 13, tol: 0.01}
+        - {name: total_crash_cost_pkr, expr: "slope_B_pkr * 1 + slope_A_pkr * 1", expect: 30000, tol: 1}
+        - {name: duration_after_weeks, expr: "A.crash_dur + B.crash_dur + D.dur", expect: 11, tol: 0.01}
+        - {name: indirect_saving_pkr, expr: "indirect_per_week_pkr * 2", expect: 16000, tol: 1}
+
+  - id: CS-47
+    title: "Resource leveling without moving the deadline"
+    domain: D3
+    level: L3
+    use: [in-class]
+    lecture: 12
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: true
+    tags: [resource-leveling, float, overallocation, histogram]
+    concepts: [resource leveling, float usage]
+    summary: "Detect a pooled-resource overallocation, level it using float, and prove the finish date survives."
+    context: "CAMPUSHUB's two-developer pool (40 h/week combined) serves three tasks. The schedule is resource-blind: T1 (20 h/wk, weeks 1–3, critical), T2 (20 h/wk, weeks 2–3, float 1 week), T3 (20 h/wk, weeks 3–5, float 2 weeks)."
+    problem: "Find the overallocation, level it by delaying a task into its float, and verify no week exceeds capacity and the finish date is unchanged."
+    constraints:
+      - "Tasks may only be delayed into their float; no splitting."
+      - "T1 is critical and immovable."
+      - "Leveling must keep every week's load ≤ 40 h."
+    tasks:
+      - "Build the weekly load histogram and identify the overloaded week(s)."
+      - "Apply the leveling move that consumes the least float."
+      - "Verify capacity and finish-date impact."
+    deliverables:
+      - "Before/after histograms."
+      - "Leveling decision with float justification."
+    discussion:
+      - "Why does float belong to the project, not the task that has it?"
+      - "What changes if two tasks are both near-critical?"
+    objectives:
+      - "Detect and resolve overallocation with float."
+      - "Prove leveling decisions preserve the baseline."
+    rubric: "Overallocation detected (25%); leveling move uses float correctly (45%); verification complete (30%)."
+    solution:
+      model: "Float-aware leveling"
+      reasoning: "Loads: wk1 = 20, wk2 = 40, wk3 = 20+20+20 = 60 (over by 20), wk4 = 20, wk5 = 20. Moving T3 one week later (start wk4) draws on its 2-week float: loads become 20/40/40/40/20 — all within capacity, finish unchanged because T3 still ends in wk5... the float absorbs it exactly. Moving T2 instead would consume its only float week and put it at zero float — worse, because it converts a near-critical task into critical. The histogram before/after is the evidence; the float ledger is the permission slip."
+      alternatives:
+        - "Adding a contractor for week 3: works, costs money, and hides the planning gap that float analysis already solved for free."
+      calculations: "Worked histogram in instructor key; machine-checked."
+      lesson_for_instructor: "Ask who authorized using T3's float — nobody did; leveling is a re-baseline decision, not a silent edit."
+    numeric:
+      type: leveling
+      note: "Overload detection and float-based leveling."
+      data:
+        capacity_h_per_week: 40
+        weekly_loads_before: {w1: 20, w2: 40, w3: 60, w4: 20, w5: 20}
+        t3_delay_weeks: 1
+        weekly_loads_after: {w1: 20, w2: 40, w3: 40, w4: 40, w5: 20}
+      steps:
+        - {name: overload_w3_before, expr: "weekly_loads_before.w3 - capacity_h_per_week", expect: 20, tol: 0.01}
+        - {name: max_load_after, expr: "max(weekly_loads_after.w1, weekly_loads_after.w2, weekly_loads_after.w3, weekly_loads_after.w4, weekly_loads_after.w5)", expect: 40, tol: 0.01}
+        - {name: total_hours_conserved, expr: "(weekly_loads_before.w1 + weekly_loads_before.w2 + weekly_loads_before.w3 + weekly_loads_before.w4 + weekly_loads_before.w5) - (weekly_loads_after.w1 + weekly_loads_after.w2 + weekly_loads_after.w3 + weekly_loads_after.w4 + weekly_loads_after.w5)", expect: 0, tol: 0.01}
+
+  - id: CS-48
+    title: "The requirements freeze that wasn't"
+    domain: D3
+    level: L3
+    use: [homework]
+    lecture: 9
+    seed: MEDSYNC
+    difficulty: advanced
+    numerical: false
+    tags: [scope, requirements, freeze, change-control, healthcare]
+    concepts: [requirements management, change control]
+    summary: "Design a requirements freeze that survives a clinical stakeholder who keeps 'small' amending requests."
+    context: "MedSync's nursing lead submits 'one-line' amendments weekly — each genuinely small, cumulatively 40% scope growth. Baseline sign-off exists but has no teeth; the PM has been absorbing changes to keep peace."
+    problem: "Design a freeze mechanism that distinguishes genuine safety-critical amendments from scope creep, without alienating clinical users."
+    constraints:
+      - "Safety-relevant amendments cannot be refused outright."
+      - "The mechanism must fit a 9-month regulated project."
+      - "Nursing lead remains a stakeholder, not an adversary."
+    tasks:
+      - "Define freeze tiers (frozen / conditional / open) with criteria."
+      - "Design the amendment intake: who logs, who triages, what evidence is required."
+      - "Script the conversation that re-anchors the nursing lead."
+    deliverables:
+      - "Freeze-tier policy."
+      - "Intake workflow."
+      - "Re-anchor conversation script."
+    discussion:
+      - "Why did absorbing 'small' changes feel safe while it was the riskiest behavior on the project?"
+      - "What does the clinical lead's behavior tell you about the original requirements process?"
+    objectives:
+      - "Design tiered change control proportionate to project risk."
+      - "Repair a stakeholder relationship while enforcing a baseline."
+    rubric: "Tier criteria are safety-aware (40%); intake workflow is real and owned (30%); script preserves the relationship (30%)."
+    solution:
+      model: "Tiered freeze with clinical exception path"
+      reasoning: "Tiers: frozen (baseline), conditional (change allowed only by swapping equal scope, CCB-approved), open (safety and regulatory only — defined as patient-safety impact or audit requirement, evidenced in writing). Intake: every request logged in one queue with requester, rationale, safety claim; PM + clinical safety officer triage weekly. The re-anchor conversation reframes: 'every absorbed one-liner took testing capacity from the defects that could harm a patient' — the nurse's own values, not schedule optics. Absorbing changes felt safe because each was small; the compounding effect is invisible until rework surfaces, which is precisely why creep is the classic beginner failure."
+      alternatives:
+        - "Full freeze with zero exceptions: cleaner governance, but in a hospital it fails the first safety amendment and destroys the mechanism's credibility."
+      lesson_for_instructor: "Have students total the 40% growth in hours — the abstract creep becomes concrete the moment it is priced."
+
+  - id: CS-49
+    title: "CPM with lags on the scoring pipeline"
+    domain: D3
+    level: L4
+    use: [in-class, exam]
+    lecture: 11
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: true
+    tags: [CPM, lags, forward-pass, backward-pass, float, critical-path]
+    concepts: [CPM with leads and lags, total and free float]
+    summary: "Solve a six-activity network with FS lags completely — both passes, floats, and the path that looks critical but isn't."
+    context: "TelcoCare's scoring-pipeline plan: A model prep (3 wk) → B feature build (4 wk) → [B FS+2 wk] C validation (2 wk) and [B FS] D deployment prep (5 wk); C → E monitoring design (3 wk); D → [D FS+1 wk] F signoff (4 wk)."
+    problem: "Complete the forward and backward passes with lags, compute all total and free floats, and identify the critical path."
+    constraints:
+      - "Lags: B→C carries a 2-week lag; D→F carries a 1-week lag."
+      - "Show every ES/EF/LS/LF value — partial passes score zero."
+      - "Free float computed against the successor's earliest start."
+    tasks:
+      - "Forward pass with lag-aware earliest dates."
+      - "Backward pass with lag-aware latest dates."
+      - "Total and free float per activity."
+      - "Identify the near-critical path and its float."
+    deliverables:
+      - "Full CPM worksheet."
+      - "Critical path and near-critical path with floats."
+    discussion:
+      - "How does a lag change backward-pass arithmetic — and where do most errors happen?"
+      - "C has total float but zero free float: what does that mean operationally?"
+    objectives:
+      - "Execute lag-aware CPM passes correctly."
+      - "Interpret the TF/FF split as a scheduling signal."
+    rubric: "Forward pass with lags (30%); backward pass with lags (30%); floats and paths (40%)."
+    solution:
+      model: "Lag-aware CPM"
+      reasoning: "Forward: A 0–3; B 3–7; C ES = 7+2 = 9, EF 11; D 7–12; E 11–14; F ES = 12+1 = 13, EF 17; end 17. Backward: F LS 13; E LS 14; C LF = E.LS = 14, LS 12 (TF = 12−9 = 3); D LF = F.LS−1 = 12, LS 7 (TF 0); B LF = min(C.LS−2 = 10, D.LS = 7) = 7, LS 3 (TF 0); A LS 0 (TF 0). Critical path A–B–D–F = 17 wk; near-critical C–E at TF 3. C's free float: E can start at 11, C finishes at 11 — FF = 0 while TF = 3. Translation: C may slip 3 weeks before the project slips, but any C slip immediately delays E's start; the buffer belongs to the chain, not to C alone."
+      alternatives: []
+      calculations: "Full worksheet in instructor key; machine-checked."
+      lesson_for_instructor: "The B backward pass is where 80% of students err — they forget the lag subtracts on the C side only."
+    numeric:
+      type: cpm
+      note: "Lag-aware forward/backward pass, floats, and tight-path identification."
+      data:
+        activities:
+          - {id: A, dur: 3, preds: []}
+          - {id: B, dur: 4, preds: [A]}
+          - {id: C, dur: 2, preds: [B], lags: {B: 2}}
+          - {id: D, dur: 5, preds: [B]}
+          - {id: E, dur: 3, preds: [C]}
+          - {id: F, dur: 4, preds: [D], lags: {D: 1}}
+      expected:
+        es: {A: 0, B: 3, C: 9, D: 7, E: 11, F: 13}
+        ef: {A: 3, B: 7, C: 11, D: 12, E: 14, F: 17}
+        ls: {A: 0, B: 3, C: 12, D: 7, E: 14, F: 13}
+        lf: {A: 3, B: 7, C: 14, D: 12, E: 17, F: 17}
+        total_float: {A: 0, B: 0, C: 3, D: 0, E: 3, F: 0}
+        free_float: {A: 0, B: 0, C: 0, D: 0, E: 3, F: 0}
+        critical_path: ["A", "B", "D", "F"]
+        project_duration: 17
+
+  - id: CS-50
+    title: "Exclusions as litigation armor"
+    domain: D3
+    level: L3
+    use: [homework]
+    lecture: 9
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: false
+    tags: [scope-statement, exclusions, assumptions, contract-boundary]
+    concepts: [scope boundaries, exclusions]
+    summary: "Rewrite a vague scope statement's exclusions so that the three most likely future disputes are already answered."
+    context: "CAMPUSHUB's vendor contract says the portal includes 'reporting and analytics support'. Disputes are brewing: the registrar wants cohort trend dashboards; finance wants export-to-Excel; the VC office wants ad-hoc SQL access. Each side reads the sentence its way."
+    problem: "Rewrite the scope statement so each future dispute resolves by document, not by negotiation."
+    constraints:
+      - "Every ambiguous term gets a definition or is excluded with a pointer."
+      - "Three specific disputes must each be resolved explicitly."
+      - "The exclusions must not leak into hostility — offer the change-request path."
+    tasks:
+      - "Draft the exclusion list with definitions."
+      - "Map each brewing dispute to the clause that settles it."
+      - "Draft the one-paragraph CR invitation that accompanies exclusions."
+    deliverables:
+      - "Revised scope statement excerpt."
+      - "Dispute-to-clause mapping."
+      - "CR invitation paragraph."
+    discussion:
+      - "Why do exclusions written in anger fail in court and in collaboration?"
+      - "What belongs in scope versus assumptions versus exclusions?"
+    objectives:
+      - "Write exclusions that resolve disputes before they start."
+      - "Keep the change path open while closing the ambiguity."
+    rubric: "Ambiguities defined or excluded (40%); mapping covers all three disputes (40%); tone keeps CR path open (20%)."
+    solution:
+      model: "Definition-first exclusions"
+      reasoning: "The sentence 'reporting and analytics support' fails because three nouns are undefined. Rewrite: reporting = the six named standard reports with defined filters (listed); analytics = prebuilt cohort dashboards for the registrar role (specified); excluded = ad-hoc query access, custom report development, data export beyond the defined CSV of named fields — each excluded item ends with 'available via change request at standard rates'. Mapping: registrar's cohort trends → in scope (prebuilt dashboard, defined); finance export → excluded, CR path; VC SQL access → excluded, CR path. Exclusions written with a path stay collaborative; exclusions written as a wall invite the dispute they meant to prevent."
+      alternatives:
+        - "Redefining scope mid-project to include the dashboards: costs a week of re-estimation; honest if the registrar's need is strategic — but that is a CCB decision, not a scope-statement edit."
+      lesson_for_instructor: "Read three student drafts aloud without naming authors; the class votes 'would this settle the dispute?' — most first drafts say 'not included' without saying what WAS included."
+
+  - id: CS-51
+    title: "Committed costs and the change-order ambush"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 13
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: false
+    tags: [committed-cost, change-order, ETC, vendor, budget]
+    concepts: [committed cost, forecast integrity]
+    summary: "Expose why a 'healthy' budget report is misleading: the spend ignores committed costs and a pending change order."
+    context: "GRIDSENSE's month-6 report shows 52% spend against 55% planned — 'under budget, on track'. Hidden facts: the telemetry vendor contract commits PKR 1.2M for months 7–12 regardless of use, and a change order (worth 800k, approved verbally) is not yet in the baseline."
+    problem: "Explain why the report misleads, restate the true position, and design the reporting fix."
+    constraints:
+      - "Committed ≠ spent; the forecast must include both."
+      - "The change order must enter the baseline or be refused — no verbal middle ground."
+      - "The fix must survive the PM's rotation (new PM inherits it)."
+    tasks:
+      - "Restate the true cost position qualitatively (spend, commitments, unrecorded change)."
+      - "Diagnose the reporting failure: which control, absent, allowed this?"
+      - "Design the fix: baseline discipline and a cost report that cannot hide commitments."
+    deliverables:
+      - "Corrected position statement."
+      - "Root-cause diagnosis."
+      - "Reporting fix specification."
+    discussion:
+      - "Why do cash-based reports flatter projects in their middle months?"
+      - "Who benefits from the verbal change order — and how do you unwind it?"
+    objectives:
+      - "Distinguish spend, commitment, and forecast."
+      - "Close the control gaps that let a verbal change order exist."
+    rubric: "Position restated with all three components (40%); diagnosis names the absent control (30%); fix is durable (30%)."
+    solution:
+      model: "Spend-commitment-forecast reconciliation"
+      reasoning: "The report compares cash out vs planned spend and ignores 1.2M of committed future outflow plus 800k of unrecorded scope: true remaining cost is understated by 2M, roughly a quarter of the budget — 'under budget' is fiction. Root cause: cost reporting keyed to invoices rather than commitments, and a CCB without a written-decision rule. Fix: (1) cost baseline maintained as committed + spent, forecast = remaining commitments + remaining estimates; (2) CCB decision rule — no implementation before a signed CR, enforced by the deployment gate; (3) month-end reconciliation of commitments ledger to contract register. The unwinding of the verbal order is political: present it as baseline hygiene, not accusation."
+      alternatives:
+        - "Absorbing the 800k into contingency: hides a scope decision in a risk pot — the exact accounting this case exists to prevent."
+      lesson_for_instructor: "Ask what the EVM numbers would look like — PV/EV/AC all look fine while the forecast is 2M wrong; EVM's blindness to commitments is its known gap."
+
+  - id: CS-52
+    title: "The milestone slip announcement"
+    domain: D9
+    level: L3
+    use: [in-class]
+    lecture: 26
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: false
+    tags: [communication, milestone-slip, stakeholder, message-design]
+    concepts: [bad-news communication, audience segmentation]
+    summary: "Design tiered communications for a six-week milestone slip: registrar, VC office, students, vendor — each hears what they need."
+    context: "CAMPUSHUB's registration-integration milestone slips six weeks. Audiences: the registrar (process impact), the VC office (political exposure), 12,000 students (expectation management), the integration vendor (commercial consequences). One message cannot serve all four."
+    problem: "Design the communication matrix: message, channel, sender, timing, and the question each audience will ask."
+    constraints:
+      - "No audience may learn the fact from another audience first."
+      - "The vendor message must precede the public one."
+      - "Each message ≤ 200 words."
+    tasks:
+      - "Communication matrix for four audiences."
+      - "Draft the registrar's message in full."
+      - "List the sequencing rule and its rationale."
+    deliverables:
+      - "Communication matrix."
+      - "Registrar message draft."
+      - "Sequencing rule."
+    discussion:
+      - "What does 'no surprises' mean when audiences have conflicting interests?"
+      - "Who signs the student-facing message, and why does it matter?"
+    objectives:
+      - "Segment bad-news communication by audience need."
+      - "Sequence disclosures to protect both trust and negotiations."
+    rubric: "Matrix covers four audiences with distinct needs (40%); message drafts are concrete (40%); sequencing defensible (20%)."
+    solution:
+      model: "Audience-tiered disclosure"
+      reasoning: "Matrix: vendor (day 0, PM+procurement, contract consequences and recovery options); registrar (day 0 PM, process workarounds, their questions are 'what do I do differently'); VC office (day 0-1, sponsor brief, political framing, 'who knew what when'); students (day 3, service notice signed by registrar — not the PM, students don't know the PM; their question is 'what changes for me'). Sequencing rule: those with obligations (vendor) before those with exposures (VC) before those with expectations (students); internal before external at every tier. The registrar draft leads with dates and workarounds, one paragraph of cause, zero blame — the registrar will forward it verbatim, so it must survive forwarding."
+      alternatives:
+        - "One all-hands message: efficient, and it fails all four audiences simultaneously — a classic false economy."
+      lesson_for_instructor: "Have students find the sentence that gets screenshotted in each draft; that sentence is the real message."
+
+  - id: CS-53
+    title: "Fast-tracking gone wrong"
+    domain: D3
+    level: L4
+    use: [in-class]
+    lecture: 11
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: false
+    tags: [fast-tracking, rework, risk, compression, integration]
+    concepts: [fast tracking, rework loops]
+    summary: "Diagnose a fast-tracking decision that converted a two-week slip into a five-week rework wave."
+    context: "CAMPUSHUB's PM fast-tracked schema design into requirements work to recover two weeks. Requirements changed twice after schema freeze; the rebuild consumed five weeks. The retrospective blames 'bad luck'; the PM blames 'unstable requirements'."
+    problem: "Diagnose the failure mechanism, separate bad luck from bad method, and state when fast-tracking is defensible."
+    constraints:
+      - "The analysis must name the dependency that was actually violated."
+      - "The method-vs-luck distinction must be evidence-based, not rhetorical."
+      - "The defensibility criteria must be checkable before the decision, not after."
+    tasks:
+      - "Trace the rework loop: which dependency, what assumption, what signal was ignored."
+      - "Classify the loss: method failure vs genuine uncertainty."
+      - "Write the pre-decision checklist for future fast-tracking."
+    deliverables:
+      - "Rework-loop trace."
+      - "Method-vs-luck classification."
+      - "Fast-track decision checklist."
+    discussion:
+      - "Why is fast-tracking described as 'free' when this case shows it costing 2.5× a crash would have?"
+      - "What would have made the requirements instability visible before the schema froze?"
+    objectives:
+      - "Analyze compression decisions by their dependency assumptions."
+      - "Build pre-decision criteria rather than post-mortem blame."
+    rubric: "Loop trace identifies the violated dependency (40%); classification is evidence-based (30%); checklist is pre-decision checkable (30%)."
+    solution:
+      model: "Dependency-assumption diagnosis"
+      reasoning: "The fast-track assumed requirements were stable enough to freeze schema against — an assumption nobody tested: the two requirement changes were both foreseeable (registrar had flagged a reporting change in writing two weeks before). Method failure, not luck: the signal existed and was not consulted. The rework loop: schema froze on R7; R9 changed R7's cardinality; rebuild cascaded through three downstream modules. Defensible fast-tracking needs: (1) dependency whose late-side task is genuinely insensitive to early-side variation (soft overlap, not hard coupling); (2) the coupling tested, not assumed — a spike or interface contract; (3) a rework budget named in advance. This case had none of the three. Crash would have cost 2 weeks of money; fast-track cost 5 weeks of rework — 'free' was the most expensive word on the project."
+      alternatives:
+        - "Accepting the two-week slip: with these numbers, clearly correct; the checklist exists so the next team doesn't rediscover this by experience."
+      lesson_for_instructor: "Pair this with CS-46: same project pressure, opposite methods; the honest comparison is expected rework vs crash slope."
+
+  - id: CS-54
+    title: "Designing the EVM cadence"
+    domain: D4
+    level: L4
+    use: [homework]
+    lecture: 20
+    seed: MEDSYNC
+    difficulty: advanced
+    numerical: false
+    tags: [EVM, cadence, reporting, control, measurement-design]
+    concepts: [EVM implementation, measurement cadence]
+    summary: "Design an EVM implementation that fits a hospital project: measurement rules, cadence, and the anti-gaming rules."
+    context: "MedSync will run EVM with 40% milestone-weighted WBS and 60% hourly-rate work. The team fears gaming ('pencil-whipping' percent complete); the sponsor wants monthly trend lines, not weekly noise."
+    problem: "Specify the measurement rules per WBS type, the reporting cadence, and the anti-gaming controls."
+    constraints:
+      - "Milestone-weighted packages earn at milestones only."
+      - "Hourly packages may not use percent-complete self-assessment without evidence."
+      - "Cadence: monthly formal, with defined exception triggers for interim alerts."
+    tasks:
+      - "Measurement rule table per package type."
+      - "Exception triggers that force interim reporting."
+      - "Anti-gaming controls with named owners."
+    deliverables:
+      - "Measurement rule table."
+      - "Exception trigger list."
+      - "Anti-gaming control set."
+    discussion:
+      - "Why is percent-complete the most gamed number in project management?"
+      - "What does a CPI trend line actually certify — and what does it not?"
+    objectives:
+      - "Implement EVM measurement rules proportionate to work type."
+      - "Design controls that make gaming harder than honesty."
+    rubric: "Rules fit package types (40%); triggers are quantitative (30%); controls name owners (30%)."
+    solution:
+      model: "Type-based measurement with exception triggers"
+      reasoning: "Milestone packages: 0/100 or weighted milestones, earned by verifiable completion evidence — immune to gaming by design. Hourly packages: earned hours from timesheet against baseline (EV = hours performed × rate), not self-assessed percent; evidence is the timesheet, audited monthly. Exceptions forcing interim report: CPI or SPI moves >0.05 month-over-month, any package >20% over its budget-at-completion forecast, two consecutive months of SPI <0.9. Anti-gaming: earned hours reconcile to timesheets (owner: PMO analyst); milestone evidence attached in the repository (owner: QA lead); the 0.05 trigger removes the incentive to smooth bad news across months. CPI trends certify cost efficiency history; they do not certify scope completeness — scope verification stays a separate gate."
+      alternatives:
+        - "0/100 everywhere: maximally game-proof, but buries in-flight work and makes the trend line blind — the 60% hourly work needs proportional earning."
+      lesson_for_instructor: "Show a pencil-whipped percent-complete curve next to a timesheet-earned curve; the divergence IS the lesson."
+
+  - id: CS-55
+    title: "Facilitating the risk workshop that doesn't bore"
+    domain: D5
+    level: L3
+    use: [in-class]
+    lecture: 15
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: false
+    tags: [risk-workshop, facilitation, pre-mortem, participation]
+    concepts: [risk identification, facilitation design]
+    summary: "Design a risk workshop for a silent team: pre-mortem structure, round-robin mechanics, and the follow-through that makes it stick."
+    context: "GRIDSENSE's last risk workshop produced 11 generic risks, all from the two loudest engineers. The PM needs the next workshop to surface the quiet team's knowledge — the QA lead and the data engineer have never spoken in one."
+    problem: "Design the workshop: structure, mechanics that force equal airtime, and the follow-through loop."
+    constraints:
+      - "90 minutes maximum."
+      - "Every participant contributes before anyone may dominate."
+      - "Output must be register-ready, not sticky notes that die."
+    tasks:
+      - "Design the pre-mortem opening (the failure already happened — why?)."
+      - "Specify the round-robin and anonymity mechanics."
+      - "Define the follow-through: who trisqs, when, and how contributors learn what happened."
+    deliverables:
+      - "Workshop agenda with timings."
+      - "Participation mechanics."
+      - "Follow-through loop."
+    discussion:
+      - "Why does the pre-mortem framing outperform 'what risks do you see'?"
+      - "What kills risk workshops — the meeting or the weeks after it?"
+    objectives:
+      - "Design facilitation that redistributes airtime."
+      - "Close the loop so identification becomes management."
+    rubric: "Agenda fits 90 minutes (25%); mechanics force participation (40%); follow-through loop closes (35%)."
+    solution:
+      model: "Pre-mortem with structured airtime"
+      reasoning: "Agenda: 10 min pre-mortem framing ('it is 6 months out and the project failed — write the story'), 25 min silent writing then round-robin reading (each voice once before discussion; anonymity via numbered cards read aloud by the facilitator), 30 min clustering and cause-chaining (generic risks become specific when forced to name cause-effect), 15 min P×I quick-score, 10 min owners assigned live. Follow-through: register updated within 48h with contributor credit; triage at next weekly; each contributor gets the disposition of their item — the loop, not the pizza, is what makes people contribute next time. Pre-mortem works because it licenses pessimism as an intellectual task rather than disloyalty."
+      alternatives:
+        - "Anonymous digital intake instead of live round-robin: better for very hierarchical teams, loses the cause-chaining discussion; hybrid is the honest answer."
+      lesson_for_instructor: "Run the pre-mortem opening on this course itself for five minutes; students generate better risks about their own capstone in that frame."
+
+  - id: CS-56
+    title: "Quality gates for the data pipeline"
+    domain: D6
+    level: L3
+    use: [homework]
+    lecture: 14
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [quality-gates, data-quality, pipelines, ML-ops, exit-criteria]
+    concepts: [quality gates, data quality dimensions]
+    summary: "Define quality gates for a feature pipeline: what blocks promotion, what warns, and who owns each check."
+    context: "TelcoCare's feature pipeline feeds the churn model. Current 'quality' is a weekly eyeball by the data engineer. Two incidents last quarter: silent null drift and a timezone bug that corrupted one feature for nine days."
+    problem: "Design the quality gate suite: dimensions checked, blocking vs warning thresholds, and ownership."
+    constraints:
+      - "Gates run automatically in the pipeline, not on a calendar."
+      - "Dimensions must cover the two incident classes and schema change."
+      - "Blocking decisions need a documented override path."
+    tasks:
+      - "Gate table: dimension, check, threshold, block-or-warn, owner."
+      - "Override path with who may override and what is logged."
+      - "Map each gate to the incident class it would have caught."
+    deliverables:
+      - "Gate table."
+      - "Override policy."
+      - "Incident mapping."
+    discussion:
+      - "Why do 'warn-only' gates rot into wallpaper?"
+      - "Who should hold the override right for a revenue-facing model's inputs?"
+    objectives:
+      - "Translate incidents into automated quality gates."
+      - "Design overrides that stay accountable."
+    rubric: "Gates cover incident classes plus schema (40%); thresholds are concrete (30%); override path accountable (30%)."
+    solution:
+      model: "Incident-derived gate suite"
+      reasoning: "Gates: completeness (null rate per column vs 7-day baseline, block at +5pp — the silent null drift), validity (timezone-normalized timestamps asserted in-schema, block — the timezone bug), freshness (max event age, warn at SLA edge, block past it), schema (contract test on column set and types, block), distribution (PSI on key features, warn at 0.1, block at 0.25), volume (row-count vs seasonal expectation, warn). Every block carries an override: on-call data lead may override with reason logged, auto-escalated to the model owner; two overrides of the same gate in a week forces a retrospective. The mapping matters more than the list: each gate exists because an incident paid for it — gates without incident lineage are decoration."
+      alternatives:
+        - "Blocking on PSI from day one: threshold-setting needs baseline data; start warn-only, promote to block after two weeks of calibration."
+      lesson_for_instructor: "Ask which gate would have caught the nine-day timezone corruption — then ask why nobody wrote it before the incident. That asymmetry is quality management."
+
+  - id: CS-57
+    title: "Cloud overrun"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 13
+    seed: VOLTPAY
+    difficulty: advanced
+    numerical: true
+    tags: [cloud-cost, overrun, forecast, budget-variance, right-sizing]
+    concepts: [budget variance, cost forecasting]
+    summary: "Diagnose a cloud-cost overrun (egress mis-estimate, idle reserved GPUs), forecast both endings, and pick the intervention."
+    context: "VoltPay budgeted PKR 300k/month cloud for its 6-month MVP (BAC 1.8M). At end of month 4: actual 1.65M against planned 1.2M. Post-mortem on the invoice: egress is running 2× estimate and the GPU reservation runs at 30% utilization."
+    problem: "Quantify the variance, forecast completion at current rates and after the fix, and recommend."
+    constraints:
+      - "BAC 1,800,000; months 1–4 actual 1,650,000 against planned 1,200,000."
+      - "Fix scenario: right-size GPUs saves 120k/month from month 5; egress cannot be fixed before month 6."
+      - "Forecast at current rates = actual-to-date + remaining months × current monthly rate."
+    tasks:
+      - "Compute the month-4 variance in PKR and percent."
+      - "Forecast EAC and VAC at current rates."
+      - "Recompute EAC and VAC with the GPU right-sizing."
+      - "Recommend, naming what the recommendation assumes."
+    deliverables:
+      - "Variance computation."
+      - "Two forecasts with VACs."
+      - "Recommendation with assumptions."
+    discussion:
+      - "Why is egress the classic cloud budget-killer in data products?"
+      - "Should the GPU reservation be canceled mid-term even with penalty?"
+    objectives:
+      - "Quantify and forecast a cost overrun."
+      - "Evaluate interventions against forecast arithmetic."
+    rubric: "Variance correct (25%); both forecasts correct (45%); recommendation matches arithmetic (30%)."
+    solution:
+      model: "Rate-based forecast with intervention scenarios"
+      reasoning: "Variance = 1,650,000 − 1,200,000 = −450,000 (37.5% over plan-to-date). Current monthly rate = 1,650,000/4 = 412,500 → EAC = 1,650,000 + 2×412,500 = 2,475,000, VAC = −675,000. With right-sizing from month 5: monthly 292,500 → EAC = 2,235,000, VAC = −435,000. The fix recovers 240k of the 675k hole; the rest is sunk in the egress mis-estimate until month 6's renegotiation. Recommendation: right-size immediately (the arithmetic pays inside the first month even with a mid-term penalty on the reservation); re-forecast the sponsor with the honest VAC, not the original BAC. Assumption named: the fix saves the full 120k from month 5 — if right-sizing lands mid-month, recovery halves."
+      alternatives:
+        - "Do nothing and absorb: VAC −675k against a 6M runway (CS-45) is 11% of cash — indefensible without a revenue argument."
+      calculations: "Worked forecast table in instructor key; machine-checked."
+      lesson_for_instructor: "Connect to CS-45's runway: the same PKR figures, one project apart — cost control IS runway extension."
+    numeric:
+      type: arith
+      note: "Variance, current-rate EAC/VAC, fixed EAC/VAC."
+      data:
+        bac_pkr: 1800000
+        actual_to_date_pkr: 1650000
+        planned_to_date_pkr: 1200000
+        months_elapsed: 4
+        months_remaining: 2
+        fix_saving_per_month_pkr: 120000
+      steps:
+        - {name: variance_pkr, expr: "actual_to_date_pkr - planned_to_date_pkr", expect: 450000, tol: 1}
+        - {name: overrun_pct, expr: "(actual_to_date_pkr / planned_to_date_pkr - 1) * 100", expect: 37.5, tol: 0.01}
+        - {name: current_rate_pkr, expr: "actual_to_date_pkr / months_elapsed", expect: 412500, tol: 1}
+        - {name: eac_current_pkr, expr: "actual_to_date_pkr + months_remaining * current_rate_pkr", expect: 2475000, tol: 1}
+        - {name: vac_current_pkr, expr: "bac_pkr - eac_current_pkr", expect: -675000, tol: 1}
+        - {name: fixed_rate_pkr, expr: "current_rate_pkr - fix_saving_per_month_pkr", expect: 292500, tol: 1}
+        - {name: eac_fixed_pkr, expr: "actual_to_date_pkr + months_remaining * fixed_rate_pkr", expect: 2235000, tol: 1}
+        - {name: vac_fixed_pkr, expr: "bac_pkr - eac_fixed_pkr", expect: -435000, tol: 1}
+
+  - id: CS-58
+    title: "Build-vs-subscribe TCO"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 13
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: true
+    tags: [TCO, build-vs-buy, subscription, escalation, decision]
+    concepts: [total cost of ownership, build vs buy]
+    summary: "Compare three-year TCO of building document signing vs subscribing, find the crossover year, and decide."
+    context: "CAMPUSHUB needs document signing. Build: 300k development, 60k/yr maintenance, 24k/yr infra, one-time 100k compliance review in year 1. Subscribe: 180k/yr with 5% annual escalation, 30k onboarding in year 1."
+    problem: "Compute the three-year TCO of each path, find the crossover year, and recommend with the hidden factors named."
+    constraints:
+      - "Compute cumulative cost per year for years 1–4."
+      - "Subscription escalates 5% on the fee only; onboarding is year-1 only."
+      - "The recommendation must name at least two non-cost factors."
+    tasks:
+      - "Year-by-year cumulative cost table for both paths."
+      - "Identify the crossover year and month."
+      - "Recommend, with non-cost factors."
+    deliverables:
+      - "Cumulative TCO table."
+      - "Crossover analysis."
+      - "Recommendation."
+    discussion:
+      - "Whose labor does the 'build' column undercount — and by how much in practice?"
+      - "What does the escalation clause do to a ten-year view?"
+    objectives:
+      - "Compute multi-year TCO with escalation."
+      - "Integrate cost arithmetic with strategic factors."
+    rubric: "TCO tables correct (40%); crossover correct (25%); recommendation weighs non-cost factors (35%)."
+    solution:
+      model: "Cumulative TCO with crossover"
+      reasoning: "Build: y1 = 300+60+24+100 = 484; y2 = 84 → 568; y3 = 84 → 652; y4 = 84 → 736. Subscribe: y1 = 30+180 = 210; y2 = 189 → 399; y3 = 198.45 → 597.45; y4 = 208.37 → 805.82. Three-year: subscribe wins by 54.55k. Crossover: build adds 84k/yr, subscribe ~208k/yr → 54.55 ÷ (208.37−84) ≈ 0.44 → mid-year 4. Decision for a university portal with a decade horizon: build — but the arithmetic understates build's real cost: the 60k maintenance line assumes an engineer who knows the code stays; staff turnover makes maintenance lumpy, and the compliance review is an underestimate of audit burden. The honest recommendation: subscribe if integration depth is shallow, build if signing must weave into student-record workflows — the crossover math is necessary but not sufficient."
+      alternatives:
+        - "Hybrid: subscribe now, rebuild in-house at year 3 if volumes justify: pays the onboarding twice; defensible only if the 5% escalation is expected to worsen."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Ask who pays when the subscribed vendor raises 25% instead of 5% — the switch cost is the number the TCO table cannot show."
+    numeric:
+      type: arith
+      note: "Cumulative TCO per year and crossover."
+      data:
+        build: {dev: 300000, maint_yr: 60000, infra_yr: 24000, compliance: 100000}
+        subscribe: {fee_yr: 180000, escalation: 0.05, onboarding: 30000}
+      steps:
+        - {name: build_y1, expr: "build.dev + build.maint_yr + build.infra_yr + build.compliance", expect: 484000, tol: 1}
+        - {name: build_y3_cum, expr: "build_y1 + 2 * (build.maint_yr + build.infra_yr)", expect: 652000, tol: 1}
+        - {name: sub_y1, expr: "subscribe.onboarding + subscribe.fee_yr", expect: 210000, tol: 1}
+        - {name: sub_y2_fee, expr: "subscribe.fee_yr * (1 + subscribe.escalation)", expect: 189000, tol: 1}
+        - {name: sub_y3_cum, expr: "sub_y1 + sub_y2_fee + sub_y2_fee * (1 + subscribe.escalation)", expect: 597450, tol: 1}
+        - {name: sub_y4_cum, expr: "sub_y3_cum + sub_y2_fee * (1 + subscribe.escalation) ** 2", expect: 805822.5, tol: 2}
+        - {name: build_y4_cum, expr: "build_y3_cum + build.maint_yr + build.infra_yr", expect: 736000, tol: 1}
+        - {name: three_year_gap_pkr, expr: "build_y3_cum - sub_y3_cum", expect: 54550, tol: 1}
+
+  - id: CS-59
+    title: "The regulator arrives mid-project"
+    domain: D9
+    level: L3
+    use: [in-class]
+    lecture: 7
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: false
+    tags: [stakeholder-emergence, regulator, re-planning, power-interest]
+    concepts: [stakeholder change, governance response]
+    summary: "Re-plan stakeholder management when a regulator materializes in month 4 with data-residency requirements."
+    context: "GRIDSENSE learns in month 4 that grid telemetry now falls under a data-residency directive: sensor data must stay in-country. The stakeholder register has no regulator; the architecture assumed a foreign analytics cloud."
+    problem: "Produce the stakeholder re-plan: register update, power/interest repositioning, and the architecture decision this forces."
+    constraints:
+      - "The regulator's requirements are non-negotiable and dated."
+      - "The foreign-cloud assumption is embedded in two workstreams."
+      - "The register update must assign an engagement owner."
+    tasks:
+      - "Update the register and grid: where does the regulator sit and why?"
+      - "Trace the architecture impact: which workstreams, what rework order."
+      - "Define the engagement plan: who talks to the regulator, about what, how often."
+    deliverables:
+      - "Updated register and grid."
+      - "Impact trace."
+      - "Engagement plan."
+    discussion:
+      - "Why do high-power/low-interest stakeholders become emergencies only when they notice you?"
+      - "Should the regulator have been in the original register? Argue both ways."
+    objectives:
+      - "Manage stakeholder emergence under constraint."
+      - "Connect stakeholder power to architecture decisions."
+    rubric: "Grid repositioning justified (30%); impact trace is specific (40%); engagement plan assigned (30%)."
+    solution:
+      model: "Emergent-stakeholder re-plan"
+      reasoning: "The regulator enters as high-power/high-interest immediately — residency is a compliance fact, not an opinion. Register: owner = PM with compliance officer; cadence = monthly written, on-demand reviews. Impact trace: the foreign analytics cloud sits under feature pipeline and the monitoring stack; residency forces in-country processing or a regional mirror — the pipeline workstream re-plans first (data gravity), monitoring second (can aggregate outbound). This is why stakeholder analysis precedes architecture: a register without the regulator made an architecture assumption that was actually a stakeholder assumption. Should the regulator have been in the original register? For grid telemetry, yes — residency regimes for critical infrastructure were foreseeable; the miss is an identification failure, not bad luck."
+      alternatives:
+        - "Lobbying for an exemption: a real option with a real clock; plan the architecture as if denied — never couple compliance posture to a hope."
+      lesson_for_instructor: "Ask what other registers in this course have the same hole; the answer (most) is the point."
+
+  - id: CS-60
+    title: "Hybrid governance for the ML platform"
+    domain: D8
+    level: L4
+    use: [homework]
+    lecture: 24
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [hybrid, governance, ML-platform, stage-gates, agile]
+    concepts: [hybrid delivery, governance design]
+    summary: "Design governance that lets platform work run agile while model releases pass regulatory-style gates."
+    context: "TelcoCare's ML platform team wants two-week sprints; the commercial sponsor wants release gates with evidence; the data governance board wants dataset lineage sign-off. Three rhythms, one platform."
+    problem: "Design the hybrid: what runs agile, what runs gated, and how the two rhythms interlock."
+    constraints:
+      - "Sprint cadence stays two weeks for engineering work."
+      - "Model releases need documented evidence before exposure."
+      - "No gate may take more than five working days to decide."
+    tasks:
+      - "Split the work: agile lane vs gated lane, with the criteria."
+      - "Design the interlock: how sprint output enters the gate queue."
+      - "Define the gate checklist and the decision authority."
+    deliverables:
+      - "Lane split with criteria."
+      - "Interlock design."
+      - "Gate checklist."
+    discussion:
+      - "Where do hybrid designs usually break — at the handoff or at the calendar?"
+      - "Who owns the decision when a gate blocks a sprint commitment?"
+    objectives:
+      - "Design hybrid governance that respects both rhythms."
+      - "Make the handoff explicit and owned."
+    rubric: "Lane criteria are principled (40%); interlock is concrete (40%); gate authority named (20%)."
+    solution:
+      model: "Two-lane hybrid with an interlock queue"
+      reasoning: "Agile lane: platform engineering, pipeline changes, tooling, experiments — two-week sprints, DoD as quality floor. Gated lane: model releases, schema changes to served features, anything touching consent scope — each passes a gate with evidence (model card, slice evaluation, lineage sign-off). Interlock: sprint output lands in a gate queue reviewed every Monday by the model release board (model owner, governance delegate, product lead); five-day decision SLA forces evidence to be prepared before the sprint ends, not after. Where hybrids break: the handoff — sprint teams promise releases on a calendar the gate queue doesn't honor. Fix: the sprint commitment includes gate-queue lead time as explicitly as it includes engineering time. Deadlock authority: product lead decides, governance delegate's objection is recorded and escalated, never silently dropped."
+      alternatives:
+        - "Full SAFe-style release train: adds ceremony the 12-person platform doesn't need; the two-lane design is the minimum that satisfies all three rhythms."
+      lesson_for_instructor: "Ask what happens to gate evidence quality when the gate SLA is five days — the SLA is what makes the evidence real."
+
+  - id: CS-61
+    title: "TCPI and the credibility ceiling"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 19
+    seed: MEDSYNC
+    difficulty: advanced
+    numerical: true
+    tags: [EVM, TCPI, EAC, credibility, re-forecast]
+    concepts: [TCPI, forecast credibility]
+    summary: "Compute TCPI against BAC and against EAC, judge which forecast the team can credibly deliver, and brief the sponsor."
+    context: "MedSync month 7 of 12: BAC 5.0M, EV 2.6M, AC 3.0M, PV 2.9M. The sponsor wants 'the real number' and has heard EAC₁ quoted before."
+    problem: "Compute the indicator set, both TCPIs, and construct the sponsor briefing."
+    constraints:
+      - "TCPI(BAC) = (BAC − EV)/(BAC − AC); TCPI(EAC) = (BAC − EV)/(EAC − AC)."
+      - "The briefing must state which number the team commits to and why."
+      - "Historical context: this team's CPI has been stable for three months."
+    tasks:
+      - "Compute CPI, SPI, EAC₁, VAC."
+      - "Compute TCPI against BAC and against EAC₁."
+      - "Judge credibility and commit to one forecast."
+      - "Draft the three-sentence sponsor briefing."
+    deliverables:
+      - "Indicator computation."
+      - "Credibility judgment."
+      - "Sponsor briefing."
+    discussion:
+      - "Why does TCPI against BAC become meaningless after CPI has been low for months?"
+      - "What does a TCPI of 1.20 demand of a team whose CPI is 0.867?"
+    objectives:
+      - "Compute and interpret TCPI under two targets."
+      - "Commit to a forecast the evidence supports."
+    rubric: "Computations correct (40%); credibility reasoning sound (40%); briefing is three sentences and honest (20%)."
+    solution:
+      model: "TCPI credibility analysis"
+      reasoning: "CPI = 2.6/3.0 = 0.8667; SPI = 2.6/2.9 = 0.8966; EAC₁ = 5,000,000/0.8667 ≈ 5,769,231; VAC ≈ −769,231. TCPI(BAC) = 2.4/2.0 = 1.20: the team must produce 1.20 of earned value per rupee for the remaining five months after producing 0.867 for seven — with CPI stable for three months, that is a credibility stretch, not a plan. TCPI(EAC₁) = 2.4/2,769,231 = 0.8667 — exactly current CPI, by construction: EAC₁ assumes current efficiency persists. Commit to EAC₁ and re-baseline the VAC; TCPI 1.20 is what you would need to believe a turnaround the trend line does not support. Briefing: 'We are 13% inefficient and 10% behind; at current efficiency we land at 5.77M, 770k over. I am committing to that number and re-planning the remaining scope against it.'"
+      alternatives:
+        - "Committing to BAC with a recovery plan: honest only if the plan changes the efficiency drivers, not the slogan — ask what specifically the plan does in month 8 that months 5–7 did not."
+      calculations: "Worked set in instructor key; machine-checked."
+      lesson_for_instructor: "TCPI 1.20 vs CPI 0.867: have students compute how many months of 'perfect' performance would recover the gap — the arithmetic kills the fantasy."
+    numeric:
+      type: arith
+      note: "Full indicator set with both TCPIs."
+      data:
+        bac_pkr: 5000000
+        ev_pkr: 2600000
+        ac_pkr: 3000000
+        pv_pkr: 2900000
+      steps:
+        - {name: cpi, expr: "ev_pkr / ac_pkr", expect: 0.8667, tol: 0.001}
+        - {name: spi, expr: "ev_pkr / pv_pkr", expect: 0.8966, tol: 0.001}
+        - {name: eac1_pkr, expr: "bac_pkr / cpi", expect: 5769231, tol: 3000}
+        - {name: vac_pkr, expr: "bac_pkr - eac1_pkr", expect: -769231, tol: 3000}
+        - {name: tcpi_bac, expr: "(bac_pkr - ev_pkr) / (bac_pkr - ac_pkr)", expect: 1.20, tol: 0.001}
+        - {name: tcpi_eac, expr: "(bac_pkr - ev_pkr) / (eac1_pkr - ac_pkr)", expect: 0.8667, tol: 0.001}
+
+  - id: CS-62
+    title: "Escalating a failing vendor without killing the delivery"
+    domain: D7
+    level: L3
+    use: [in-class]
+    lecture: 18
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [vendor, escalation, contract, parallel-path, relationship]
+    concepts: [vendor management, escalation]
+    summary: "Escalate a vendor's repeated SLA misses while keeping delivery alive — the parallel-path decision."
+    context: "TelcoCare's scoring-API vendor missed the monthly SLA three months running (see CS-25's mechanics). Credits are paid; the service is still inadequate. Procurement wants a hard escalation; the delivery team fears a vendor that retaliates passively during contract end."
+    problem: "Design the escalation: legal posture, operational protection, and the decision point for exit."
+    constraints:
+      - "Credits alone are demonstrably insufficient."
+      - "Delivery continues regardless — no delivery hostage-taking."
+      - "The exit decision needs defined criteria, not frustration."
+    tasks:
+      - "Design the escalation ladder (notice → cure period → exit trigger)."
+      - "Specify the operational parallel-path that de-risks exit."
+      - "Define exit criteria: what measurements, over what window, trigger what."
+    deliverables:
+      - "Escalation ladder."
+      - "Parallel-path plan."
+      - "Exit criteria."
+    discussion:
+      - "Why do credits fail where service credits were supposed to work?"
+      - "When is the parallel-path more expensive than the problem it insures?"
+    objectives:
+      - "Escalate contractually without operational suicide."
+      - "Convert vendor frustration into measurable exit triggers."
+    rubric: "Ladder is contractually real (40%); parallel-path protects delivery (30%); exit criteria measurable (30%)."
+    solution:
+      model: "Escalation ladder with parallel-path insurance"
+      reasoning: "Ladder: formal performance notice citing the SLA ledger (three months of credits = documented breach pattern); 60-day cure period with a named vendor executive sponsor and weekly joint metrics; exit trigger = any two further misses in the cure window. Parallel-path: stand up the buyer-side synthetic probe suite (already built for SLA measurement in CS-25) against a candidate replacement in shadow mode — 60 days of shadow data makes exit executable instead of theoretical. Credits fail because they price inconvenience, not dependency: 120k credits against a product whose revenue rides on the API is not a remedy. The parallel-path's cost is the insurance premium; it is cheaper than the first month of a stalled migration."
+      alternatives:
+        - "Terminating immediately: legally available, operationally reckless without shadow data — the case's facts (delivery dependency) make it indefensible."
+      lesson_for_instructor: "Ask what the vendor's executive sponsor changes — accountability, not engineering; the metrics stay identical."
+
+  - id: CS-63
+    title: "Buying information: the PoC decision"
+    domain: D5
+    level: L4
+    use: [exam]
+    lecture: 16
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: true
+    tags: [decision-tree, EMV, EVPI, value-of-information, PoC]
+    concepts: [decision trees, expected value of perfect information]
+    summary: "Structure a build-vs-vendor decision as a tree, compute EVPI, and decide whether an 80k proof-of-concept is worth buying."
+    context: "TelcoCare must choose: build a custom model-retraining pipeline (cost 400k; succeeds with p = 0.6 delivering 1.2M of benefit; fails delivering nothing) or buy a vendor scoring service (certain benefit 700k, cost 300k). A four-week proof-of-concept costing 80k would reveal, perfectly, whether the custom build would succeed."
+    problem: "Build the decision tree, compute both EMVs, compute EV with the PoC, and decide."
+    constraints:
+      - "EMV custom = 0.6 × 1.2M − 400k; vendor net = 700k − 300k."
+      - "With PoC: if success revealed → build; if failure revealed → buy vendor; PoC cost paid either way."
+      - "EVPI = EV(with perfect info) − EV(without)."
+    tasks:
+      - "Draw and evaluate the tree."
+      - "Compute EVPI and compare with the PoC price."
+      - "State the decision and what would reverse it."
+    deliverables:
+      - "Decision tree with values."
+      - "EVPI computation."
+      - "Decision with reversal condition."
+    discussion:
+      - "Why is a real PoC's information never perfect — and how much does that discount the 240k?"
+      - "What does it mean that the PoC's value comes entirely from the failure branch?"
+    objectives:
+      - "Quantify the value of information before buying it."
+      - "Recognize that information's value lives in the branch it prevents."
+    rubric: "Tree evaluation correct (40%); EVPI correct (30%); decision with reversal condition (30%)."
+    solution:
+      model: "Decision tree with EVPI"
+      reasoning: "Custom EMV = 0.6×1,200,000 − 400,000 = 320,000. Vendor net = 700,000 − 300,000 = 400,000 → vendor wins today. With perfect info: success branch → build (1,200,000 − 400,000 = 800,000); failure branch → vendor (400,000). EV = 0.6×800,000 + 0.4×400,000 = 640,000, minus the 80k PoC = 560,000 — beats 400,000 by 160k. EVPI (gross, before PoC cost) = 640,000 − 400,000 = 240,000; the PoC at 80k buys information worth 240k → buy. Reversal condition: if PoC price exceeds 240k or its information is materially imperfect, decline. The insight students miss: the vendor option wins today, yet the PoC is still worth buying — its entire value is the 40% branch where it saves you from the mediocre certain option."
+      alternatives:
+        - "Building an imperfect PoC for 80k that reveals success with 90% fidelity: EV recompute shows value shrinks but stays positive; the full-information number is the ceiling, not the offer."
+      calculations: "Worked tree in instructor key; machine-checked."
+      lesson_for_instructor: "Ask why EVPI is 240k and not 1.2M — the information only matters where it changes the decision."
+    numeric:
+      type: arith
+      note: "EMV of both options, EV with information, EVPI, and PoC value."
+      data:
+        build_cost_pkr: 400000
+        build_benefit_pkr: 1200000
+        build_success_p: 0.6
+        vendor_benefit_pkr: 700000
+        vendor_cost_pkr: 300000
+        poc_cost_pkr: 80000
+      steps:
+        - {name: emv_custom_pkr, expr: "build_success_p * build_benefit_pkr - build_cost_pkr", expect: 320000, tol: 1}
+        - {name: emv_vendor_pkr, expr: "vendor_benefit_pkr - vendor_cost_pkr", expect: 400000, tol: 1}
+        - {name: ev_without_info_pkr, expr: "max(emv_custom_pkr, emv_vendor_pkr)", expect: 400000, tol: 1}
+        - {name: ev_with_info_gross_pkr, expr: "build_success_p * (build_benefit_pkr - build_cost_pkr) + (1 - build_success_p) * emv_vendor_pkr", expect: 640000, tol: 1}
+        - {name: evpi_gross_pkr, expr: "ev_with_info_gross_pkr - ev_without_info_pkr", expect: 240000, tol: 1}
+        - {name: ev_poc_pkr, expr: "ev_with_info_gross_pkr - poc_cost_pkr", expect: 560000, tol: 1}
+        - {name: poc_net_value_pkr, expr: "ev_poc_pkr - ev_without_info_pkr", expect: 160000, tol: 1}
+
+  - id: CS-64
+    title: "Aging WIP and the feature factory smell"
+    domain: D8
+    level: L3
+    use: [in-class]
+    lecture: 22
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [kanban, WIP-age, flow, started-not-finished, prioritization]
+    concepts: [flow metrics, WIP aging]
+    summary: "Diagnose a board where 14 of 22 items have aged past 30 days, and redesign the pull policy."
+    context: "TelcoCare's platform board: 22 items in progress, 14 older than 30 days, average cycle time 19 days and rising. Stakeholders add 'urgent' items weekly; nothing is ever stopped, only started."
+    problem: "Diagnose the flow failure, redesign the pull policy, and define the aging alarm."
+    constraints:
+      - "The policy must specify what happens to the 14 aged items."
+      - "Urgent lane needs an admission rule, not a vibes lane."
+      - "The fix must survive the next stakeholder who shouts."
+    tasks:
+      - "Diagnose: what does 19-day cycle time with 22 WIP tell you about the pull policy?"
+      - "Write the new pull policy (WIP limits, stop rule, urgent admission)."
+      - "Define the aging alarm and the escalation it triggers."
+    deliverables:
+      - "Flow diagnosis."
+      - "Pull policy."
+      - "Aging alarm definition."
+    discussion:
+      - "Why does 'we can't stop it, it's half done' guarantee it stays half done?"
+      - "What is the cost of the urgent lane to the non-urgent work?"
+    objectives:
+      - "Read WIP-age as a policy failure signal."
+      - "Design pull rules that survive organizational pressure."
+    rubric: "Diagnosis links WIP to cycle time (30%); policy is complete and enforceable (45%); alarm is operational (25%)."
+    solution:
+      model: "Pull-policy redesign from aging data"
+      reasoning: "22 WIP at rising cycle time is the textbook symptom: work is started as a stakeholder-management strategy, not a delivery one. Nothing is finished because everything is touched. Policy: WIP limit 8 board-wide, hard; each column gets its own limit; starting item N+1 requires finishing one — the stop rule is 'one new start costs one finished item', which converts finishing into the scarcest resource. The 14 aged items: triage into finish (max 3), park (backlog with dated revisit), kill — decided in one session with stakeholders present; nothing returns to 'in progress' unnamed. Urgent lane: admission = sponsor sign-off + it displaces the lowest-priority WIP item (visible cost), max 1 slot. Aging alarm: any item >25 days highlights; >35 days forces the finish-park-kill decision at the next sync. The next shouter gets the same answer: name what you displace."
+      alternatives:
+        - "Just raising WIP limits to 'unblock' — the opposite of the diagnosis; the case exists because that reflex already ran for a year."
+      lesson_for_instructor: "Recreate the board physically with 22 cards; watching 'finish one to start one' bite is worth three lectures."
+
+  - id: CS-65
+    title: "Sizing the buffers: CCPM for the class project"
+    domain: D5
+    level: L4
+    use: [in-class]
+    lecture: 16
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: true
+    tags: [CCPM, buffers, critical-chain, padding, commitment]
+    concepts: [critical chain, buffer sizing]
+    summary: "Convert padded task estimates into a critical-chain plan with a project buffer and feeding buffers, then compare commitment dates."
+    context: "CAMPUSHUB's team habitually pads: their 'safe' estimates average 80% padding. The critical chain at aggressive (50%) durations: A 2wk, B 3wk, C 2wk, D 4wk, E 1wk = 12wk; a feeding chain F 2wk + G 3wk = 5wk merges before E."
+    problem: "Size the project and feeding buffers, compute the committed duration, and compare with the padded plan."
+    constraints:
+      - "Project buffer = 50% of critical-chain length."
+      - "Feeding buffer = 50% of feeding-chain length."
+      - "Committed date = chain + project buffer."
+    tasks:
+      - "Compute the project buffer and committed duration."
+      - "Compute the feeding buffer and where it sits."
+      - "Compare the commitment with a padded per-task plan (why is it shorter AND safer?)."
+    deliverables:
+      - "Buffer computations."
+      - "Committed duration."
+      - "Comparison rationale."
+    discussion:
+      - "Why does aggregation of uncertainty make a single buffer safer than distributed padding?"
+      - "What breaks CCPM if teams keep their private padding anyway?"
+    objectives:
+      - "Size CCPM buffers mechanically."
+      - "Explain the aggregation argument against distributed padding."
+    rubric: "Buffer sizes correct (40%); committed duration correct (25%); aggregation rationale (35%)."
+    solution:
+      model: "CCPM buffer sizing"
+      reasoning: "Project buffer = 50% × 12 = 6 wk → committed duration 18 wk. Feeding buffer = 50% × 5 = 2.5 wk, inserted where F–G merges into the critical chain before E. The comparison: padded per-task plans protect every task individually, so padding is consumed by ordinary variation and the project still slips (student syndrome, Parkinson's law absorb the buffer invisibly). The aggregated buffer is statistically safer at the same or shorter total duration because independent task variations partially cancel at the chain level. It breaks if private padding survives the cut — the '50% durations' must be genuinely aggressive, or the buffer double-counts the same safety. This is a change-management problem wearing an arithmetic costume."
+      alternatives:
+        - "Monte Carlo percentile sizing instead of 50% rule: more defensible statistically, needs data the class project lacks; note the connection to CS-22."
+      calculations: "Worked sizing in instructor key; machine-checked."
+      lesson_for_instructor: "Ask each student for their own 'safe' estimate on a known task, then the aggressive one — the padding ratio usually exceeds 50% on the spot."
+    numeric:
+      type: arith
+      note: "Project buffer, feeding buffer, committed duration."
+      data:
+        critical_chain_weeks: 12
+        feeding_chain_weeks: 5
+        buffer_factor: 0.5
+      steps:
+        - {name: project_buffer_weeks, expr: "critical_chain_weeks * buffer_factor", expect: 6, tol: 0.01}
+        - {name: feeding_buffer_weeks, expr: "feeding_chain_weeks * buffer_factor", expect: 2.5, tol: 0.01}
+        - {name: committed_duration_weeks, expr: "critical_chain_weeks + project_buffer_weeks", expect: 18, tol: 0.01}
+
+  - id: CS-66
+    title: "Two tech leads, one architecture"
+    domain: D9
+    level: L3
+    use: [in-class]
+    lecture: 25
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: false
+    tags: [conflict, technical-disagreement, decision-rights, architecture]
+    concepts: [conflict resolution, decision rights]
+    summary: "Resolve a durable technical disagreement between two leads by fixing decision rights, not picking a winner."
+    context: "CAMPUSHUB's two tech leads have disagreed for three weeks on the integration approach (event-driven vs scheduled batch). The team has factionalized; tickets stall pending 'the decision'; the sponsor notices only the delay."
+    problem: "Resolve the conflict: process for the decision, decision rights, and the team reset."
+    constraints:
+      - "The decision needs making within one week."
+      - "Both leads remain leads; no demotion-as-resolution."
+      - "The resolution must include a disagreement-protocol for the future."
+    tasks:
+      - "Design the decision process: what evidence, what forum, who decides."
+      - "Write the decision-rights matrix for technical choices."
+      - "Draft the team reset communication."
+    deliverables:
+      - "Decision process."
+      - "Decision-rights matrix."
+      - "Reset communication."
+    discussion:
+      - "Why did three weeks of stalemate cost more than either architecture would have?"
+      - "When should a PM override a technical decision they don't own?"
+    objectives:
+      - "Separate decision rights from decision quality."
+      - "Convert durable conflict into a bounded process."
+    rubric: "Process fits one week (30%); matrix prevents recurrence (40%); reset communication rebuilds without blame (30%)."
+    solution:
+      model: "Bounded decision with explicit rights"
+      reasoning: "The stalemate persisted because decision rights were undefined: each lead believed consensus was required, so neither could lose and neither could win. Process: 90-minute decision forum — each lead presents their option against four named criteria (fit to current team skills, operational cost, migration path from the other, failure blast radius); the technical director (not the PM) decides within 48 hours using those criteria; the decision is logged with dissent recorded. Decision rights: implementation choices = owning lead; architecture = technical director on lead recommendation; PM overrides only on cost/schedule grounds, never on technical merit. Reset: 'We spent three weeks where the cost of deciding wrong was smaller than the cost of not deciding; here is how we decide the next one.' The reset names the process failure, not the people."
+      alternatives:
+        - "Split the system: event-driven for the two flows that need it, batch for the rest — often the real answer hiding under the binary framing; legitimate here if the criterion analysis shows different fitness per flow."
+      lesson_for_instructor: "Track what the stalemate cost in tickets blocked — students usually estimate one week; the real number is the lesson."
+
+  - id: CS-67
+    title: "The platform bet: scenario NPV"
+    domain: D5
+    level: L4
+    use: [exam]
+    lecture: 29
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: true
+    tags: [NPV, scenario-analysis, investment, discount-rate, break-even]
+    concepts: [scenario NPV, break-even probability]
+    summary: "Evaluate a 2M platform investment across three scenarios, find expected NPV and the break-even success probability."
+    context: "GRIDSENSE's sponsor proposes a 2.0M analytics platform investment. Four-year horizon, 10% discount rate. Scenarios: good (p = 0.3) inflows 900k/yr; base (p = 0.5) 600k/yr; bad (p = 0.2) 200k/yr."
+    problem: "Compute each scenario's NPV, the expected NPV, and the break-even probability of the good scenario."
+    constraints:
+      - "NPV = −2.0M + inflows × annuity factor (4 yr @ 10%)."
+      - "Annuity factor: (1 − 1.10⁻⁴)/0.10."
+      - "Break-even: p_good varies, p_bad fixed at 0.2, p_base = 0.8 − p_good."
+    tasks:
+      - "Compute the annuity factor and each scenario NPV."
+      - "Compute expected NPV and the recommendation it implies."
+      - "Solve for the break-even p_good."
+      - "State what the analysis ignores (one strategic factor)."
+    deliverables:
+      - "Scenario NPV table."
+      - "Expected NPV and break-even probability."
+      - "Recommendation with stated limitation."
+    discussion:
+      - "Why does a negative expected NPV not automatically kill a platform investment?"
+      - "Whose job is the 10% discount rate — and what does it hide?"
+    objectives:
+      - "Compute scenario NPVs and expected value."
+      - "Solve break-even probability and read it as a decision threshold."
+    rubric: "NPVs correct (40%); break-even correct (30%); recommendation with limitation (30%)."
+    solution:
+      model: "Scenario NPV with break-even"
+      reasoning: "Annuity factor = 3.1699. NPVs: good = 900×3.1699 − 2000 = +852.9k; base = 600×3.1699 − 2000 = −98.1k; bad = 200×3.1699 − 2000 = −1366.0k. Expected NPV = 0.3(852.9) + 0.5(−98.1) + 0.2(−1366.0) = −66.4k → reject as structured. Break-even: E = p×852.9 + (0.8−p)(−98.1) + 0.2(−1366.0) = 951.0p − 351.7 → p* = 0.3698. The sponsor needs to believe the good scenario is ~37% likely, not 30%. What the analysis ignores: option value — the platform creates capabilities (data products, faster experiments) whose value is not in the four-year inflow lines; that is why negative-EVPV platform bets sometimes proceed, but the option value must be argued, not assumed."
+      alternatives:
+        - "Restructuring to reduce the 2.0M outlay (phased platform): raises every scenario's NPV mechanically; the honest version re-estimates the bad scenario's inflows too — phased platforms often deliver the bad case anyway."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Have students state the break-even p in a sentence the sponsor could hear: 'you need to be 37% sure, not 30%' lands better than a table."
+    numeric:
+      type: arith
+      note: "Annuity factor, scenario NPVs, expected NPV, break-even p."
+      data:
+        investment_kpkr: 2000
+        years: 4
+        discount: 0.10
+        good: {p: 0.3, inflow_kpkr: 900}
+        base: {p: 0.5, inflow_kpkr: 600}
+        bad: {p: 0.2, inflow_kpkr: 200}
+      steps:
+        - {name: af, expr: "(1 - (1 + discount) ** (-years)) / discount", expect: 3.1699, tol: 0.001}
+        - {name: npv_good_kpkr, expr: "good.inflow_kpkr * af - investment_kpkr", expect: 852.9, tol: 0.2}
+        - {name: npv_base_kpkr, expr: "base.inflow_kpkr * af - investment_kpkr", expect: -98.1, tol: 0.2}
+        - {name: npv_bad_kpkr, expr: "bad.inflow_kpkr * af - investment_kpkr", expect: -1366.0, tol: 0.2}
+        - {name: enpv_kpkr, expr: "good.p * npv_good_kpkr + base.p * npv_base_kpkr + bad.p * npv_bad_kpkr", expect: -66.4, tol: 0.2}
+        - {name: break_even_p_good, expr: "(investment_kpkr - af * (base.inflow_kpkr * 0.8 + bad.inflow_kpkr * 0.2)) / (af * (good.inflow_kpkr - base.inflow_kpkr))", expect: 0.3698, tol: 0.002}
+
+  - id: CS-68
+    title: "The nine-day silent corruption"
+    domain: D6
+    level: L4
+    use: [homework]
+    lecture: 14
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [data-quality, incident, root-cause, monitoring, timezone]
+    concepts: [data quality incidents, root cause analysis]
+    summary: "Run the root-cause analysis of a nine-day silent feature corruption and design the controls that catch the next one."
+    context: "A timezone handling bug corrupted one feature silently for nine days (see CS-56's incident). Detection came from a business analyst's odd-looking report, not from monitoring. The model trained on corrupted data twice."
+    problem: "Produce the RCA: causal chain, why each existing control missed it, and the control set with owners."
+    constraints:
+      - "The RCA must distinguish trigger from root cause."
+      - "'Human error' is banned as a cause statement."
+      - "Each control maps to a specific link in the causal chain."
+    tasks:
+      - "Write the causal chain diagram in text."
+      - "Explain why each existing control missed it."
+      - "Design the control set with owners and detection targets."
+    deliverables:
+      - "Causal chain."
+      - "Control-gap analysis."
+      - "Control set."
+    discussion:
+      - "Why did a business analyst out-detect the entire monitoring stack?"
+      - "What is the difference between the trigger (bug) and the root cause (no invariant)?"
+    objectives:
+      - "Run a disciplined RCA on a data incident."
+      - "Design controls against causal links, not against people."
+    rubric: "Chain separates trigger from root cause (40%); gap analysis is specific (30%); controls map to links (30%)."
+    solution:
+      model: "Causal-chain RCA"
+      reasoning: "Chain: deployment changed a library default → timestamp handling changed → one feature silently corrupted → no invariant asserted on the feature's distribution → training ingested it twice → model degraded subtly → business analyst noticed an odd segment number. Root cause: no distribution invariant on served features — the bug (trigger) was ordinary; the silence was the design failure. Controls: schema-contract test asserting timezone normalization (blocks at deploy); freshness and distribution gates from CS-56 (detect within hours, not days); canary training run with metric deltas before full retrain (contains model damage); analyst-reported anomalies route into the same incident queue as monitor alerts — the human sensor needs a channel, not a compliment. 'Human error' is banned because it ends analysis at the person; the person will be replaced by another person with the same invariants missing."
+      alternatives:
+        - "Blaming the deploying engineer and moving on: the incident will recur under a different name; RCA discipline exists precisely for this."
+      lesson_for_instructor: "Ask why the second training run also ingested the bad data — the absence of a hold-and-review gate between trainings is the chain's second link."
+
+  - id: CS-69
+    title: "Communication protocol for a distributed team"
+    domain: D9
+    level: L3
+    use: [homework]
+    lecture: 26
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: false
+    tags: [distributed-team, communication-protocol, async, timezone]
+    concepts: [communication protocol, async work]
+    summary: "Design an async-first communication protocol for a team split across two time zones and three languages."
+    context: "GRIDSENSE's team: 6 engineers in-country, 4 data engineers 3 hours behind, client stakeholders 5 hours ahead. Decisions currently happen in meetings that exclude half the team; the data engineers learn decisions secondhand."
+    problem: "Design the protocol: what is decided async, what needs synchronous time, and how decisions become durable."
+    constraints:
+      - "One 60-minute synchronous window per week is all calendars allow."
+      - "Decisions must be findable three months later."
+      - "The protocol must state response-time expectations per channel."
+    tasks:
+      - "Channel charter: purpose, response expectation, decision authority per channel."
+      - "Decision-record format and where it lives."
+      - "The one weekly sync: agenda rules and what may never be decided there."
+    deliverables:
+      - "Channel charter."
+      - "Decision-record template."
+      - "Sync agenda rules."
+    discussion:
+      - "Why do distributed teams over-meet rather than over-document?"
+      - "What does 'findable three months later' require that chat cannot give?"
+    objectives:
+      - "Design async-first protocols with real decision records."
+      - "Protect the scarce synchronous window for what needs it."
+    rubric: "Charter is complete per channel (40%); decision records are durable (35%); sync rules protect the window (25%)."
+    solution:
+      model: "Async-first with decision records"
+      reasoning: "Channels: chat for coordination (response ≤ 4h work-hours, no decisions); documents/PRs for work products (review ≤ 24h); decision records for anything with consequences (propose → 48h async comment window → owner decides → log in the decision register with context, options, choice, dissent). The weekly sync agenda: decisions already proposed in writing get 10 minutes each — the sync ratifies, it does not originate; anything not pre-read is deferred, ruthlessly. 'Findable three months later' kills chat as a decision store: chat is where decisions go to disappear; the decision register with stable links is the memory. Over-meeting happens because meetings feel like action; documentation feels like bureaucracy until the first dispute is settled by a register link."
+      alternatives:
+        - "Two syncs per week: faster ratification, and it recreates the exclusion the protocol exists to fix; the data engineers' time zone makes it a noon meeting for them."
+      lesson_for_instructor: "Audit the last ten decisions in students' own capstone: how many exist in writing? The gap is usually total."
+
+  - id: CS-70
+    title: "AI risk-mining pilot"
+    domain: D5
+    level: L4
+    use: [in-class]
+    lecture: 31
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: false
+    tags: [AI-assisted, risk-mining, pilot, evaluation, process-design]
+    concepts: [AI-assisted risk management, pilot evaluation]
+    summary: "Design and evaluate an LLM risk-mining pilot: what it mines, how its output is verified, and the success criteria."
+    context: "TelcoCare proposes letting an LLM mine four years of project retrospective notes and incident tickets to propose register risks. The PMO is skeptical; the data lead is enthusiastic. Nothing in the current register cites historical evidence — it's all opinion."
+    problem: "Design the pilot: input corpus, output format, verification loop, and success criteria that would justify scaling."
+    constraints:
+      - "The pilot runs on one past project's corpus before any live use."
+      - "Every mined risk must link to its source evidence or be discarded."
+      - "Success criteria must measure value added, not volume produced."
+    tasks:
+      - "Specify the corpus and the mining prompt's output contract."
+      - "Design the verification loop: who reviews, against what ground truth."
+      - "Define success criteria and the scale/no-scale decision rule."
+    deliverables:
+      - "Pilot specification."
+      - "Verification loop."
+      - "Success criteria and decision rule."
+    discussion:
+      - "What does 'value added' mean when the register is already opinion-based?"
+      - "Which failure mode is worse: hallucinated risks or plausible-but-generic ones?"
+    objectives:
+      - "Design a bounded AI pilot with verification."
+      - "Define success by decision value, not output volume."
+    rubric: "Corpus and output contract are specific (30%); verification loop is real (40%); success criteria measure value (30%)."
+    solution:
+      model: "Evidence-linked mining with ground-truth scoring"
+      reasoning: "Corpus: one completed project's retrospectives, incident tickets, and change log. Output contract: each mined risk = {statement, causal chain, evidence citation (ticket/retro ID + quote), proposed register fields}; no citation, no entry. Verification: two reviewers (PM + the past project's lead) score each mined risk against the project's actual outcome — was it real, was it caught, would earlier registration have changed a decision? Success criteria: ≥60% of mined risks rated real-and-undocumented, and at least three where earlier registration plausibly changes a decision — that is value, not volume. The scale decision compares reviewer hours per validated risk against hours to produce them manually. The generic-risk failure mode is worse than hallucination: hallucinations are caught by citation checks; plausible generics slip into registers and rot them from inside."
+      alternatives:
+        - "Skipping the pilot and mining live projects: faster, and it violates every verification principle this course teaches; the retrospective corpus is the only place ground truth exists."
+      lesson_for_instructor: "Run the reviewer role yourself on three mined examples; the class scores them blind first, and calibration disagreement is the discussion."
+
+  - id: CS-71
+    title: "Phase gates for a regulated AI feature"
+    domain: D2
+    level: L4
+    use: [homework]
+    lecture: 8
+    seed: MEDSYNC
+    difficulty: advanced
+    numerical: false
+    tags: [phase-gates, regulated-AI, tailoring, evidence, healthcare]
+    concepts: [phase gates, tailoring]
+    summary: "Tailor a phase-gate model for an AI feature in a hospital: which gates, what evidence, what tailoring is honest."
+    context: "MedSync will add AI-suggested medication reconciliation. The vendor's agile rhythm meets the hospital's evidence requirements. Someone proposes 'we'll do agile, with gates if the auditor asks' — the PM must design real gates without killing delivery speed."
+    problem: "Design the gate model: which gates, evidence per gate, and the tailoring justification."
+    constraints:
+      - "Gates at minimum: data-use approval, model validation, clinical safety, deployment."
+      - "Each gate: entry evidence, decision authority, timebox."
+      - "Tailoring rationale must reference the regulation, not preference."
+    tasks:
+      - "Gate table with evidence, authority, timebox."
+      - "Define what runs between gates (agile lanes)."
+      - "Write the tailoring justification paragraph."
+    deliverables:
+      - "Gate table."
+      - "Between-gate delivery design."
+      - "Tailoring justification."
+    discussion:
+      - "Which gate is the real regulator — the audit or the clinical safety review?"
+      - "What does 'gates if the auditor asks' cost when the auditor does ask?"
+    objectives:
+      - "Tailor governance to regulatory reality."
+      - "Preserve agile delivery inside a gated frame."
+    rubric: "Gates complete with real evidence (45%); between-gate design preserves speed (30%); tailoring justified (25%)."
+    solution:
+      model: "Evidence-based gates with agile interior"
+      reasoning: "Gates: G1 data-use (consent scope, DPIA, data governance sign-off — authority: governance board, 5 days); G2 model validation (slice evaluation, model card, reproducibility — authority: model owner + clinical informatics, 5 days); G3 clinical safety (failure-mode analysis, escalation protocol, shadow-period results — authority: clinical safety officer, 5 days); G4 deployment (rollback evidence, monitoring thresholds, training sign-off — authority: sponsor, 3 days). Between gates: agile sprints on everything not gated — features, UI, pipeline, evaluation harnesses; sprint output feeds the next gate's evidence pack. Tailoring justification: the gates exist because the regulator audits evidence trails, not intentions; 'gates if asked' forfeits the one thing gates produce — evidence assembled contemporaneously rather than reconstructed after the fact. The honest tailoring is compression (fixed 5-day SLAs), not elimination."
+      alternatives:
+        - "Two gates (data-use + deployment) with internal reviews: faster; defensible only if clinical safety review is genuinely embedded in sprint DoD — usually it is not."
+      lesson_for_instructor: "Connect to CS-60: same interlock pattern, higher stakes; the SLA discipline is what makes gates compatible with agile anywhere."
+
+  - id: CS-72
+    title: "WBS dictionary disputes"
+    domain: D3
+    level: L3
+    use: [in-class]
+    lecture: 9
+    seed: CAMPUSHUB
+    difficulty: advanced
+    numerical: false
+    tags: [WBS, dictionary, acceptance-criteria, boundary, disputes]
+    concepts: [WBS dictionary, boundary definition]
+    summary: "Fix a WBS dictionary whose vague boundaries caused two teams to build overlapping deliverables and one gap."
+    context: "CAMPUSHUB's WBS dictionary entries read like titles, not boundaries: 'Develop reporting module (80 h)'. Two teams built report engines; nobody built the export feature; the 80 h was consumed twice."
+    problem: "Rewrite three dictionary entries to boundary standard and define the acceptance test for each."
+    constraints:
+      - "Each entry: deliverable description, explicit boundaries (in/out), acceptance criteria, effort, dependencies."
+      - "The overlap case must be resolved with an ownership rule."
+      - "Entries must be testable by someone who did not write them."
+    tasks:
+      - "Rewrite three entries to the boundary standard."
+      - "Define the ownership rule that prevents duplicate builds."
+      - "Write the acceptance test for one entry."
+    deliverables:
+      - "Three rewritten entries."
+      - "Ownership rule."
+      - "One acceptance test."
+    discussion:
+      - "Why do dictionary entries degrade into titles, and when does it happen?"
+      - "Who should audit the 100% rule in a real project, and how often?"
+    objectives:
+      - "Write dictionary entries that bound work precisely."
+      - "Institutionalize ownership to prevent duplication."
+    rubric: "Entries meet boundary standard (45%); ownership rule works (30%); acceptance test is external (25%)."
+    solution:
+      model: "Boundary-standard dictionary"
+      reasoning: "Entry rewrite pattern: 'Develop reporting module' becomes deliverable description (six named reports, defined filters, CSV export of listed fields), in/out boundaries (in: server-rendered reports; out: ad-hoc query, scheduling, the export API — owned by WBS 3.2), acceptance criteria (each report renders from seeded data with expected row counts; export matches schema contract), effort, dependencies. Ownership rule: every WBS node has exactly one accountable owner; any work item whose home is ambiguous routes to the WBS owner for assignment within one day — ambiguity is resolved by rule, not by whoever builds first. The degradation happens mid-project under pressure: titles are faster to write, and the debt surfaces exactly at integration. Audit: PMO or PM verifies the 100% rule at each baseline change, not on a calendar."
+      alternatives: []
+      lesson_for_instructor: "Hand out one vague entry and one good entry; ask which one the 80 h was consumed twice on and why nobody noticed until integration."
+
+  - id: CS-73
+    title: "Drawing down the contingency reserve"
+    domain: D4
+    level: L4
+    use: [exam]
+    lecture: 13
+    seed: GRIDSENSE
+    difficulty: advanced
+    numerical: false
+    tags: [contingency, reserves, draw-down, governance, risk-consumption]
+    concepts: [reserve management, governance]
+    summary: "Design the reserve draw-down policy: who authorizes, what evidence, and how remaining reserve is re-forecast."
+    context: "GRIDSENSE holds 10% contingency (400k). By month 5, three draws are requested simultaneously: 150k for the residency rework (CS-59's fallout), 90k for sensor drift mitigation, 60k for a scope addition someone labeled a 'risk response'."
+    problem: "Design the draw-down policy and rule on the three requests."
+    constraints:
+      - "Contingency funds identified risks only — never scope."
+      - "Draws need: risk reference, remaining-exposure estimate, replenishment impact on remaining plan."
+      - "The policy must state what happens when the reserve hits 25% remaining."
+    tasks:
+      - "Write the draw-down policy (authorization, evidence, thresholds)."
+      - "Rule on the three requests with reasons."
+      - "Define the 25% trigger and what it sets in motion."
+    deliverables:
+      - "Draw-down policy."
+      - "Rulings on three requests."
+      - "25% trigger definition."
+    discussion:
+      - "Why does unlabeled reserve spending predict project failure better than any EVM index?"
+      - "Who should see the reserve balance — and who should not?"
+    objectives:
+      - "Govern contingency as risk funds, not slush."
+      - "Design triggers that convert reserve depletion into action."
+    rubric: "Policy is complete (35%); rulings are correct with reasons (45%); trigger is consequential (20%)."
+    solution:
+      model: "Risk-linked draw-down"
+      reasoning: "Policy: draws reference a register risk ID; evidence = remaining exposure after the funded response; authorization ≤50k PM, ≤150k sponsor, >150k CCB; every draw updates the risk register (response funded) and the forecast. Rulings: residency rework (150k) — approved; it funds the top register risk's response (sponsor authorizes, at the limit). Sensor drift (90k) — approved; risk was scored and EMV'd in CS-21; spending 90k against a 1.0M EMV exposure is rational. The 60k 'scope addition as risk response' — rejected: it references no risk; if it genuinely mitigates one, name the risk and the causal mechanism; otherwise it is a CR through the change process. The 25% trigger: below 100k remaining, the sponsor receives a funded-mitigation review — either the remaining risks are covered by the residue plus management reserve, or scope/schedule adjustments are opened. Unlabeled reserve spending is the best single predictor of failure because it means the control that separates risk money from wish money has already dissolved."
+      alternatives:
+        - "Management reserve as the release valve for the 60k: correct mechanism, wrong governance if the sponsor approves it informally — same money, now traceable."
+      lesson_for_instructor: "Ask who at GRIDSENSE knows the true reserve balance; if the answer is 'PM and nobody else', ask what that PM can be accused of in month 9."
+
+  - id: CS-74
+    title: "Fairness metrics on the new cohort"
+    domain: D6
+    level: L4
+    use: [exam]
+    lecture: 23
+    seed: TELCOCARE
+    difficulty: advanced
+    numerical: true
+    tags: [fairness, slice-evaluation, precision, recall, flag-rate, responsible-AI]
+    concepts: [fairness metrics, slice evaluation]
+    summary: "Compute per-segment precision, recall, and flag rates for the churn model, find the disparity, and decide the disposition."
+    context: "TelcoCare's retrained model shows aggregate AUC 0.86 on the validation set. A slice evaluation on 2,000 customers (1,000 postpaid, 1,000 prepaid) yields: postpaid TP 320, FP 40, FN 60, TN 580; prepaid TP 90, FP 110, FN 210, TN 590."
+    problem: "Compute per-segment precision, recall, and flag rates; quantify the disparity; recommend a disposition."
+    constraints:
+      - "Precision = TP/(TP+FP); recall = TP/(TP+FN); flag rate = (TP+FP)/segment size."
+      - "Model DoD (CS-32) requires flag-rate ratio within [0.8, 1.25] absent documented justification."
+      - "Disposition options: fix in-model, carve-out with sponsor sign-off, document-and-ship with monitoring."
+    tasks:
+      - "Compute all six metrics (precision, recall, flag rate × 2 segments)."
+      - "Compute the flag-rate ratio and test it against the DoD band."
+      - "Recommend a disposition with the reasoning a governance board would need."
+    deliverables:
+      - "Metric table."
+      - "Disparity computation."
+      - "Disposition recommendation."
+    discussion:
+      - "Which metric captures this model's unfairness best — precision gap, recall gap, or flag-rate ratio?"
+      - "Is a prepaid carve-out a fix or an exclusion, given prepaid customers are the faster-churning segment?"
+    objectives:
+      - "Compute slice-level fairness metrics from confusion matrices."
+      - "Make a governed disposition decision against a DoD threshold."
+    rubric: "Metrics correct (45%); ratio computed and tested (25%); disposition reasoned (30%)."
+    solution:
+      model: "Slice fairness evaluation"
+      reasoning: "Postpaid: precision = 320/360 = 0.889; recall = 320/380 = 0.842; flag rate = 360/1000 = 0.36. Prepaid: precision = 90/200 = 0.45; recall = 90/300 = 0.30; flag rate = 200/1000 = 0.20. Flag-rate ratio (prepaid/postpaid) = 0.556 — far outside [0.8, 1.25]. The precision gap (0.889 vs 0.45) means prepaid flags are half noise; the recall gap means real churners go unflagged. Disposition: this is not carve-out material — prepaid customers churn fastest, so excluding them abandons exactly the population the product exists for. Fix in-model: segment-specific thresholds (raise prepaid precision at equal recall), more prepaid-weighted training data, and feature review (the prepaid signal set is thinner). Interim: document-and-ship with the disparity on the model card, manual review of prepaid flags, monthly slice re-evaluation as the monitoring gate. The governance board needs exactly the six numbers and the ratio — the table is the argument."
+      alternatives:
+        - "Carve-out: defensible only if the business process for prepaid retention exists separately; it does not, so the carve-out converts model unfairness into service absence."
+      calculations: "Worked table in instructor key; machine-checked."
+      lesson_for_instructor: "Ask which single number a non-technical sponsor should see — the flag-rate ratio, because it answers 'who gets flagged how often', which is the fairness question in commercial language."
+    numeric:
+      type: arith
+      note: "Per-segment precision, recall, flag rates, and the disparity ratio."
+      data:
+        postpaid: {tp: 320, fp: 40, fn: 60, tn: 580, n: 1000}
+        prepaid: {tp: 90, fp: 110, fn: 210, tn: 590, n: 1000}
+        dod_band: {min: 0.8, max: 1.25}
+      steps:
+        - {name: precision_postpaid, expr: "postpaid.tp / (postpaid.tp + postpaid.fp)", expect: 0.8889, tol: 0.001}
+        - {name: recall_postpaid, expr: "postpaid.tp / (postpaid.tp + postpaid.fn)", expect: 0.8421, tol: 0.001}
+        - {name: flag_rate_postpaid, expr: "(postpaid.tp + postpaid.fp) / postpaid.n", expect: 0.36, tol: 0.001}
+        - {name: precision_prepaid, expr: "prepaid.tp / (prepaid.tp + prepaid.fp)", expect: 0.45, tol: 0.001}
+        - {name: recall_prepaid, expr: "prepaid.tp / (prepaid.tp + prepaid.fn)", expect: 0.30, tol: 0.001}
+        - {name: flag_rate_prepaid, expr: "(prepaid.tp + prepaid.fp) / prepaid.n", expect: 0.20, tol: 0.001}
+        - {name: flag_rate_ratio, expr: "flag_rate_prepaid / flag_rate_postpaid", expect: 0.5556, tol: 0.001}
+
+  - id: CS-75
+    title: "Rebalancing the response portfolio"
+    domain: D5
+    level: L4
+    use: [homework]
+    lecture: 17
+    seed: MEDSYNC
+    difficulty: advanced
+    numerical: false
+    tags: [risk-response, portfolio, residual-risk, secondary-risk, budget]
+    concepts: [response portfolio, residual risk]
+    summary: "Rebalance a risk response portfolio when the mitigation budget is cut 40% — what stays funded and why."
+    context: "MedSync's response plan funds five mitigations totaling 300k. The budget cut leaves 180k. The five: sensor-drift mitigation 90k (EMV exposure 1.0M), key-engineer pairing 70k (EMV 450k), vendor API transfer 40k (EMV 280k), documentation push 60k (EMV 150k), office-move acceptance review 40k (EMV 100k)."
+    problem: "Rebalance the portfolio under the cut, stating residual exposure and secondary risk for each decision."
+    constraints:
+      - "Total spend ≤ 180k."
+      - "Each unfunded mitigation returns its risk to exposure — state the residual."
+      - "At least one response must change strategy rather than amount."
+    tasks:
+      - "Propose the funded set with the arithmetic of exposure per rupee."
+      - "State residual exposure and secondary risk per item."
+      - "Identify the strategy change and justify it."
+    deliverables:
+      - "Funded set with exposure-per-rupee logic."
+      - "Residual/secondary table."
+      - "Strategy-change justification."
+    discussion:
+      - "Is exposure-per-rupee the right ratio, or does it hide detectability?"
+      - "What does an unfunded key-person risk do to the schedule baseline's credibility?"
+    objectives:
+      - "Prioritize responses under budget constraint."
+      - "Account for residual and secondary risk explicitly."
+    rubric: "Set is coherent within 180k (35%); residual/secondary accounting (35%); strategy change justified (30%)."
+    solution:
+      model: "Exposure-per-rupee rebalancing"
+      reasoning: "Exposure per rupee: sensor drift 11.1, key engineer 6.4, vendor API 7.0, documentation 2.5, office move 2.5. Fund: sensor drift 90k (top exposure, slow-detecting — detectability argues even harder than the ratio), vendor API 40k (7.0 ratio and a pure transfer — buying certainty). That is 130k; remaining 50k covers key-engineer pairing only partially — this is the strategy change: instead of full pairing (70k), fund pairing only on the two highest-bus-factor components (50k) and mitigate the rest by documentation (the 60k documentation push drops to 0; its residual is absorbed into the pairing scope). Residuals: key-engineer EMV drops to maybe 250k, not zero — named on the register. Office move stays accepted (2.5 ratio, lowest). Secondary risks: partial pairing creates a knowledge-split risk (two components documented, two not) — owned by the tech lead with a named consolidation point at the integration milestone."
+      alternatives:
+        - "Fund pairing fully and drop documentation: defensible if documentation's 150k EMV overstates reality; the register's estimate quality is the real question — ask how the 150k was derived."
+      lesson_for_instructor: "Ask what the register says about the 150k documentation EMV's provenance — the honest answer is 'someone guessed', which is a lesson about estimate quality, not arithmetic."

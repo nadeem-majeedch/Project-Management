@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L29 · Sustainability &amp;amp; Benefits Realization (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L29 · Sustainability &amp; Benefits Realization</h1>
+<h2>The project ends; the value question does not</h2>
+<p>Week 15 · Unit U6 · CLO6 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Build</strong> a benefits map linking outputs → outcomes → strategic benefit</li><li><strong>Compute</strong> the compute footprint of a modelling strategy (energy, CO₂, cost)</li><li><strong>Trade</strong> accuracy against sustainability honestly — with numbers</li><li><strong>Plan</strong> the handover that keeps value flowing after the team dissolves</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>CLO6 continues: value beyond delivery. The compute slide runs CS-40's checker-verified chain. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>The benefits map</h2>
+<div class="mermaid">
+flowchart LR
+  O1["Output:&lt;br&gt;churn-model API"] --&gt; OC1["Outcome:&lt;br&gt;retention calls targeted"]
+  O2["Output:&lt;br&gt;dashboard"] --&gt; OC1
+  OC1 --&gt; B1["Benefit:&lt;br&gt;churn −15% by FY-end"]
+  OC1 --&gt; B2["Benefit:&lt;br&gt;campaign spend −10%"]
+</div>
+<li>Outputs are what you build; <strong>outcomes</strong> are behavior change; benefits are measured strategic value</li><li>Every benefit needs: metric, baseline, owner, and a <strong>measurement date after the project ends</strong></li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The output/outcome distinction is the package's core teaching — students routinely call outputs benefits. The post-project measurement date is what makes it real. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Compute footprint, worked (CS-40, verified)</h2>
+<p><strong>Strategy A:</strong> 288 GPU-h at 400 W · grid 0.6 kg CO₂/kWh · PKR 35/kWh · accuracy 87.2% <strong>Strategy B:</strong> 160 GPU-h · accuracy 86.9%</p>
+<table><tr><th>Step</th><th>A</th><th>B</th></tr><tr><td>Energy = h × W / 1000</td><td><strong>115.2 kWh</strong></td><td><strong>64.0 kWh</strong></td></tr><tr><td>CO₂ = kWh × 0.6</td><td><strong>69.12 kg</strong></td><td><strong>38.4 kg</strong></td></tr><tr><td>Cost = kWh × 35</td><td><strong>4,032 PKR</strong></td><td><strong>2,240 PKR</strong></td></tr></table>
+<li>B saves <strong>44.4%</strong> energy for <strong>−0.3 points</strong> accuracy — the sustainability trade made <em>numerical</em></li><li>Compute is a budget line <strong>and</strong> an externality: plan both</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Every figure is CS-40's verified chain. The trade table is the teaching moment: sustainability decisions are estimable, not vibes. 6 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>Handover: the closure that prevents reopenings</h2>
+<li><strong>Operations readiness:</strong> runbooks, monitoring (L20), support tiers named</li><li><strong>Knowledge transfer:</strong> not a document dump — paired run weeks with the receiving team</li><li><strong>Benefits owners</strong> confirmed <strong>in writing</strong> before closure (L30's sign-off list)</li><li>The recurring DS gap: nobody owns model <strong>retraining</strong> — the drift monitor alerts a team that dissolved (L20's unread alert, again)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The retraining-ownership gap is the package's signature DS closure failure. It links L14 (rules), L20 (monitors), L23 (gates) into a closure checklist. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a shipped portal whose benefits case died with the project team — no owner, no measurement date</li><li><strong>DS:</strong> CS-40's two training strategies: the honest sustainability trade — and the follow-on question (retraining cadence multiplies the footprint)</li><li>Sustainability is a <strong>stated assumption</strong> in estimates: energy price, grid factor, retraining frequency</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The assumption-stating point ties to L10's provenance discipline — the same honesty, new domain. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-40</strong> — <em>Benefits map and compute footprint</em>: build the map for the churn-model project, then run the A/B footprint trade and defend your choice</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Numeric case, checker-verified (115.2/64.0 kWh · 69.12/38.4 kg · 4,032/2,240 PKR · 44.4% saving). Key: instructor/answer-keys/cases/CS-40.md. The defense must include the accuracy trade stated numerically.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Who should own benefits after closure — the sponsor, operations, or the PM? What does each answer create?</li><li>Is model retraining a project or an operation? What follows for its budget and its governance?</li><li>Would you ship B (86.9%) when A (87.2%) was promised? Draft the stakeholder message.</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2's answer shapes the whole handover design — the ambiguous middle is where DS projects live. Q3 rehearses L26's bad-news craft with sustainability stakes. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Outputs → outcomes → benefits: measured by someone, on a date, after closure</li><li>Compute footprint is estimable: energy, CO₂, cost per strategy</li><li>Handover transfers <strong>ownership</strong>, not documents</li></ul>
+<p><strong>Exit ticket (2 min):</strong> write your capstone's one real benefit — metric, baseline, owner, measurement date.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Tickets feed M4's benefits section. Preview L30: closure itself — the drill students run on this course.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — value delivery system; benefits realization</li><li>Strubell et al. (2019) <em>Energy and Policy Considerations for Deep Learning in NLP</em> — ACL (public; syllabus-consistent)</li><li>Teaching package: <code>instructor/teaching-packages/U6-integration-ethics-closing/L29-29-sustainability-benefits.md</code></li><li><strong>Next:</strong> L30 — Closing Projects &amp; Lessons Learned</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Strubell citation verified as real and public (ACL 2019) and consistent with the L29 package's reading list. Preview L30 with the course retrospective drill.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L32 · Capstone Defense &amp;amp; Course Synthesis (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L32 · Capstone Defense &amp; Course Synthesis</h1>
+<h2>Defend the plan. Then keep the discipline.</h2>
+<p>Week 16 · Unit U7 · CLO6 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Present</strong> an integrated project plan to a panel under time pressure</li><li><strong>Answer</strong> probing questions on any artifact's chain (estimates → schedule → budget → risk)</li><li><strong>Evaluate</strong> peer defenses with the published rubric, fairly and specifically</li><li><strong>Synthesize</strong> the course: which discipline will you keep, and why</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Defense day. Rubric: docs/capstone/presentation-rubric.md (matches instructor/rubrics/capstone-plan.md exactly). Panel = instructor + peers (feedback-only scoring per the peer-review form). Timing: run the defense schedule from the spec, not from this deck.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Defense format</h2>
+<table><tr><th>Segment</th><th>Time</th><th>What's scored</th></tr><tr><td>Plan walk-through</td><td>8 min</td><td>integration &amp; clarity (L27's map, live)</td></tr><tr><td>Panel probing</td><td>6 min</td><td>artifact chains — trace any number</td></tr><tr><td>Scenario question</td><td>3 min</td><td>"your R2 fires in week 6 — what happens?"</td></tr><tr><td>Red-team debrief</td><td>3 min</td><td>consistency defense (peer review M3)</td></tr></table>
+<li>Every claim must trace to an artifact — the panel reads the <em>plan</em>, not the slides</li><li>"I don't know, but here's how I'd find out by Friday" is a <strong>passing</strong> answer; invention is not</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The scenario question rehearses L19/L20 under pressure. The honest-ignorance rule is stated in the rubric — say it aloud; it lowers theater and raises truth. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>The probe questions the panel will ask</h2>
+<li>Trace one number: <strong>from WBS package to budget line</strong> (checks #1–2, L27)</li><li>Where is your <strong>contingency</strong> spent from — and on which risks? (L13→L17 chain)</li><li>Which <strong>quality rule</strong> would catch your worst data failure? (L14)</li><li>Your <strong>gate evidence</strong> at M3: who checked it, against what? (L23)</li><li>What did you <strong>cut</strong> in tailoring — and what risk did you accept? (L08)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>These five map 1:1 to the red-team checks and the rubric's evidence rows — no surprises, by design. 4 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>CS &amp; DS examples in this course</h2>
+<li><strong>CS:</strong> the campus-portal arc — charter (L06) → WBS (L09) → network (L11) → EVM (L19) → defense (today)</li><li><strong>DS:</strong> the churn-model arc — scope with evaluation harness (L09) → data-quality rules (L14) → model DoD &amp; gates (L23) → benefits &amp; footprint (L29)</li><li>Both arcs end here: one integrated plan, defended</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The two arcs are the course's narrative threads — name them one last time so students see their own path. 2 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-43</strong> — <em>Capstone defense simulation</em>: the dress rehearsal — full format, peer panel, rubric scoring, feedback before the real defense</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>If the real defense follows this session, CS-43 IS the rehearsal slot; otherwise it runs as the mock. Key: instructor/answer-keys/cases/CS-43.md (panel brief + scoring sheet).</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Course synthesis: the map you leave with</h2>
+<div class="mermaid">
+flowchart LR
+  F["Foundations &amp;&lt;br&gt;life cycles (U1–U2)"] --&gt; P["Planning:&lt;br&gt;scope→schedule→cost (U3)"]
+  P --&gt; C["Control:&lt;br&gt;risk→EVM→change (U4)"]
+  C --&gt; A["Adaptive delivery&lt;br&gt;&amp; teams (U5)"]
+  A --&gt; I["Integration, ethics,&lt;br&gt;closure (U6–U7)"]
+  I -.-&gt;|"value to real people&lt;br&gt;is the point"| F
+</div>
+<li>The capstone was the course in miniature: <strong>initiate → plan → control → close</strong>, with governance throughout</li><li>The disciplines that survive: provenance, ranges over points, named owners, documented decisions</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The four-discipline summary is the honest core — these are the transferable habits the exams and the rubric both reward. 4 min.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion (final — and it counts as your last exit ticket)</h2>
+<li>Which single course discipline changed how you plan your own work? Show, don't tell.</li><li>Where will PMBOK-style discipline and Agile instinct conflict in your first job — and what will you do?</li><li>What should the <em>next</em> cohort's version of this course keep, cut, and add? (This is CS-41's lessons-learned, closing the loop.)</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q3's output is genuinely used — next cohort's tailoring. Close the loop visibly: the L30 drill produced owners; the course is one of them. 8 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; the last exit ticket</h2>
+<li>Defense = traceable claims + honest unknowns + integrated plan</li><li>The course in four habits: <strong>provenance · ranges · owners · documented decisions</strong></li><li>Projects end; the discipline is portable — that was the design</li></ul>
+<p><strong>Exit ticket (final):</strong> one paragraph — the project you'll run differently now, and the first artifact you'll build for it.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>These paragraphs are the course's real outcome measure — skim for the report to the department. Thank the cohort.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — the course's structural spine</li><li>ISO 21502:2020 &amp; ISO 31000:2018 — governance and risk frames</li><li>Schwaber &amp; Sutherland (2020) <em>The Scrum Guide</em> · Anderson (2010) <em>Kanban</em></li><li>PMI <em>Code of Ethics and Professional Conduct</em></li><li>Every lab brief, case, and template: <a href="../../index.md"><code>docs/</code></a> — the course site remains available after the semester</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>End with the availability note: the site outlives the semester — students defending FYPs next term will need these templates again.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>

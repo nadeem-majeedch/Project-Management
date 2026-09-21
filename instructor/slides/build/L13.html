@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PM-401 · L13 · Cost Estimating &amp;amp; Budgeting (slides)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* @theme pm401
+   PM-401 lecture deck theme — WCAG contrast (computed, WCAG 2.x formula):
+   body text #1f2733 on #ffffff = 15.0:1 (AAA); #1e2a38 on #eef2f7 = 12.9:1 (AAA);
+   accent text #b3502a on white = 5.1:1 (AA normal text); #9a3412 headings 7.3:1.
+   All body/text colors >= 4.5:1 (AA). */
+
+:root {
+  --c-ink: #1f2733;
+  --c-panel: #eef2f7;
+  --c-accent: #b3502a;
+  --c-line: #c8d0da;
+  --c-note: #3a4654;
+  --c-crit: #9a3412;
+  --c-canvas: #ffffff;
+}
+
+section {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-size: 28px;
+  line-height: 1.42;
+  padding: 60px 70px;
+}
+
+h1 { font-size: 1.9em; color: var(--c-ink); border-bottom: 3px solid var(--c-accent); padding-bottom: 8px; }
+h2 { font-size: 1.4em; color: var(--c-ink); }
+h3 { font-size: 1.15em; color: var(--c-crit); }
+
+a { color: var(--c-accent); text-decoration: underline; }
+
+strong { color: var(--c-crit); }
+
+/* ---- Mermaid diagram blocks ---- */
+.mermaid {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--c-ink);
+}
+
+/* ---- Speaker notes: hidden on the slide face ---- */
+.notes { display: none; }
+
+/* ---- Footer / page number ---- */
+section::after {
+  content: attr(data-pagination);
+  position: absolute;
+  bottom: 14px; right: 22px;
+  font-size: 0.55em;
+  color: var(--c-note);
+}
+
+/* ---- Table styling ---- */
+table { font-size: 0.82em; border-collapse: collapse; }
+th { background: var(--c-panel); color: var(--c-ink); }
+th, td { border: 1px solid var(--c-line); padding: 4px 10px; }
+
+blockquote {
+  border-left: 4px solid var(--c-accent);
+  background: var(--c-panel);
+  color: var(--c-ink);
+  padding: 8px 16px;
+  font-size: 0.9em;
+}
+
+
+body { margin: 0; background: #2b3240; }
+main { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 28px 0; }
+section.slide { width: 960px; max-width: 96vw; min-height: 540px; box-shadow: 0 2px 12px rgba(0,0,0,.4); box-sizing: border-box; position: relative; }
+section.slide.lead { display: flex; flex-direction: column; justify-content: center; }
+code { background: var(--c-panel); padding: 0 5px; border-radius: 4px; font-family: Consolas, "Courier New", monospace; font-size: 0.88em; }
+pre code { display: block; padding: 10px 14px; }
+.mermaid { min-height: 2em; }
+details.speaker-notes { margin-top: 18px; border-top: 2px dashed var(--c-line); padding-top: 8px; font-size: 0.72em; color: var(--c-note); }
+details.speaker-notes summary { cursor: pointer; font-weight: 600; color: var(--c-accent); }
+details.speaker-notes div { white-space: pre-line; }
+.index-card { width: 960px; max-width: 96vw; background: #fff; color: var(--c-ink); padding: 40px 56px; box-sizing: border-box; box-shadow: 0 2px 12px rgba(0,0,0,.4); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+@media print {
+  body { background: #fff; }
+  main { gap: 0; padding: 0; }
+  section.slide { box-shadow: none; width: 100%; max-width: none; min-height: auto; page-break-after: always; }
+  details.speaker-notes { display: block !important; }
+  .index-card { box-shadow: none; }
+}
+
+</style>
+</head>
+<body>
+<main>
+<section class="slide lead" id="s01" data-pagination="1 / 10">
+<h1>L13 · Cost Estimating &amp; Budgeting</h1>
+<h2>From activity costs to a time-phased, controllable budget</h2>
+<p>Week 7 · Unit U3 · CLO2 · 2 hours</p>
+
+</section><section class="slide" id="s02" data-pagination="2 / 10">
+<h2>Learning objectives</h2>
+<li><strong>Build</strong> a bottom-up budget from labor, direct costs, overhead, and contingency</li><li><strong>Distinguish</strong> cost baseline from budget (and where management reserve lives)</li><li><strong>Explain</strong> what the S-curve is for and how it becomes PV (L19)</li><li><strong>Audit</strong> a budget line for hidden assumptions</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Every number on the arithmetic slide is checker-verified (check_answers.py recomputes the chain from role hours). The baseline $64,424 is the anchor L19 reuses — keep it exact. Timing ~5 min.</div></details>
+</section><section class="slide" id="s03" data-pagination="3 / 10">
+<h2>Bottom-up: labor first</h2>
+<p><strong>Rates:</strong> developers $45/h · data engineer $50/h · overhead 60% of labor</p>
+<table><tr><th>Role</th><th>Hours</th><th>Rate</th><th>Cost</th></tr><tr><td>Developers (3 × 280 h)</td><td>840</td><td>$45</td><td>$37,800</td></tr><tr><td>Data engineer</td><td>200</td><td>$50</td><td>$10,000</td></tr><tr><td>PM (15% of team effort)</td><td>155</td><td>$45</td><td>$6,975</td></tr><tr><td><strong>Labor subtotal</strong></td><td></td><td></td><td><strong>$54,775</strong></td></tr></table>
+<li>PM effort is <em>planned</em>, not donated — the most common omission in student budgets</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The PM-effort point is the teaching package's misconception #1. These role hours roll up to $3,225,600 PKR in the CAMPUS-MEND key — the checker verifies both currencies' chains. 5 min.</div></details>
+</section><section class="slide" id="s04" data-pagination="4 / 10">
+<h2>Direct costs → baseline → budget</h2>
+<table><tr><th>Step</th><th>Computation</th><th>Result</th></tr><tr><td>Direct costs (license, GPU, storage, egress)</td><td>2,400 + 264 + 828 + 300</td><td><strong>$3,792</strong></td></tr><tr><td>Subtotal</td><td>54,775 + 3,792</td><td><strong>$58,567</strong></td></tr><tr><td>Contingency (10%)</td><td>0.10 × 58,567</td><td><strong>$5,857</strong></td></tr><tr><td><strong>Cost baseline</strong></td><td></td><td><strong>$64,424</strong></td></tr><tr><td>Management reserve (5%, sponsor-held)</td><td>—</td><td><strong>outside the baseline</strong></td></tr></table>
+<li><strong>Baseline = what PM controls</strong> · Budget = baseline + reserve</li><li>Contingency covers <em>identified</em> risks; reserve covers the <em>unknown</em> ones</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The contingency/reserve split is a recurring exam item (QB-U3, final exam). The $64,424 becomes L19's BAC verbatim — say that explicitly so students see the chain. 6 min.</div></details>
+</section><section class="slide" id="s05" data-pagination="5 / 10">
+<h2>The S-curve: time-phasing the baseline</h2>
+<div class="mermaid">
+flowchart LR
+  W["Work packages&lt;br&gt;+ schedule (L12)"] --&gt; T["Time-phase&lt;br&gt;the costs"]
+  T --&gt; S["S-curve&lt;br&gt;(cumulative PV)"]
+  S --&gt; M["Month-end&lt;br&gt;measurement points"]
+</div>
+<li>Flat curve = work back-loaded; steep = front-loaded — both are <strong>choices with risks</strong></li><li>The S-curve is not decoration: it <strong>is</strong> the PV line L19 measures against</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview the measurement connection — students who see the S-curve as accounting art miss that EVM needs it. 4 min.</div></details>
+</section><section class="slide" id="s06" data-pagination="6 / 10">
+<h2>CS / DS in the room</h2>
+<li><strong>CS:</strong> a mobile-app budget that forgot app-store fees and device-lab time — direct costs, not labor</li><li><strong>DS:</strong> GPU hours are the classic DS direct cost — and the classic place where "it's just compute" hides 20% of budget</li><li>CS-17: a data-project budget where the labor roll-up must be recomputed, not trusted</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>The GPU point ties to Lab 7's direct-cost section. CS-17 is the numeric audit case. 3 min.</div></details>
+</section><section class="slide" id="s07" data-pagination="7 / 10">
+<h2>Case anchor:</h2>
+<p><strong>CS-17</strong> — <em>Bottom-up budget for a data project</em>: audit the labor roll-up (2,100,000 PKR — the stated figure hides an error), rebuild the baseline, and defend your contingency rate</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Numeric case, machine-verified: labor = 420×2600 + 300×2400 + 160×1800 = 2,100,000; the chain cascades through contingency to the baseline. Key: instructor/answer-keys/cases/CS-17.md. Lab 7 is the CAMPUS-MEND version.</div></details>
+</section><section class="slide" id="s08" data-pagination="8 / 10">
+<h2>Discussion</h2>
+<li>Who should own the management reserve — and what behavior does that ownership create?</li><li>Contingency is 10%. Your sponsor says "make it 5% and we're approved." What is your professional response?</li><li>Which is more dangerous: a budget without an S-curve, or a schedule without a budget?</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Q2 is an ethics-adjacent negotiation seed (L24's skills apply). Expected: re-derive contingency from the risk register, not negotiate the percentage. 6 min.</div></details>
+</section><section class="slide" id="s09" data-pagination="9 / 10">
+<h2>Summary &amp; exit ticket</h2>
+<li>Budget = labor + direct + overhead + contingency (<strong>baseline</strong>) + reserve (<strong>sponsor-held</strong>)</li><li>The S-curve time-phases the baseline — it becomes EVM's PV</li><li>Contingency answers identified risks; reserve answers unknown ones</li></ul>
+<p><strong>Exit ticket (2 min):</strong> your capstone labor is 300 h at $40/h with 60% overhead. Compute labor+overhead, then the baseline at 10% contingency.</p>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Answer for the instructor: 300×40 = 12,000; +60% = 19,200; ×1.10 = 21,120. Formative; feeds M2's cost artifact.</div></details>
+</section><section class="slide" id="s10" data-pagination="10 / 10">
+<h2>References &amp; next lecture</h2>
+<li>PMI (2021) <em>PMBOK® Guide</em> 7th ed. — cost domain practices</li><li>Template: <a href="../../docs/templates/index.md"><code>docs/templates/cost-baseline-template.csv</code></a> · Lab 7: <a href="../../docs/labs/index.md"><code>docs/labs/lab-07-cost-baseline.md</code></a></li><li>Teaching package: <code>instructor/teaching-packages/U3-planning-the-work/L13-13-cost-budget.md</code></li><li><strong>Next:</strong> L14 — Quality &amp; Data-Quality Planning: quality is planned in, not inspected in</li></ul>
+<details class="speaker-notes"><summary>Speaker notes</summary><div>Preview L14 with the DS-specific twist: for this cohort, data quality IS quality management.</div></details>
+</section></main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose",
+  fontFamily: "Segoe UI, Helvetica Neue, Arial, sans-serif" });
+</script>
+</body>
+</html>
