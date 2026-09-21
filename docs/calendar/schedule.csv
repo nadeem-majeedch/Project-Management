@@ -1,33 +1,33 @@
 lecture_no,week,unit,date,title,clos,lab,lab_link,assessments_milestones,lecture_page
-1,1,U1,,Why Projects Fail: The Case for Project Management,CLO1,,,,L01-01-why-projects-fail).md
-2,1,U1,,"Strategy, Portfolios, Programs & Projects",CLO1,,,,L02-02-strategy-portfolio).md
-3,2,U1,,PMBOK Guide 7: Principles & Performance Domains,CLO1,,,,L03-03-pmbok7-principles-domains).md
-4,2,U1,,"Roles, Competencies & the PM Profession",CLO1,,,Quiz 1 (L01–L04),L04-04-roles-profession).md
-5,3,U2,,"Life Cycles: Predictive, Adaptive, Hybrid","CLO1, CLO5",,,,L05-05-lifecycles).md
-6,3,U2,,Project Charter & Business Case,"CLO1, CLO2",1,lab-01-charter.md,,L06-06-charter).md
-7,4,U2,,Stakeholder Identification & Analysis,CLO5,2,lab-02-stakeholders.md,,L07-07-stakeholders).md
-8,4,U2,,Tailoring for Software & Data Projects,"CLO1, CLO5",,,Capstone M1: team + charter,L08-08-tailoring).md
-9,5,U3,,Scope & Work Breakdown Structure,CLO2,3,lab-03-scope-wbs.md,,L09-09-scope-wbs).md
-10,5,U3,,"Estimation: Size, Effort, Duration",CLO2,,,,L10-10-estimation).md
-11,6,U3,,"Network Logic, CPM & PERT",CLO2,4,lab-04-cpm-network.md,,L11-11-cpm-pert).md
-12,6,U3,,"Schedules, Gantt Charts & Resource Levelling",CLO2,6,lab-06-gantt-resources.md,Quiz 2 (L09–L12); Capstone M2: plan skeleton,L12-12-schedule-tools).md
-13,7,U3,,Cost Estimating & Budgeting,CLO3,7,lab-07-cost-baseline.md,,L13-13-cost-budget).md
-14,7,U3,,Quality & Data-Quality Planning,CLO3,8,lab-08-quality-plan.md,,L14-14-quality-data-quality).md
-15,8,U4,,Risk Management Foundations (ISO 31000 Alignment),CLO4,10,lab-10-probability-impact.md,,L15-15-risk-foundations).md
-16,8,U4,,"Quantitative Risk: PERT, Trees & Simulation",CLO4,11,lab-11-monte-carlo.md,A2 Assignment 1 due (Scope & Schedule),L16-16-quant-risk-simulation).md
-17,9,U4,,"Risk Responses, Issues & Reserves",CLO4,,,,L17-17-risk-response).md
-18,9,U4,,Procurement & Vendor Management,"CLO3, CLO4",,,,L18-18-procurement).md
-19,10,U4,,Earned Value Management,CLO4,13,lab-13-evm-recovery.md,A3 Assignment 2 due (Risk Register),L19-19-evm).md
-20,10,U4,,"Monitoring, Dashboards & Change Control",CLO4,15,lab-15-change-recovery.md,,L20-20-monitoring-control).md
-21,11,U5,,Scrum in Practice,CLO5,14,lab-14-agile-sprint.md,A4 Assignment 3 due (EVM Analysis),L21-21-scrum).md
-22,11,U5,,"Kanban, Flow & Throughput",CLO5,,,,L22-22-kanban-flow).md
-23,12,U5,,Agile for Data Science & ML Projects,CLO5,,,,L23-23-agile-data-ml).md
-24,12,U5,,Scaling Frameworks & Hybrid Delivery,CLO5,,,,L24-24-scaling-hybrid).md
-25,13,U5,,Team Performance & Leadership,CLO5,,,,L25-25-team-performance).md
-26,13,U5,,Stakeholder Communication & Negotiation,CLO5,,,Quiz 3 (L21–L26),L26-26-communication-negotiation).md
-27,14,U6,,The Master Project Plan: Integrating Everything,CLO6,16,lab-16-capstone-pack.md,Capstone M3: plan draft for peer review,L27-27-master-plan).md
-28,14,U6,,"Ethics, Governance & Professional Responsibility",CLO6,,,,L28-28-ethics-governance).md
-29,15,U6,,Sustainability & Benefits Realization,CLO6,,,,L29-29-sustainability-benefits).md
-30,15,U6,,Closing Projects & Lessons Learned,CLO6,,,,L30-30-closure-lessons).md
-31,16,U7,,AI-Assisted Project Management,CLO6,,,,L31-31-ai-assisted-pm).md
-32,16,U7,,Capstone Defense & Course Synthesis,CLO6,,,Capstone M4: final defense,L32-32-capstone-synthesis).md
+1,1,U1,,Why Projects Fail: The Case for Project Management,CLO1,,,,L01-01-why-projects-fail.md).md
+2,1,U1,,"Strategy, Portfolios, Programs & Projects",CLO1,,,,L02-02-strategy-portfolio.md).md
+3,2,U1,,PMBOK Guide 7: Principles & Performance Domains,CLO1,,,,L03-03-pmbok7-principles-domains.md).md
+4,2,U1,,"Roles, Competencies & the PM Profession",CLO1,,,Quiz 1 (L01–L04),L04-04-roles-profession.md).md
+5,3,U2,,"Life Cycles: Predictive, Adaptive, Hybrid","CLO1, CLO5",,,,L05-05-lifecycles.md).md
+6,3,U2,,Project Charter & Business Case,"CLO1, CLO2",1,lab-01-charter.md.md,,L06-06-charter.md).md
+7,4,U2,,Stakeholder Identification & Analysis,CLO5,2,lab-02-stakeholders.md.md,,L07-07-stakeholders.md).md
+8,4,U2,,Tailoring for Software & Data Projects,"CLO1, CLO5",,,Capstone M1: team + charter,L08-08-tailoring.md).md
+9,5,U3,,Scope & Work Breakdown Structure,CLO2,3,lab-03-scope-wbs.md.md,,L09-09-scope-wbs.md).md
+10,5,U3,,"Estimation: Size, Effort, Duration",CLO2,,,,L10-10-estimation.md).md
+11,6,U3,,"Network Logic, CPM & PERT",CLO2,4,lab-04-cpm-network.md.md,,L11-11-cpm-pert.md).md
+12,6,U3,,"Schedules, Gantt Charts & Resource Levelling",CLO2,6,lab-06-gantt-resources.md.md,Quiz 2 (L09–L12); Capstone M2: plan skeleton,L12-12-schedule-tools.md).md
+13,7,U3,,Cost Estimating & Budgeting,CLO3,7,lab-07-cost-baseline.md.md,,L13-13-cost-budget.md).md
+14,7,U3,,Quality & Data-Quality Planning,CLO3,8,lab-08-quality-plan.md.md,,L14-14-quality-data-quality.md).md
+15,8,U4,,Risk Management Foundations (ISO 31000 Alignment),CLO4,10,lab-10-probability-impact.md.md,,L15-15-risk-foundations.md).md
+16,8,U4,,"Quantitative Risk: PERT, Trees & Simulation",CLO4,11,lab-11-monte-carlo.md.md,A2 Assignment 1 due (Scope & Schedule),L16-16-quant-risk-simulation.md).md
+17,9,U4,,"Risk Responses, Issues & Reserves",CLO4,,,,L17-17-risk-response.md).md
+18,9,U4,,Procurement & Vendor Management,"CLO3, CLO4",,,,L18-18-procurement.md).md
+19,10,U4,,Earned Value Management,CLO4,13,lab-13-evm-recovery.md.md,A3 Assignment 2 due (Risk Register),L19-19-evm.md).md
+20,10,U4,,"Monitoring, Dashboards & Change Control",CLO4,15,lab-15-change-recovery.md.md,,L20-20-monitoring-control.md).md
+21,11,U5,,Scrum in Practice,CLO5,14,lab-14-agile-sprint.md.md,A4 Assignment 3 due (EVM Analysis),L21-21-scrum.md).md
+22,11,U5,,"Kanban, Flow & Throughput",CLO5,,,,L22-22-kanban-flow.md).md
+23,12,U5,,Agile for Data Science & ML Projects,CLO5,,,,L23-23-agile-data-ml.md).md
+24,12,U5,,Scaling Frameworks & Hybrid Delivery,CLO5,,,,L24-24-scaling-hybrid.md).md
+25,13,U5,,Team Performance & Leadership,CLO5,,,,L25-25-team-performance.md).md
+26,13,U5,,Stakeholder Communication & Negotiation,CLO5,,,Quiz 3 (L21–L26),L26-26-communication-negotiation.md).md
+27,14,U6,,The Master Project Plan: Integrating Everything,CLO6,16,lab-16-capstone-pack.md.md,Capstone M3: plan draft for peer review,L27-27-master-plan.md).md
+28,14,U6,,"Ethics, Governance & Professional Responsibility",CLO6,,,,L28-28-ethics-governance.md).md
+29,15,U6,,Sustainability & Benefits Realization,CLO6,,,,L29-29-sustainability-benefits.md).md
+30,15,U6,,Closing Projects & Lessons Learned,CLO6,,,,L30-30-closure-lessons.md).md
+31,16,U7,,AI-Assisted Project Management,CLO6,,,,L31-31-ai-assisted-pm.md).md
+32,16,U7,,Capstone Defense & Course Synthesis,CLO6,,,Capstone M4: final defense,L32-32-capstone-synthesis.md).md

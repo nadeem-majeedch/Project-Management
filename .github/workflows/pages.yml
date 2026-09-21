@@ -4,16 +4,14 @@ name: pages
 # artifact deployment (actions/configure-pages + upload-pages-artifact +
 # deploy-pages) — no gh-pages branch is created or needed.
 #
-# Triggers kept from the previous design: manual run, or a site-* tag.
-# To auto-deploy on every push to main instead, add:
-#   push:
-#     branches: [main]
-# (and remember Repo Settings → Pages → Source = "GitHub Actions").
-
+# Triggers: every push to main (course stays current automatically),
+# manual dispatch, or a site-* tag. Repo Settings → Pages → Source must be
+# "GitHub Actions" for the deploy job to succeed.
 on:
-  workflow_dispatch:
   push:
+    branches: [main]
     tags: ["site-*"]
+  workflow_dispatch:
 
 permissions:
   contents: read

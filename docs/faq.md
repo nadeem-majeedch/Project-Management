@@ -11,7 +11,7 @@ an authoritative page, the link wins over this summary.
 
 **Do I need prior project-management knowledge?**
 No. L01 assumes zero PM background. The course's own
-[prerequisites](syllabus/course-description.md#prerequisites) are programming
+[prerequisites](syllabus/course-description.md#eligibility-prerequisites) are programming
 and basic statistics maturity, not PM experience.
 
 **Which textbooks do I need to buy?**

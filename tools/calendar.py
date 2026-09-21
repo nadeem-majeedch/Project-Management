@@ -64,7 +64,9 @@ def front_matter(path: Path) -> dict:
 
 
 def rel_posix(p: Path) -> str:
-    return p.relative_to(ROOT / "docs").as_posix().removesuffix(".md")
+    # Keep the .md suffix: MkDocs rewrites 'x.md' links to 'x.html' hrefs.
+    # Extensionless links are emitted as-is and would 404 on static hosting.
+    return p.relative_to(ROOT / "docs").as_posix()
 
 
 # ---------------------------------------------------------------------------
@@ -284,7 +286,7 @@ def web_view() -> str:
     ]
     for r in rows:
         lab_cell = (
-            f"[Lab {r['lab']['lab']}](../{r['lab']['path']}.md)" if r["lab"] else "—"
+            f"[Lab {r['lab']['lab']}](../{r['lab']['path']})" if r["lab"] else "—"
         )
         events = "; ".join(r["events"]) if r["events"] else "—"
         lines.append(
